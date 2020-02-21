@@ -29,4 +29,29 @@ public class LoginController {
 		model.put("password", password);
 		return "welcome";
 	}
+	
+	@RequestMapping(value="/registerOTP", method = RequestMethod.GET)
+	public String transferToRegistration(ModelMap model){
+		return "signUpEmail";
+	}
+	
+	@RequestMapping(value="/EmailSent", method = RequestMethod.POST)
+	public String showEmailSentScreen(ModelMap model){
+		return "OTPScreen";
+	}
+	//this is for testing purposes.
+	@RequestMapping(value="/otp", method = RequestMethod.GET)
+	public String showAuthScreen(ModelMap model){
+		return "OTPAuth";
+	}
+	
+	@RequestMapping(value="/newAccount", method = RequestMethod.POST)
+	public String showNewAccount(ModelMap model){
+		return "newAccount";
+	}
+	
+	@RequestMapping(value="/confirmationAccount", method = RequestMethod.POST)
+	public String showConfirmationAccount(ModelMap model){
+		return "confirmationAccount";
+	}
 }
