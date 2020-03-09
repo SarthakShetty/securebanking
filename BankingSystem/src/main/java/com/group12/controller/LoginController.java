@@ -1,5 +1,8 @@
 package com.group12.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,9 +27,22 @@ public class LoginController {
 			model.put("errorMessage", "Invalid Credentials");
 			return "login";
 		}
-
+		
+		List<String> l = new ArrayList<String>();
+		l.add("Beep Boop");
+		l.add("got em");
+		l.add("fork");
+		l.add("Beep Boop");
+		l.add("got em");
+		l.add("fork");
+		l.add("Beep Boop");
+		l.add("got em");
+		l.add("fork");
 		model.put("name", name);
 		model.put("password", password);
+		model.put("employeeID", "1234");
+		model.put("dob", "Today");
+		model.put("list", l);
 		return "welcome";
 	}
 	
@@ -53,5 +69,27 @@ public class LoginController {
 	@RequestMapping(value="/confirmationAccount", method = RequestMethod.POST)
 	public String showConfirmationAccount(ModelMap model){
 		return "confirmationAccount";
+	}
+	
+	@RequestMapping(value="/forgotPassword", method= RequestMethod.GET)
+	public String showForPass(ModelMap model){
+		return "forgotPassword";
+		
+	}
+	
+	@RequestMapping(value="/forgotPasswordOTP", method= RequestMethod.POST)
+	public String showForPassOTP(ModelMap model){
+		return "forgotPasswordOTP";
+		
+	}
+	
+	@RequestMapping(value="/verifyOTP", method= RequestMethod.POST)
+	public String verifyOTP(ModelMap model, @RequestParam String otp){
+		if(!otp.equals("123")){
+			model.put("errorMessage", "Entry does not match OTP given, please try again.");
+			return "forgotPasswordOTP";
+		}
+		return "confirmfpOTP";
+		
 	}
 }

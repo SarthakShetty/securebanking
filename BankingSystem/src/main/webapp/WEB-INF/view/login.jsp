@@ -63,7 +63,6 @@
 			</div>
 			<hr class="divider">
 			<div id="loginForm">
-				<p><font color="red">${errorMessage}</font></p>
 				<form action="/login" method="POST">
 					<div class="md-form">
 						<input type="text" name="name" placeholder="Username"  id="user" class="form-control"/> 
@@ -84,6 +83,7 @@
 					<div>
 						<input type="submit" class="btn btn-primary btn-md" value="Sign In" style="margin: 30px auto 0 auto;"/>
 					</div>
+					<p><font color="red">${errorMessage}</font></p>s
 					
 				</form>
 				<hr class="divider">

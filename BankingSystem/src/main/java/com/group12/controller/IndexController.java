@@ -1,32 +1,23 @@
-//package com.group12.controller;
-//
-//import java.util.Map;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.servlet.ModelAndView;
-//
-//import com.group12.dao.CustomerDAO;
-//
-//@Controller
-//public class IndexController {
-//	
-//	@Autowired
-//	private CustomerDAO customerDao;
-//
-//	@RequestMapping("/")
-//	public String home(Map<String, Object> model) {
-//		
-//		model.put("message", "HowToDoInJava Reader !!");
-//		
-//		return "index";
-//	}
-//	
-//	@RequestMapping("/next")
-//	public String next(Map<String, Object> model) {
-//		model.put("message", "You are in new page !!");
-//		return "next";
-//	}
-//
-//}
+package com.group12.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+public class IndexController {
+	@Autowired
+	private LoginService loginService;
+	
+	@RequestMapping(value="/welcome", method=RequestMethod.GET)
+	public String showLogin(){
+		return "login";
+	}
+	
+}
