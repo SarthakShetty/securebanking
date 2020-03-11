@@ -54,7 +54,7 @@
 				display: none;
 			}
 			
-			#transactions table{
+			table{
 				color: white !important;
 			}
 			
@@ -64,13 +64,18 @@
 			
 			#listDiv{
 				width: 70%;
+				display: inline;
 			}
 			
 			#authSide{
-				width: 25%;
+				width: 100%;
 				text-align: center;
-				position: absolute;
-				right: 15%;
+				
+			}
+			
+			#accountDiv{
+				display: inline;
+				height: 100px;
 			}
 			
 			.my-custom-scrollbar {
@@ -80,6 +85,11 @@
 			}
 			.table-wrapper-scroll-y {
 				display: block;
+			}
+			
+			#hm form{
+				margin-bottom: 30px;
+				margin-left: 50px;
 			}
 		</style>
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
@@ -205,10 +215,50 @@
 				</div>
 			</div>
 			<div id="accounts">
-				
+				<h1>Account List</h1>
+				<hr class="divider"/>
+				<div id="accountDiv">
+					<select class="custom-select" size="8" style="width: 60%;">
+					  <c:forEach items="${accountList}" var="aList">
+					  	<option>${aList}</option>
+					  </c:forEach>
+					</select>
+				</div>
+				<div id="hm" style="display: inline-block; text-align: center;">
+					<form action="/deleteAccount">
+						<input type="submit" value="Delete" class="btn btn-info "/>
+					</form>
+					<form action="/modifyAccount">
+						<input type="submit" value="Modify" class="btn btn-info" /> 
+					</form>
+					<form action="/addAccount">
+						<input type="submit" value="Add Account" class="btn btn-info"/>
+					</form>
+				</div>
 			</div>
 			<div id="log">
-			
+				<h1>Transactions Log</h1>
+				<hr class="divider"/>
+				<div id="listDiv" class="table-wrapper-scroll-y my-custom-scrollbar">
+					<table class="table table-bordered mb-0">
+						<thead>
+						  <tr>
+						    <th scope="col">Transactions</th>
+						    <th scope="col"></th>
+						  </tr>
+						</thead>
+						<tbody>
+						  <c:forEach items="${list}" var="tList">
+						  	<tr>
+						  		<td>
+						  			${tList}
+						  		</td>
+						  		<td><input type="checkbox" class="form-check-input"></td>
+						  	</tr>
+						  </c:forEach>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	<script>

@@ -43,6 +43,7 @@ public class LoginController {
 		model.put("employeeID", "1234");
 		model.put("dob", "Today");
 		model.put("list", l);
+		model.put("accountList", l);
 		return "welcome";
 	}
 	
