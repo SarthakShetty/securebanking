@@ -19,6 +19,9 @@ public class Customer {
 	private String city;
 	private String address;
 	private int failure_count;
+	private String password;
+	private String username;
+	private String zipCode;
 	
 
 
@@ -116,6 +119,30 @@ public class Customer {
 
 	public void setCust_id(String cust_id) {
 		this.cust_id = cust_id;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
 	}
 	
 }
