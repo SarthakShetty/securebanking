@@ -91,6 +91,11 @@
 				margin-bottom: 30px;
 				margin-left: 50px;
 			}
+			
+			#newAccDiv{
+				width: 100%;
+				display: none;
+			}
 		</style>
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 		<link href="https://fonts.googleapis.com/css?family=Squada+One&display=swap" rel="stylesheet">
@@ -101,7 +106,7 @@
 	</head>
 	<body>
 		<div id="container">
-			<h1>Internal User</h1>
+			<h1>Hello internal user - ${name}</h1>
 			<ul class="nav nav-tabs">
 			  <li class="active" id="pr" onclick="change(this)"><a href="#">Profile</a></li>
 			  <li id="va" onclick="change(this)"><a href="#">View/Authorize Transactions</a></li>
@@ -231,10 +236,114 @@
 					<form action="/modifyAccount">
 						<input type="submit" value="Modify" class="btn btn-info" /> 
 					</form>
-					<form action="/addAccount">
-						<input type="submit" value="Add Account" class="btn btn-info"/>
+					<form action="">
+						<input type="button" onclick="showNewAcc()" value="Add Account" class="btn btn-info"/>
 					</form>
 				</div>
+				<div id="newAccDiv">
+					<hr class="divider">
+					<form action="/confirmationAccount" method="POST">
+					  <div class="form-group row">
+					    <label for="firstName" class="col-sm-5 col-form-label">First Name:</label>
+					    <div class="col-sm-7">
+					      <input type="text"  class="form-control" id="firstName" >
+					    </div>
+					  </div>
+					  <div class="form-group row">
+					    <label for="lastName" class="col-sm-5 col-form-label">Last Name:</label>
+					    <div class="col-sm-7">
+					      <input type="text" class="form-control" id="lastName" >
+					    </div>
+					  </div>
+					  <div class="form-group row">
+					    <label for="username" class="col-sm-5 col-form-label">Username:</label>
+					    <div class="col-sm-7">
+					      <input type="text"  class="form-control" id="username">
+					    </div>
+					  </div>
+					  <div class="form-group row">
+					    <label for="password" class="col-sm-5 col-form-label">Password:</label>
+					    <div class="col-sm-7">
+					      <input type="password" class="form-control" id="password" >
+					    </div>
+					  </div>
+					  <div class="form-group row">
+					    <label for="cPassword" class="col-sm-5 col-form-label">Confirm Password:</label>
+					    <div class="col-sm-7">
+					      <input type="password"  class="form-control" id="cPassword">
+					    </div>
+					  </div>
+					  <div class="form-group row">
+					    <label for="address" class="col-sm-5 col-form-label">Address:</label>
+					    <div class="col-sm-7">
+					      <input type="text" class="form-control" id="address" >
+					    </div>
+					  </div>
+					  <div id="bottom">
+					  	<label>City:</label>
+					  	<input type="text" class='form-control' id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+					  	<label>Zip:</label>
+					  	<input type="text" class='form-control' id="zip" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+					  	<label>State:</label>
+					  	<select class="form-control" id="state" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+					        <option>AL</option>
+					        <option>AK</option>
+					        <option>AZ</option>
+					        <option>AR</option>
+					        <option>CA</option>
+					        <option>CO</option>
+					        <option>CT</option>
+					        <option>DE</option>
+					        <option>FL</option>
+					        <option>GA</option>
+					        <option>HI</option>
+					        <option>ID</option>
+					        <option>IL</option>
+					        <option>IN</option>
+					        <option>IA</option>
+					        <option>KS</option>
+					        <option>KY</option>
+					        <option>LA</option>
+					        <option>ME</option>
+					        <option>MD</option>
+					        <option>MA</option>
+					        <option>MI</option>
+					        <option>MN</option>
+					        <option>MS</option>
+					        <option>MO</option>
+					        <option>MT</option>
+					        <option>NE</option>
+					        <option>NV</option>
+					        <option>NH</option>
+					        <option>NJ</option>
+					        <option>NM</option>
+					        <option>NY</option>
+					        <option>NC</option>
+					        <option>ND</option>
+					        <option>OH</option>
+					        <option>OK</option>
+					        <option>OR</option>
+					        <option>PA</option>
+					        <option>RI</option>
+					        <option>SC</option>
+					        <option>SD</option>
+					        <option>TN</option>
+					        <option>TX</option>
+					        <option>UT</option>
+					        <option>VT</option>
+					        <option>VA</option>
+					        <option>WA</option>
+					        <option>WV</option>
+					        <option>WI</option>
+					        <option>WY</option>
+				      	</select>
+				      
+						<div>
+							<input type="submit" value="Add" class="btn btn-primary btn-md" style="margin: 30px auto 0 auto;">
+						</div>
+					  </div>
+				</form>
+			</div>
 			</div>
 			<div id="log">
 				<h1>Transactions Log</h1>
@@ -289,6 +398,10 @@
 			console.log(mDiv);
 			document.getElementById(mDiv).style.display = 'block';
 			console.log(active);
+		}
+		
+		function showNewAcc(){
+			document.getElementById('newAccDiv').style.display = 'block';
 		}
 	</script>
 	</body>

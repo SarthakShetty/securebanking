@@ -155,9 +155,9 @@
 				        <option>WY</option>
 			      	</select>
 			      
-			      <div>
-			      	<input type="submit" value="Finish" class="btn btn-primary btn-md" style="margin: 30px auto 0 auto;">
-			      </div>
+					<div>
+						<input type="submit" value="Finish" class="btn btn-primary btn-md" style="margin: 30px auto 0 auto;">
+					</div>
 				  </div>
 				</form>
 			</div>

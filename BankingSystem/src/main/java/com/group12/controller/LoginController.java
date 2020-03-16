@@ -38,13 +38,22 @@ public class LoginController {
 		l.add("Beep Boop");
 		l.add("got em");
 		l.add("fork");
+		
+		List<String> b = new ArrayList<String>();
+		b.add("56.70");
+		b.add("40.30");
 		model.put("name", name);
 		model.put("password", password);
 		model.put("employeeID", "1234");
 		model.put("dob", "Today");
 		model.put("list", l);
 		model.put("accountList", l);
-		return "welcome";
+		model.put("accountBList", b);
+		/*
+		 * Need to check for the type of user they are and verify
+		 */
+		// return internalUserHome
+		return "externalUserHome";
 	}
 	
 	@RequestMapping(value="/registerOTP", method = RequestMethod.GET)
