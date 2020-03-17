@@ -2,7 +2,7 @@ package com.group12.utils;
 
 public class Constants {
 
-	public static String TRANSACTION_TYPE_CREATE_ACCOUNT = "Create";
+	public static char TRANSACTION_TYPE_CREATE_ACCOUNT = 'C';
 
 	public static String TRANSACTION_TYPE_TRANSFER = "Transfer";
 

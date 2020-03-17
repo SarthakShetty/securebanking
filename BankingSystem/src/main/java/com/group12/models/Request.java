@@ -10,7 +10,7 @@ public class Request {
     private int is_critical;
     private String approved_by;
     private char status;
-    private String type;
+    private char type;
     private Timestamp transaction_date;
     private Double amount;
     
@@ -50,10 +50,10 @@ public class Request {
 	public void setStatus(char status) {
 		this.status = status;
 	}
-	public String getType() {
+	public char getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(char type) {
 		this.type = type;
 	}
 	public Timestamp getTransaction_date() {
@@ -68,5 +68,5 @@ public class Request {
 	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
-
+	
 }

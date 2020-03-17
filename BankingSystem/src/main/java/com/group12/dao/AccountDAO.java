@@ -1,15 +1,18 @@
 package com.group12.dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import com.group12.models.Account;
@@ -22,59 +25,103 @@ public class AccountDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
+	// Retrieving The Account Details
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public List<Account> getAccountDetails(int customer_id) {
+		String get_accounts_for_a_customer = "select * from account where cust_id = " + customer_id
+				+ "and is_active = 1";
+		List<Account> accounts = new ArrayList<Account>();
+
+		try {
+			accounts = jdbcTemplate.query(get_accounts_for_a_customer, new RowMapper() {
+
+				public Account mapRow(ResultSet rs, int rowNum) throws SQLException {
+					Account account = new Account();
+					account.setAcc_id((int) rs.getObject("acc_id"));
+					account.setCurr_bal(rs.getDouble("curr_bal"));
+					return account;
+				}
+			});
+
+		} catch (DataAccessException ex) {
+			throw new RuntimeException(ex);
+		}
+
+		return accounts;
+	}
+
+	// Creates an Account for the customer
 	public void createAccount(Account account) {
-		String insert_sql = "Insert into Account(cust_id,acc_type,is_active,curr_bal) values(" + account.getCust_id()
-				+ ",'" + account.getAcc_type() + "'," + 1 + "," + account.getCurr_bal() + ");";
-		jdbcTemplate.update(insert_sql);
+
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		try {
+			String insert_sql = "Insert into Account(cust_id,acc_type,is_active,curr_bal) values("
+					+ account.getCust_id() + ",'" + account.getAcc_type() + "'," + 1 + "," + account.getCurr_bal()
+					+ ");";
+			jdbcTemplate.update(connection -> {
+				PreparedStatement ps = connection.prepareStatement(insert_sql, Statement.RETURN_GENERATED_KEYS);
+
+				return ps;
+			}, keyHolder);
+
+		} catch (DataAccessException ex) {
+
+			throw new RuntimeException(ex);
+		}
+
 		Request request = new Request();
 		request.setCust_id(account.getCust_id());
-		request.setFirst_acc_num(account.getAcc_id());
+		request.setFirst_acc_num(keyHolder.getKey().intValue());
 		request.setStatus(Constants.TRANSACTION_PENDING);
 		request.setType(Constants.TRANSACTION_TYPE_CREATE_ACCOUNT);
-		insert_sql = "Insert into Customer_Request(cust_id,acc_num_1,is_critical,status,type) values("
+		String insert_sql = "Insert into Customer_Request(cust_id,acc_num_1,is_critical,status,type) values("
 				+ request.getCust_id() + "," + request.getFirst_acc_num() + "," + 0 + ",'" + request.getStatus() + "','"
 				+ request.getType() + "'" + ");";
-		jdbcTemplate.update(insert_sql);
+
+		try {
+			jdbcTemplate.update(insert_sql);
+		} catch (DataAccessException ex) {
+			throw new RuntimeException(ex);
+		}
 	}
 
-	
-	public List<Account> getAccountDetails(int customer_id) {
-		String get_accounts_for_a_customer = "select * from account where cust_id = " + customer_id + "and is_active = 1";
-		List<Account> accounts = new ArrayList<Account>();
-		accounts = jdbcTemplate.query(get_accounts_for_a_customer, new RowMapper(){
-			 
-		    public Account mapRow(ResultSet rs, int rowNum)
-		            throws SQLException {
-		    	Account account = new Account();                    
-		        return account;
-		    }});
-		
-		return accounts;
-
-	}
-	
+	// Debit and credit operation for an account
 	public void creditOrDebit(Request request) {
-		String get_Ammount_present_In_Acc = "select curr_bal from Account where acc_id  = " + request.getFirst_acc_num()+ ";";
-		Double amount_left = jdbcTemplate.queryForObject(get_Ammount_present_In_Acc,Double.class);
+		String get_Ammount_present_In_Acc = "select curr_bal from Account where acc_id  = " + request.getFirst_acc_num()
+				+ ";";
 
+		Double amount_left = 0.0;
+		try {
+			amount_left = jdbcTemplate.queryForObject(get_Ammount_present_In_Acc, Double.class);
+		} catch (DataAccessException ex) {
+			throw new RuntimeException(ex);
+		}
 
 		if (Constants.TRANSACTION_TYPE_CREDIT.equals(request.getType())) {
-			
-			
+			amount_left += request.getAmount();
 
 		} else if (Constants.TRANSACTION_TYPE_DEBIT.equals(request.getType())) {
+			amount_left -= request.getAmount();
+		}
 
+		String updateAcc = "UPDATE Account SET curr_bal =" + amount_left + " where acc_id ="
+				+ request.getFirst_acc_num() + ";";
+
+		try {
+			jdbcTemplate.update(updateAcc);
+		} catch (DataAccessException ex) {
+			throw new RuntimeException(ex);
 		}
 
 	}
-	
+
+	// Creates a transfer and request amount request
 	public void transferFunds_create_request(Request request) {
-		
-		
+
 		if (Constants.TANSACTION_TYPE_REQUEST.equals(request.getType())) {
 			request.setStatus(Constants.TRANSACTION_CUSTOMER_ACCEPTANCE);
 		} else if (Constants.TRANSACTION_TYPE_TRANSFER.equals(request.getType())) {
-			if (request.getIs_critical() == 1 ) {
+			if (request.getIs_critical() == 1) {
 				request.setStatus(Constants.TRANSACTION_PENDING);
 			} else {
 				transferFundsFromAcc(request);
@@ -86,7 +133,11 @@ public class AccountDAO {
 				+ request.getCust_id() + "," + request.getFirst_acc_num() + "," + request.getSecond_acc_num() + ","
 				+ request.getIs_critical() + ",'" + request.getStatus() + "','" + request.getType() + "',"
 				+ request.getAmount() + ");";
-		jdbcTemplate.update(insert_sql);
+		try {
+			jdbcTemplate.update(insert_sql);
+		} catch (DataAccessException ex) {
+			throw new RuntimeException(ex);
+		}
 
 	}
 
@@ -94,23 +145,28 @@ public class AccountDAO {
 
 		String get_Ammount_present_In_Acc = "select curr_bal from Account where acc_id  = " + request.getFirst_acc_num()
 				+ ";";
-		Double amount_left = jdbcTemplate.queryForObject(get_Ammount_present_In_Acc,Double.class);
-		
+		Double amount_left = jdbcTemplate.queryForObject(get_Ammount_present_In_Acc, Double.class);
+
 		if (amount_left < request.getAmount()) {
 			request.setStatus(Constants.TRANSACTION_TERMINATED);
 		} else {
 			amount_left -= request.getAmount();
 			get_Ammount_present_In_Acc = "select curr_bal from Account where acc_id  = " + request.getSecond_acc_num()
 					+ ";";
-			
-			double sec_acc_num = jdbcTemplate.queryForObject(get_Ammount_present_In_Acc,Double.class);
+
+			double sec_acc_num = jdbcTemplate.queryForObject(get_Ammount_present_In_Acc, Double.class);
 			sec_acc_num += request.getAmount();
 			String update_first_Acc = "UPDATE Account SET curr_bal =" + amount_left + " where acc_id ="
 					+ request.getFirst_acc_num() + ";";
 			String update_sec_Acc = "UPDATE Account SET curr_bal =" + sec_acc_num + " where acc_id ="
 					+ request.getSecond_acc_num() + ";";
-			jdbcTemplate.update(update_first_Acc);
-			jdbcTemplate.update(update_sec_Acc);
+			try {
+
+				jdbcTemplate.update(update_first_Acc);
+				jdbcTemplate.update(update_sec_Acc);
+			} catch (DataAccessException ex) {
+				throw new RuntimeException(ex);
+			}
 			request.setStatus(Constants.TRANSACTION_COMPLETED);
 		}
 	}
