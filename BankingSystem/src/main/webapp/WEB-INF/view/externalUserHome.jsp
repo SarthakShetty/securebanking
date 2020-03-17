@@ -21,7 +21,7 @@
 			}
 			
 			
-			h1, h2, p, label{
+			h1, h2, h3, p, label{
 				color: white !important;
 			}
 			
@@ -100,13 +100,39 @@
 				margin: 0 10px 0 10px !important;			
 			}
 			
-			#transferB div, #credit div{
+			#transferB div, #credit div, #payment div{
 				display: inline-block;
 				margin: 0 100px 0 0;
 			}
 			
-			#credit input{
+			#credit input, #payment label, #payment select{
 				display: block;
+				margin: 10px 0 0 0;
+			}
+			
+			#payment button{
+				display: block;
+				margin: 10px 0 0 0;
+			}
+			
+			#nameInfo, #editInfo, #submitInfo{
+				display: inline-block;
+			}
+			
+			#editInfo{
+				position: absolute;
+				top: 0%;
+				right: 30%;
+			}
+			
+			#submitInfo{
+				position: absolute;
+				right: 0%;
+				top: 15%;
+			}
+			
+			#profile{
+				position: relative;
 			}
 			
 		</style>
@@ -228,75 +254,144 @@
 				</div>
 			</div>
 			<div id="payment">
-				<h1>Transactions Log</h1>
-				<hr class="divider"/>
-				<div id="listDiv" class="table-wrapper-scroll-y my-custom-scrollbar">
-					<table class="table table-bordered mb-0">
-						<thead>
-						  <tr>
-						    <th scope="col">Transactions</th>
-						    <th scope="col"></th>
-						  </tr>
-						</thead>
-						<tbody>
-						  <c:forEach items="${list}" var="tList">
-						  	<tr>
-						  		<td>
-						  			${tList}
-						  		</td>
-						  		<td><input type="checkbox" class="form-check-input"></td>
-						  	</tr>
-						  </c:forEach>
-						</tbody>
-					</table>
+				<div>
+					<h2>Requested From</h2>
+					<c:forEach items="${requestListNames}" var="nList">
+						<label>${nList}</label>
+					</c:forEach>
+				</div>
+				<div >
+					<h2>Amount</h2>
+					<c:forEach items="${requestListAmount}" var="aList">
+						<label>${aList}</label>
+					</c:forEach>
+				</div>
+				<div>
+					<h2>Account to Pay From</h2>
+					<c:forEach items="${requestListNames}" var="x">
+						<select>
+							<c:forEach items="${accountList}" var="aList">
+								<option>${aList}</option>
+							</c:forEach>
+						</select>
+					</c:forEach>
+				</div>
+				<div class="col" style="margin: 0 0 0 0 !important;">
+					<c:forEach items="${requestListNames}" var="x">
+						<button class="btn btn-sm btn-info">Make Payment</button>
+					</c:forEach>
 				</div>
 			</div>
 			<div id="profile">
-				<h1>Transactions Log</h1>
-				<hr class="divider"/>
-				<div id="listDiv" class="table-wrapper-scroll-y my-custom-scrollbar">
-					<table class="table table-bordered mb-0">
-						<thead>
-						  <tr>
-						    <th scope="col">Transactions</th>
-						    <th scope="col"></th>
-						  </tr>
-						</thead>
-						<tbody>
-						  <c:forEach items="${list}" var="tList">
-						  	<tr>
-						  		<td>
-						  			${tList}
-						  		</td>
-						  		<td><input type="checkbox" class="form-check-input"></td>
-						  	</tr>
-						  </c:forEach>
-						</tbody>
-					</table>
+				<div id="nameInfo">
+					<div>
+						<label style="display: inline-block;">Name:</label>
+						<label style="display: inline-block;">${name}</label>
+					</div>
+					<div>
+						<div style="display: block;"><h3>Accounts</h3></div>
+						<div style="display: inline-block;">
+							<c:forEach items="${accountList}" var="aList">
+								<label style="display: block;">${aList}</label>
+							</c:forEach>
+						</div>
+						
+					</div>
+				</div>
+				<div id="editInfo">
+					<div class="form-group row">
+				    <label for="phone" class="col-sm-5 col-form-label">Phone:</label>
+				    <div class="col-sm-7">
+				      <input type="text"  class="form-control" id="phone">
+				    </div>
+				  </div>
+				  <div class="form-group row">
+				    <label for="address" class="col-sm-5 col-form-label">Address:</label>
+				    <div class="col-sm-7">
+				      <input type="text" class="form-control" id="address" >
+				    </div>
+				  </div>
+				  <div id="bottom">
+				  	<label>City:</label>
+				  	<input type="text" class='form-control' id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+				  	<label>Zip:</label>
+				  	<input type="text" class='form-control' id="zip" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+				  	<label>State:</label>
+				  	<select class="form-control" id="state" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+				        <option>AL</option>
+				        <option>AK</option>
+				        <option>AZ</option>
+				        <option>AR</option>
+				        <option>CA</option>
+				        <option>CO</option>
+				        <option>CT</option>
+				        <option>DE</option>
+				        <option>FL</option>
+				        <option>GA</option>
+				        <option>HI</option>
+				        <option>ID</option>
+				        <option>IL</option>
+				        <option>IN</option>
+				        <option>IA</option>
+				        <option>KS</option>
+				        <option>KY</option>
+				        <option>LA</option>
+				        <option>ME</option>
+				        <option>MD</option>
+				        <option>MA</option>
+				        <option>MI</option>
+				        <option>MN</option>
+				        <option>MS</option>
+				        <option>MO</option>
+				        <option>MT</option>
+				        <option>NE</option>
+				        <option>NV</option>
+				        <option>NH</option>
+				        <option>NJ</option>
+				        <option>NM</option>
+				        <option>NY</option>
+				        <option>NC</option>
+				        <option>ND</option>
+				        <option>OH</option>
+				        <option>OK</option>
+				        <option>OR</option>
+				        <option>PA</option>
+				        <option>RI</option>
+				        <option>SC</option>
+				        <option>SD</option>
+				        <option>TN</option>
+				        <option>TX</option>
+				        <option>UT</option>
+				        <option>VT</option>
+				        <option>VA</option>
+				        <option>WA</option>
+				        <option>WV</option>
+				        <option>WI</option>
+				        <option>WY</option>
+			      	</select>
+			      
+				  </div>
+				</div>
+				<div id="submitInfo">
+					<button class="btn btn-md btn-info">Make Changes</button>
 				</div>
 			</div>
-			<div id="accMan">
-				<h1>Transactions Log</h1>
-				<hr class="divider"/>
-				<div id="listDiv" class="table-wrapper-scroll-y my-custom-scrollbar">
-					<table class="table table-bordered mb-0">
-						<thead>
-						  <tr>
-						    <th scope="col">Transactions</th>
-						    <th scope="col"></th>
-						  </tr>
-						</thead>
-						<tbody>
-						  <c:forEach items="${list}" var="tList">
-						  	<tr>
-						  		<td>
-						  			${tList}
-						  		</td>
-						  		<td><input type="checkbox" class="form-check-input"></td>
-						  	</tr>
-						  </c:forEach>
-						</tbody>
-					</table>
+			<div id="accMan" style="text-align: center;">
+				<div style="margin: 20px 0 0 0; display: inline-block;">
+					<label>
+				    	<input type="radio" name="custoptions" id="delacc" autocomplete="off"> Delete an Account
+				  	</label>
+				  	<label>
+				    	<input type="radio" name="custoptions" id="newacc" autocomplete="off"> Create a New Account
+				  	</label>
+				  	<select style="display: block; margin: 20px auto;">
+				  		<c:forEach items="${accountList}" var="aList">
+				  			<option>${aList}</option>
+				  		</c:forEach>
+				  	</select>
+				</div>
+				<div style="display: block;">
+					<button class="btn btn-md btn-info">Submit Request</button>
 				</div>
 			</div>
 		</div>

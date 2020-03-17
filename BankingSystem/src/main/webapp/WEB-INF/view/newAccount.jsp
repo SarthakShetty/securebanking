@@ -91,6 +91,12 @@
 				    </div>
 				  </div>
 				  <div class="form-group row">
+				    <label for="phone" class="col-sm-5 col-form-label">Phone:</label>
+				    <div class="col-sm-7">
+				      <input type="text"  class="form-control" id="phone">
+				    </div>
+				  </div>
+				  <div class="form-group row">
 				    <label for="address" class="col-sm-5 col-form-label">Address:</label>
 				    <div class="col-sm-7">
 				      <input type="text" class="form-control" id="address" >

@@ -42,6 +42,11 @@ public class LoginController {
 		List<String> b = new ArrayList<String>();
 		b.add("56.70");
 		b.add("40.30");
+		
+		List<String> reqListNames = new ArrayList<String>();
+		reqListNames.add("brandon");
+		reqListNames.add("stephen");
+		
 		model.put("name", name);
 		model.put("password", password);
 		model.put("employeeID", "1234");
@@ -49,6 +54,8 @@ public class LoginController {
 		model.put("list", l);
 		model.put("accountList", l);
 		model.put("accountBList", b);
+		model.put("requestListAmount", b);
+		model.put("requestListNames", reqListNames);
 		/*
 		 * Need to check for the type of user they are and verify
 		 */
