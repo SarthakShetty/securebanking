@@ -118,8 +118,8 @@ public class CustomerRequestDAO {
 
 		return requests;
 	}
-	//TODO
-	public List<Request> retrieveAllPendingTransactions(int customer_id, int is_critical) {
+
+	public List<Request> retrieveAllPendingRequests(int customer_id, int is_critical) {
 			
 		return null;
 		
