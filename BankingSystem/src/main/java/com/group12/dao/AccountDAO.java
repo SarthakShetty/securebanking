@@ -1,9 +1,7 @@
 package com.group12.dao;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +21,9 @@ public class AccountDAO {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private CustomerRequestDAO customerRequestDAO;
 
 	// Retrieving The Account Details
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -52,29 +52,15 @@ public class AccountDAO {
 
 	// Creates an Account for the customer
 	public void createAccount(Account account) {
-
-		KeyHolder keyHolder = new GeneratedKeyHolder();
-		try {
-			String insert_sql = "Insert into Account(cust_id,acc_type,is_active,curr_bal) values("
-					+ account.getCust_id() + ",'" + account.getAcc_type() + "'," + 1 + "," + account.getCurr_bal()
-					+ ");";
-			jdbcTemplate.update(connection -> {
-				PreparedStatement ps = connection.prepareStatement(insert_sql, Statement.RETURN_GENERATED_KEYS);
-
-				return ps;
-			}, keyHolder);
-
-		} catch (DataAccessException ex) {
-
-			throw new RuntimeException(ex);
-		}
-
+		String insert_sql = "Insert into Account(cust_id,acc_type,is_active,curr_bal) values(" + account.getCust_id()
+				+ ",'" + account.getAcc_type() + "'," + 1 + "," + account.getCurr_bal() + ");";
+		jdbcTemplate.update(insert_sql);
 		Request request = new Request();
 		request.setCust_id(account.getCust_id());
-		request.setFirst_acc_num(keyHolder.getKey().intValue());
+		request.setFirst_acc_num(account.getAcc_id());
 		request.setStatus(Constants.TRANSACTION_PENDING);
 		request.setType(Constants.TRANSACTION_TYPE_CREATE_ACCOUNT);
-		String insert_sql = "Insert into Customer_Request(cust_id,acc_num_1,is_critical,status,type) values("
+		insert_sql = "Insert into Customer_Request(cust_id,acc_num_1,is_critical,status,type) values("
 				+ request.getCust_id() + "," + request.getFirst_acc_num() + "," + 0 + ",'" + request.getStatus() + "','"
 				+ request.getType() + "'" + ");";
 
@@ -140,7 +126,14 @@ public class AccountDAO {
 		}
 
 	}
+	
+	// All The critical Transactions
+	public void autorizeTransferFundsByEmployee(Request request, String approved_by) {
+		transferFundsFromAcc(request);
+		customerRequestDAO.updateRequest(request.getReq_id(), request.getStatus(), approved_by);
+	}
 
+	// Does the Transfer Process Between The Accounts
 	private void transferFundsFromAcc(Request request) {
 
 		String get_Ammount_present_In_Acc = "select curr_bal from Account where acc_id  = " + request.getFirst_acc_num()
@@ -170,4 +163,55 @@ public class AccountDAO {
 			request.setStatus(Constants.TRANSACTION_COMPLETED);
 		}
 	}
+	
+	// deletes is inactivating the account
+	public void deleteAccount(int account_no, int customer_id, int is_active) {
+		
+		String construct_query = "update account set is_active = " + is_active + 
+				"where cust_id = " + customer_id + "and acc_id = " + account_no + ";";
+		
+		try {
+			jdbcTemplate.update(construct_query);
+		}
+		catch (DataAccessException ex) {
+			throw new RuntimeException(ex);
+		}
+		
+	}
+	
+	// Activates Account
+	public void activateAccount(int requestId, String approved_by) {
+
+		String retriveAccountNum = "select acc_num_1 from Customer_Request where req_id =+ " + requestId + ");";
+		int account_Num = -1;
+
+		try {
+			account_Num = jdbcTemplate.queryForObject(retriveAccountNum, Integer.class);
+
+		} catch (DataAccessException ex) {
+			throw new RuntimeException(ex);
+		}
+		if (account_Num != -1) {
+			String activateAccount = "update account set is_active =1 where acc_id = " + account_Num + ");";
+			try {
+				account_Num = jdbcTemplate.update(activateAccount);
+
+			} catch (DataAccessException ex) {
+				throw new RuntimeException(ex);
+			}
+		}
+
+		customerRequestDAO.updateRequest(requestId, Constants.TRANSACTION_COMPLETED, approved_by);
+
+	}
+	
+	private Request createRequestObjectCreateAccount(Account account, KeyHolder keyHolder) {
+		Request request = new Request();
+		request.setCust_id(account.getCust_id());
+		request.setFirst_acc_num(keyHolder.getKey().intValue());
+		request.setStatus(Constants.TRANSACTION_PENDING);
+		request.setType(Constants.TRANSACTION_TYPE_CREATE_ACCOUNT);
+		return request;
+	}
+	
 }

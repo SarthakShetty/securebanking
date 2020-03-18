@@ -99,10 +99,10 @@ public class CustomerDAO {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public Customer getCustomerProfileDetails(int customer_id) {
+	public Customer getCustomerProfileDetails(String userName) {
 
 		List<Customer> customer = (List<Customer>) new Customer();
-		String request_customer_information = "Select * from customer where cust_id = " + customer_id + ";";
+		String request_customer_information = "Select * from customer where cust_user_id = " + userName + ";";
 
 		try {
 			customer = jdbcTemplate.query(request_customer_information, new RowMapper() {
@@ -128,5 +128,6 @@ public class CustomerDAO {
 		}
 		return customer.get(0);
 	}
+	
 
 }

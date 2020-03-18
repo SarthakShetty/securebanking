@@ -25,8 +25,8 @@ DROP TABLE IF EXISTS `account`;
 CREATE TABLE `account` (
   `cust_id` int DEFAULT NULL ,
   `acc_id` int NOT NULL AUTO_INCREMENT,
-  `acc_type` char(1) DEFAULT NULL,
-  `is_active` char(1) DEFAULT NULL,
+  `acc_type` VARCHAR(20) DEFAULT NULL,
+  `is_active` int DEFAULT NULL,
   `curr_bal` double DEFAULT NULL,
   `account_creation_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`acc_id`),
@@ -119,10 +119,10 @@ CREATE TABLE `customer_request` (
   `cust_id` int DEFAULT NULL,
   `acc_num_1` int DEFAULT NULL,
   `acc_num_2` int DEFAULT NULL,
-  `is_critical` char(1) DEFAULT NULL,
-  `approved_by` int DEFAULT NULL,
+  `is_critical` int DEFAULT NULL,
+  `approved_by` VARCHAR(50) DEFAULT NULL,
   `status` char(1) DEFAULT NULL,
-  `type` char(1) DEFAULT NULL,
+  `type` VARCHAR(50) DEFAULT NULL,
   `transaction_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `amount` double DEFAULT NULL,
   KEY `cust_id` (`cust_id`),
@@ -131,7 +131,6 @@ CREATE TABLE `customer_request` (
   KEY `acc_num_2` (`acc_num_2`),
   PRIMARY KEY (`req_id`),
   CONSTRAINT `customer_request_ibfk_1` FOREIGN KEY (`cust_id`) REFERENCES `customer` (`cust_id`),
-  CONSTRAINT `customer_request_ibfk_2` FOREIGN KEY (`approved_by`) REFERENCES `employee` (`emp_id`),
   CONSTRAINT `customer_request_ibfk_3` FOREIGN KEY (`acc_num_1`) REFERENCES `account` (`acc_id`),
   CONSTRAINT `customer_request_ibfk_4` FOREIGN KEY (`acc_num_2`) REFERENCES `account` (`acc_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -155,7 +154,7 @@ DROP TABLE IF EXISTS `employee`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `employee` (
   `emp_id` int NOT NULL AUTO_INCREMENT,
-  `emp_user_id` varchar(50) DEFAULT NULL,
+  `emp_user_id` varchar(50) NOT NULL,
   `emp_password` varchar(50) DEFAULT NULL,
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
@@ -163,7 +162,7 @@ CREATE TABLE `employee` (
   `address` varchar(150) DEFAULT NULL,
   `mobile` varchar(20) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
-  `type` char(1) DEFAULT NULL,
+  `type` INT DEFAULT NULL,
   PRIMARY KEY (`emp_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

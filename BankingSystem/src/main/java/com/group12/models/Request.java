@@ -4,8 +4,8 @@ import java.sql.Timestamp;
 
 public class Request {
 	
-    private int req_id;
-    private int cust_id;
+	private int req_id;
+	private int cust_id;
     private int first_acc_num;
     private int second_acc_num;
     private int is_critical;
