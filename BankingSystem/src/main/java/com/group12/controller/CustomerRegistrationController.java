@@ -50,7 +50,7 @@ public class CustomerRegistrationController {
 	private Customer createCustomer(HttpServletRequest request) {
 		Customer customer  = new Customer();
 		customer.setAddress(request.getParameter("address"));
-		customer.setAge(21);
+		customer.setAge(Integer.parseInt(request.getParameter("age")));
 		customer.setCity(request.getParameter("city"));
 		customer.setEmail(request.getParameter("email"));
 		customer.setFirstName(request.getParameter("firstName"));
@@ -59,7 +59,7 @@ public class CustomerRegistrationController {
 		customer.setPassword(request.getParameter("password"));
 		customer.setUsername(request.getParameter("username"));
 		customer.setZipCode(request.getParameter("zip"));
-		customer.setType('I');
+		customer.setType(request.getParameter(request.getParameter("type")).charAt(0));
 		customer.setState(request.getParameter("state"));
 		
 		return customer;

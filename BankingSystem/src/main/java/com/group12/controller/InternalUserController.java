@@ -18,7 +18,7 @@ public class InternalUserController {
 	
 	Logger log = LoggerFactory.getLogger(AccountController.class);
 	
-	@RequestMapping(value = "/InternalUser/profile")
+	@RequestMapping(value = "/internalUser/profile")
 	public ModelAndView getInternalUserDetails(ModelAndView model, HttpServletRequest request) {
 		// TODO logging messages 
 		String userName = request.getParameter("user_id");

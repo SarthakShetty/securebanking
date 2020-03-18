@@ -36,14 +36,11 @@ public class AccountController {
 	public ModelAndView createNewAccount(ModelAndView model, HttpServletRequest request) {
 		log.info(request.getParameter("acc_type") + "request" + request.toString());
 		Account account = new Account();
-//		account.setAcc_type(request.getParameter("acc_type").charAt(0));
-//		account.setCurr_bal(Double.parseDouble(request.getParameter("balance")));
-//		account.setCust_id(Integer.parseInt(request.getParameter("cust_id")));
-//		accountDAO.createAccount(account);
-		account.setAcc_type('s');
-		account.setCurr_bal(100);
-		account.setCust_id(1);
+		account.setAcc_type(request.getParameter("acc_type").charAt(0));
+		account.setCurr_bal(Double.parseDouble(request.getParameter("balance")));
+		account.setCust_id(Integer.parseInt(request.getParameter("cust_id")));
 		accountDAO.createAccount(account);
+
 		return model;
 	}
 	
@@ -81,7 +78,6 @@ public class AccountController {
 //		model.addObject("message",message);
 //		return model;
 		
-		
 		return model;
 	}
 	
@@ -103,12 +99,7 @@ public class AccountController {
 		}
 			
 		String typeOftransfer  = request.getParameter("type_transfer");
-		Request customerRequest = new Request();
-		customerRequest.setAmount(amount);
-		customerRequest.setFirst_acc_num(fromAccountNumber);
-		customerRequest.setSecond_acc_num(toAccountNumber);
-		customerRequest.setType(typeOftransfer);
-		customerRequest.setIs_critical(isCritical);
+		Request  customerRequest = createRequest(amount, fromAccountNumber, toAccountNumber, typeOftransfer);
 		accountDAO.transferFunds_create_request(customerRequest);
 		// TODO we need to change the status from char since it is more readable for users to have success
 		// TODO we need to add object to the model depending upon response
@@ -152,5 +143,26 @@ public class AccountController {
 		return model;
 	}
 	
+	@RequestMapping(value ="/customer/authorizePayment", method = RequestMethod.POST)
+	public ModelAndView authorizePayment(ModelAndView model, HttpServletRequest request, HttpSession session) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();		
+		String userName = authentication.getName();
+		double amount = Double.parseDouble(request.getParameter("amount"));
+		int fromAccountNumber = Integer.parseInt(request.getParameter("from_acc"));
+		int toAccountNumber = Integer.parseInt(request.getParameter("to_acc"));
+		String typeOftransfer  = request.getParameter("type_transfer");
+		Request customerRequest = createRequest(amount, fromAccountNumber, toAccountNumber, typeOftransfer);
+		customerDAO.authorizeRequest(customerRequest, userName, fromAccountNumber);
+		// TODO need to check if make payment actually updates the transactions
+		return model;
+	}
 	
+	private Request createRequest(double amount, int fromAccountNumber, int toAccountNumber, String typeOftransfer) {
+		Request customerRequest = new Request();
+		customerRequest.setAmount(amount);
+		customerRequest.setFirst_acc_num(fromAccountNumber);
+		customerRequest.setSecond_acc_num(toAccountNumber);
+		customerRequest.setType(typeOftransfer);
+		return customerRequest;
+		}
 }
