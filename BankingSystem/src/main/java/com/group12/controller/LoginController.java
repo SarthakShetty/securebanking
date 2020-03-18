@@ -63,42 +63,5 @@ public class LoginController {
 		return "newAccount";
 	}
 	
-	@RequestMapping(value="/confirmationAccount", method = RequestMethod.POST)
-	public ModelAndView showConfirmationAccount(ModelAndView model,HttpServletRequest request) {
-			logger.info(request.getParameter("firstName"));
-			model.setViewName("confirmationAccount");
-			if(customerDAO.checkIfMobileNumExists(request.getParameter("mobile"))) {
-				return model;
-			}
-			if(customerDAO.checkIfEmailExists(request.getParameter("email"))) {
-				return model;
-			}
-			if(customerDAO.checkIfUserNameExists(request.getParameter("username"))) {
-				return model;
-			}
-			Customer customer  = createCustomer(request);
-			customerDAO.insertCutomerData(customer);
-			
-				return model;
-			
-}
-
-	private Customer createCustomer(HttpServletRequest request) {
-		Customer customer  = new Customer();
-		customer.setAddress(request.getParameter("address"));
-		customer.setAge(21);
-		customer.setCity(request.getParameter("city"));
-		customer.setEmail(request.getParameter("email"));
-		customer.setFirstName(request.getParameter("firstName"));
-		customer.setMobile(request.getParameter("mobile"));
-		customer.setLastName(request.getParameter("lastName"));
-		customer.setPassword(request.getParameter("password"));
-		customer.setUsername(request.getParameter("username"));
-		customer.setZipCode(request.getParameter("zip"));
-		customer.setType('I');
-		customer.setState(request.getParameter("state"));
-		
-		return customer;
-	}
-
+	
 }
