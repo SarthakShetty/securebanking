@@ -154,8 +154,9 @@ public class CustomerDAO {
 	public List<Request> retrieveAllPaymentRequestForCust(int custId){
 	
 		List<Request> allRequests = new ArrayList<>();
-		allRequests = customerReqDAO.retriveAllCustomerspaymentReqs(custId);
+		allRequests = customerReqDAO.retrieveAllCustomerspaymentReqs(custId);
 		return allRequests;
 	}
+	
 
 }

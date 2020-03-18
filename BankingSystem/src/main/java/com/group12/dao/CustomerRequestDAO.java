@@ -68,7 +68,7 @@ public class CustomerRequestDAO {
 		}
 	}
 
-	public void insertIntoRequestTableForTransafer(Request request) {
+	public void insertIntoRequestTableForTransfer(Request request) {
 		String insert_sql = "Insert into Customer_Request(cust_id,acc_num_1,acc_num_2,is_critical,status,type,Amount) values("
 				+ request.getCust_id() + "," + request.getFirst_acc_num() + "," + request.getSecond_acc_num() + ","
 				+ request.getIs_critical() + ",'" + request.getStatus() + "','" + request.getType() + "',"
