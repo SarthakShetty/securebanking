@@ -76,7 +76,7 @@ public class AccountDAO {
 	}
 
 	// Activates Account
-	public void activateAccount(int requestId) {
+	public void activateAccount(int requestId, String approved_by) {
 
 		String retriveAccountNum = "select acc_num_1 from Customer_Request where req_id =+ " + requestId + ");";
 		int account_Num = -1;
@@ -97,6 +97,7 @@ public class AccountDAO {
 			}
 		}
 
+		customerRequestDAO.updateRequest(requestId, Constants.TRANSACTION_COMPLETED, approved_by);
 
 	}
 
