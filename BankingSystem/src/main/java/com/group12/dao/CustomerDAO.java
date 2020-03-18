@@ -159,19 +159,4 @@ public class CustomerDAO {
 	}
 	
 
-	//Added register method for registration purpose
-	public void register(Customer customer){
-		String insert = "insert into customer values(?,?,?,?,?,?,?,?,?,?,?,?)";
-		try {
-		jdbcTemplate.update(insert,
-				new Object[] { customer.getUsername(), customer.getPassword(), customer.getFirstName(),
-						customer.getLastName(), customer.getAge(), customer.getEmail(), customer.getMobile(),
-						customer.getAddress(), customer.getState(), customer.getCity(), customer.getZipCode(),customer.getType() });
-		System.out.println("In register class" + insert);
-		}catch (DataAccessException ex) {
-			throw new RuntimeException(ex);
-		}
-	}
-	
-
 }
