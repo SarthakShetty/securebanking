@@ -79,15 +79,26 @@ public class CustomerRequestDAO {
 			throw new RuntimeException(ex);
 		}
 	}
-
-
+	
+	public void insertIntoRequestTableForCustReq(Request request) {
+		String insert_sql = "Insert into Customer_Request(cust_id,acc_num_2,is_critical,status,type,Amount) values("
+				+ request.getCust_id() + "," + request.getSecond_acc_num() + ","
+				+ request.getIs_critical() + ",'" + request.getStatus() + "','" + request.getType() + "',"
+				+ request.getAmount() + ");";
+		try {
+			jdbcTemplate.update(insert_sql);
+		} catch (DataAccessException ex) {
+			throw new RuntimeException(ex);
+		}
+	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List<Request> retrieveAllCustomerspaymentReqs(int custId) {
 		List<Request> requests = new ArrayList<>();
 		String paymentRequests = "Select * from Customer_Request where cust_id = " + custId + "and status =" + "'"
-				+ Constants.TRANSACTION_CUSTOMER_ACCEPTANCE + "'" + "and type =" +"'"+Constants.TANSACTION_TYPE_REQUEST+"';";
-		
+				+ Constants.TRANSACTION_CUSTOMER_ACCEPTANCE + "'" + "and type =" + "'"
+				+ Constants.TANSACTION_TYPE_REQUEST + "';";
+
 		try {
 			requests = jdbcTemplate.query(paymentRequests, new RowMapper() {
 
@@ -104,11 +115,10 @@ public class CustomerRequestDAO {
 		} catch (DataAccessException ex) {
 			throw new RuntimeException(ex);
 		}
-		
-		
+
 		return requests;
 	}
-
+	//TODO
 	public List<Request> retrieveAllPendingTransactions(int customer_id, int is_critical) {
 			
 		return null;
