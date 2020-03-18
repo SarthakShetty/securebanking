@@ -24,7 +24,7 @@ public class AccountDAO {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
+
 	@Autowired
 	private CustomerRequestDAO customerRequestDAO;
 
@@ -55,6 +55,7 @@ public class AccountDAO {
 
 	// Creates an Account for the customer
 	public void createAccount(Account account) {
+
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		try {
 			String insert_sql = "Insert into Account(cust_id,acc_type,is_active,curr_bal) values("
@@ -74,113 +75,6 @@ public class AccountDAO {
 		customerRequestDAO.insertIntoCustomerReqForAccountCreation(request);
 	}
 
-	// Debit and credit operation for an account
-	public void creditOrDebit(Request request) {
-		String get_Amount_present_In_Acc = "select curr_bal from Account where acc_id  = " + request.getFirst_acc_num()
-		+ ";";
-		boolean canBeAdded = false;
-		Double amount_left = 0.0;
-		try {
-			amount_left = jdbcTemplate.queryForObject(get_Amount_present_In_Acc, Double.class);
-		} catch (DataAccessException ex) {
-			throw new RuntimeException(ex);
-		}
-		
-		if (Constants.TRANSACTION_TYPE_CREDIT.equals(request.getType())) {
-			amount_left += request.getAmount();
-			canBeAdded = true;
-			request.setStatus('C');
-		} else if (Constants.TRANSACTION_TYPE_DEBIT.equals(request.getType()) && amount_left >= request.getAmount()) {
-			amount_left -= request.getAmount();
-			canBeAdded = true;
-			request.setStatus(Constants.TRANSACTION_COMPLETED);
-		}
-		if (canBeAdded) {
-			String updateAcc = "UPDATE Account SET curr_bal =" + amount_left + " where acc_id ="
-					+ request.getFirst_acc_num() + ";";
-		
-			try {
-				jdbcTemplate.update(updateAcc);
-			} catch (DataAccessException ex) {
-				throw new RuntimeException(ex);
-			}
-		} else {
-			request.setStatus(Constants.TRANSACTION_TERMINATED);
-		}
-		customerRequestDAO.insertIntoRequestForCreditOrDebit(request);
-		
-	}
-
-	// Creates a transfer and request amount request
-	public void transferFunds_create_request(Request request) {
-
-		if (Constants.TANSACTION_TYPE_REQUEST.equals(request.getType())) {
-			request.setStatus(Constants.TRANSACTION_CUSTOMER_ACCEPTANCE);
-		} else if (Constants.TRANSACTION_TYPE_TRANSFER.equals(request.getType())) {
-			if (request.getIs_critical() == 1) {
-				request.setStatus(Constants.TRANSACTION_PENDING);
-			} else {
-				transferFundsFromAcc(request);
-				request.setStatus(Constants.TRANSACTION_COMPLETED);
-			}
-		}
-
-		customerRequestDAO.insertIntoRequestTableForTransfer(request);
-
-	}
-	
-	// All The critical Transactions
-	public void autorizeTransferFundsByEmployee(Request request, String approved_by) {
-		transferFundsFromAcc(request);
-		customerRequestDAO.updateRequest(request.getReq_id(), request.getStatus(), approved_by);
-	}
-
-	// Does the Transfer Process Between The Accounts
-	public void transferFundsFromAcc(Request request) {
-
-		String get_Ammount_present_In_Acc = "select curr_bal from Account where acc_id  = " + request.getFirst_acc_num()
-		+ ";";
-		Double amount_left = jdbcTemplate.queryForObject(get_Ammount_present_In_Acc, Double.class);
-		
-		if (amount_left < request.getAmount()) {
-			request.setStatus(Constants.TRANSACTION_TERMINATED);
-		} else {
-			amount_left -= request.getAmount();
-			get_Ammount_present_In_Acc = "select curr_bal from Account where acc_id  = " + request.getSecond_acc_num()
-					+ ";";
-		
-			double sec_acc_num = jdbcTemplate.queryForObject(get_Ammount_present_In_Acc, Double.class);
-			sec_acc_num += request.getAmount();
-			String update_first_Acc = "UPDATE Account SET curr_bal =" + amount_left + " where acc_id ="
-					+ request.getFirst_acc_num() + ";";
-			String update_sec_Acc = "UPDATE Account SET curr_bal =" + sec_acc_num + " where acc_id ="
-					+ request.getSecond_acc_num() + ";";
-			try {
-		
-				jdbcTemplate.update(update_first_Acc);
-				jdbcTemplate.update(update_sec_Acc);
-			} catch (DataAccessException ex) {
-				throw new RuntimeException(ex);
-			}
-			request.setStatus(Constants.TRANSACTION_COMPLETED);
-		}
-	}
-	
-	// deletes is inactivating the account
-	public void deleteAccount(int account_no, int customer_id, int is_active) {
-		
-		String construct_query = "update account set is_active = " + is_active + 
-				"where cust_id = " + customer_id + "and acc_id = " + account_no + ";";
-		
-		try {
-			jdbcTemplate.update(construct_query);
-		}
-		catch (DataAccessException ex) {
-			throw new RuntimeException(ex);
-		}
-		
-	}
-	
 	// Activates Account
 	public void activateAccount(int requestId, String approved_by) {
 
@@ -206,7 +100,7 @@ public class AccountDAO {
 		customerRequestDAO.updateRequest(requestId, Constants.TRANSACTION_COMPLETED, approved_by);
 
 	}
-	
+
 	private Request createRequestObjectCreateAccount(Account account, KeyHolder keyHolder) {
 		Request request = new Request();
 		request.setCust_id(account.getCust_id());
@@ -216,4 +110,117 @@ public class AccountDAO {
 		return request;
 	}
 	
+	
+	public void createCreditOrDebitReq(Request request) {
+		
+		if(request.getAmount() > 1000) {
+			request.setIs_critical(1);
+		} else {
+			request.setIs_critical(0);
+		}
+		
+		request.setStatus(Constants.TRANSACTION_PENDING);
+		customerRequestDAO.insertIntoRequestForCreditOrDebit(request);
+	}
+	
+
+	// Debit and credit operation for an account
+	public void creditOrDebit(Request request) {
+		String get_Amount_present_In_Acc = "select curr_bal from Account where acc_id  = " + request.getFirst_acc_num()
+				+ ";";
+		boolean canBeAdded = false;
+		Double amount_left = 0.0;
+		try {
+			amount_left = jdbcTemplate.queryForObject(get_Amount_present_In_Acc, Double.class);
+		} catch (DataAccessException ex) {
+			throw new RuntimeException(ex);
+		}
+
+		if (Constants.TRANSACTION_TYPE_CREDIT.equals(request.getType())) {
+			amount_left += request.getAmount();
+			canBeAdded = true;
+			request.setStatus('C');
+		} else if (Constants.TRANSACTION_TYPE_DEBIT.equals(request.getType()) && amount_left >= request.getAmount()) {
+			amount_left -= request.getAmount();
+			canBeAdded = true;
+			request.setStatus(Constants.TRANSACTION_COMPLETED);
+		}
+		if (canBeAdded) {
+			String updateAcc = "UPDATE Account SET curr_bal =" + amount_left + " where acc_id ="
+					+ request.getFirst_acc_num() + ";";
+
+			try {
+				jdbcTemplate.update(updateAcc);
+			} catch (DataAccessException ex) {
+				throw new RuntimeException(ex);
+			}
+		} else {
+			request.setStatus(Constants.TRANSACTION_TERMINATED);
+		}
+		
+		
+	}
+
+	// Creates a transfer and request amount request
+	public void transferFunds_create_request(Request request) {
+
+		if (Constants.TANSACTION_TYPE_REQUEST.equals(request.getType())) {
+			request.setStatus(Constants.TRANSACTION_CUSTOMER_ACCEPTANCE);
+			customerRequestDAO.insertIntoRequestTableForCustReq(request);
+		} else if (Constants.TRANSACTION_TYPE_TRANSFER.equals(request.getType())) {
+			if (request.getIs_critical() == 1) {
+				request.setStatus(Constants.TRANSACTION_PENDING);
+			} else {
+				//transferFundsFromAcc(request);
+				request.setStatus(Constants.TRANSACTION_PENDING);
+			}
+			customerRequestDAO.insertIntoRequestTableForTransfer(request);
+		}
+	}
+
+	// Does the Transfer Process Between The Accounts
+	public void transferFundsFromAcc(Request request) {
+
+		String get_Ammount_present_In_Acc = "select curr_bal from Account where acc_id  = " + request.getFirst_acc_num()
+				+ ";";
+		Double amount_left = jdbcTemplate.queryForObject(get_Ammount_present_In_Acc, Double.class);
+
+		if (amount_left < request.getAmount()) {
+			request.setStatus(Constants.TRANSACTION_TERMINATED);
+		} else {
+			amount_left -= request.getAmount();
+			get_Ammount_present_In_Acc = "select curr_bal from Account where acc_id  = " + request.getSecond_acc_num()
+					+ ";";
+
+			double sec_acc_num = jdbcTemplate.queryForObject(get_Ammount_present_In_Acc, Double.class);
+			sec_acc_num += request.getAmount();
+			String update_first_Acc = "UPDATE Account SET curr_bal =" + amount_left + " where acc_id ="
+					+ request.getFirst_acc_num() + ";";
+			String update_sec_Acc = "UPDATE Account SET curr_bal =" + sec_acc_num + " where acc_id ="
+					+ request.getSecond_acc_num() + ";";
+			try {
+
+				jdbcTemplate.update(update_first_Acc);
+				jdbcTemplate.update(update_sec_Acc);
+			} catch (DataAccessException ex) {
+				throw new RuntimeException(ex);
+			}
+			request.setStatus(Constants.TRANSACTION_COMPLETED);
+		}
+	}
+	
+	// deletes is inactivating the account
+	public void deleteAccount(int account_no, int customer_id, int is_active) {
+		
+		String construct_query = "update account set is_active = " + is_active + 
+				"where cust_id = " + customer_id + "and acc_id = " + account_no + ";";
+		
+		try {
+			jdbcTemplate.update(construct_query);
+		}
+		catch (DataAccessException ex) {
+			throw new RuntimeException(ex);
+		}
+		
+	}
 }
