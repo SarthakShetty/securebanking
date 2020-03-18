@@ -4,13 +4,14 @@ import java.sql.Timestamp;
 
 public class Request {
 	
-	private int cust_id;
+    private int req_id;
+    private int cust_id;
     private int first_acc_num;
     private int second_acc_num;
     private int is_critical;
     private String approved_by;
     private char status;
-    private char type;
+    private String type;
     private Timestamp transaction_date;
     private Double amount;
     
@@ -50,10 +51,10 @@ public class Request {
 	public void setStatus(char status) {
 		this.status = status;
 	}
-	public char getType() {
+	public String getType() {
 		return type;
 	}
-	public void setType(char type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 	public Timestamp getTransaction_date() {
@@ -68,5 +69,11 @@ public class Request {
 	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
-	
+	public int getReq_id() {
+		return req_id;
+	}
+	public void setReq_id(int req_id) {
+		this.req_id = req_id;
+	}
+
 }
