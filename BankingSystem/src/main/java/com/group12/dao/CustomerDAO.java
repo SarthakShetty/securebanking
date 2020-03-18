@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -19,12 +20,20 @@ import org.springframework.stereotype.Component;
 
 import com.group12.controller.LoginController;
 import com.group12.models.Customer;
+import com.group12.models.Request;
+import com.group12.utils.Constants;
 
 @Component
 public class CustomerDAO {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private CustomerRequestDAO customerReqDAO;
+	
+	@Autowired
+	private AccountDAO accountDAO;
 	
 	Logger logger = LoggerFactory.getLogger(CustomerDAO.class);
 
@@ -129,5 +138,24 @@ public class CustomerDAO {
 		return customer.get(0);
 	}
 	
+	public void authorizeRequest(Request request, String customer_userId, int acc_num) {
+
+		if (request.getIs_critical() == 1) {
+			customerReqDAO.updateRequest(request.getReq_id(), Constants.TRANSACTION_PENDING, customer_userId);
+		} else {
+			request.setFirst_acc_num(acc_num);
+			accountDAO.transferFundsFromAcc(request);
+			customerReqDAO.updateRequest(request.getReq_id(), request.getStatus(), customer_userId);
+		}
+
+	}
+	
+	
+	public List<Request> retrieveAllPaymentRequestForCust(int custId){
+	
+		List<Request> allRequests = new ArrayList<>();
+		allRequests = customerReqDAO.retriveAllCustomerspaymentReqs(custId);
+		return allRequests;
+	}
 
 }

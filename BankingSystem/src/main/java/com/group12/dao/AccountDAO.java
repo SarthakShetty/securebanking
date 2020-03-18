@@ -1,7 +1,9 @@
 package com.group12.dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
@@ -52,53 +55,60 @@ public class AccountDAO {
 
 	// Creates an Account for the customer
 	public void createAccount(Account account) {
-		String insert_sql = "Insert into Account(cust_id,acc_type,is_active,curr_bal) values(" + account.getCust_id()
-				+ ",'" + account.getAcc_type() + "'," + 1 + "," + account.getCurr_bal() + ");";
-		jdbcTemplate.update(insert_sql);
-		Request request = new Request();
-		request.setCust_id(account.getCust_id());
-		request.setFirst_acc_num(account.getAcc_id());
-		request.setStatus(Constants.TRANSACTION_PENDING);
-		request.setType(Constants.TRANSACTION_TYPE_CREATE_ACCOUNT);
-		insert_sql = "Insert into Customer_Request(cust_id,acc_num_1,is_critical,status,type) values("
-				+ request.getCust_id() + "," + request.getFirst_acc_num() + "," + 0 + ",'" + request.getStatus() + "','"
-				+ request.getType() + "'" + ");";
-
+		KeyHolder keyHolder = new GeneratedKeyHolder();
 		try {
-			jdbcTemplate.update(insert_sql);
+			String insert_sql = "Insert into Account(cust_id,acc_type,is_active,curr_bal) values("
+					+ account.getCust_id() + ",'" + account.getAcc_type() + "'," + 0 + "," + account.getCurr_bal()
+					+ ");";
+			jdbcTemplate.update(connection -> {
+				PreparedStatement ps = connection.prepareStatement(insert_sql, Statement.RETURN_GENERATED_KEYS);
+
+				return ps;
+			}, keyHolder);
+
 		} catch (DataAccessException ex) {
+
 			throw new RuntimeException(ex);
 		}
+		Request request = createRequestObjectCreateAccount(account, keyHolder);
+		customerRequestDAO.insertIntoCustomerReqForAccountCreation(request);
 	}
 
 	// Debit and credit operation for an account
 	public void creditOrDebit(Request request) {
-		String get_Ammount_present_In_Acc = "select curr_bal from Account where acc_id  = " + request.getFirst_acc_num()
-				+ ";";
-
+		String get_Amount_present_In_Acc = "select curr_bal from Account where acc_id  = " + request.getFirst_acc_num()
+		+ ";";
+		boolean canBeAdded = false;
 		Double amount_left = 0.0;
 		try {
-			amount_left = jdbcTemplate.queryForObject(get_Ammount_present_In_Acc, Double.class);
+			amount_left = jdbcTemplate.queryForObject(get_Amount_present_In_Acc, Double.class);
 		} catch (DataAccessException ex) {
 			throw new RuntimeException(ex);
 		}
-
+		
 		if (Constants.TRANSACTION_TYPE_CREDIT.equals(request.getType())) {
 			amount_left += request.getAmount();
-
-		} else if (Constants.TRANSACTION_TYPE_DEBIT.equals(request.getType())) {
+			canBeAdded = true;
+			request.setStatus('C');
+		} else if (Constants.TRANSACTION_TYPE_DEBIT.equals(request.getType()) && amount_left >= request.getAmount()) {
 			amount_left -= request.getAmount();
+			canBeAdded = true;
+			request.setStatus(Constants.TRANSACTION_COMPLETED);
 		}
-
-		String updateAcc = "UPDATE Account SET curr_bal =" + amount_left + " where acc_id ="
-				+ request.getFirst_acc_num() + ";";
-
-		try {
-			jdbcTemplate.update(updateAcc);
-		} catch (DataAccessException ex) {
-			throw new RuntimeException(ex);
+		if (canBeAdded) {
+			String updateAcc = "UPDATE Account SET curr_bal =" + amount_left + " where acc_id ="
+					+ request.getFirst_acc_num() + ";";
+		
+			try {
+				jdbcTemplate.update(updateAcc);
+			} catch (DataAccessException ex) {
+				throw new RuntimeException(ex);
+			}
+		} else {
+			request.setStatus(Constants.TRANSACTION_TERMINATED);
 		}
-
+		customerRequestDAO.insertIntoRequestForCreditOrDebit(request);
+		
 	}
 
 	// Creates a transfer and request amount request
@@ -115,15 +125,7 @@ public class AccountDAO {
 			}
 		}
 
-		String insert_sql = "Insert into Customer_Request(cust_id,acc_num_1,acc_num_2,is_critical,status,type,Amount) values("
-				+ request.getCust_id() + "," + request.getFirst_acc_num() + "," + request.getSecond_acc_num() + ","
-				+ request.getIs_critical() + ",'" + request.getStatus() + "','" + request.getType() + "',"
-				+ request.getAmount() + ");";
-		try {
-			jdbcTemplate.update(insert_sql);
-		} catch (DataAccessException ex) {
-			throw new RuntimeException(ex);
-		}
+		customerRequestDAO.insertIntoRequestTableForTransfer(request);
 
 	}
 	
@@ -134,19 +136,19 @@ public class AccountDAO {
 	}
 
 	// Does the Transfer Process Between The Accounts
-	private void transferFundsFromAcc(Request request) {
+	public void transferFundsFromAcc(Request request) {
 
 		String get_Ammount_present_In_Acc = "select curr_bal from Account where acc_id  = " + request.getFirst_acc_num()
-				+ ";";
+		+ ";";
 		Double amount_left = jdbcTemplate.queryForObject(get_Ammount_present_In_Acc, Double.class);
-
+		
 		if (amount_left < request.getAmount()) {
 			request.setStatus(Constants.TRANSACTION_TERMINATED);
 		} else {
 			amount_left -= request.getAmount();
 			get_Ammount_present_In_Acc = "select curr_bal from Account where acc_id  = " + request.getSecond_acc_num()
 					+ ";";
-
+		
 			double sec_acc_num = jdbcTemplate.queryForObject(get_Ammount_present_In_Acc, Double.class);
 			sec_acc_num += request.getAmount();
 			String update_first_Acc = "UPDATE Account SET curr_bal =" + amount_left + " where acc_id ="
@@ -154,7 +156,7 @@ public class AccountDAO {
 			String update_sec_Acc = "UPDATE Account SET curr_bal =" + sec_acc_num + " where acc_id ="
 					+ request.getSecond_acc_num() + ";";
 			try {
-
+		
 				jdbcTemplate.update(update_first_Acc);
 				jdbcTemplate.update(update_sec_Acc);
 			} catch (DataAccessException ex) {
