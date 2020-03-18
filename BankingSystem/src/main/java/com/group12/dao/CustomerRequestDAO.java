@@ -66,7 +66,7 @@ public class CustomerRequestDAO {
 		}
 	}
 
-	public void insertIntoRequestTableForTransfer(Request request) {
+	public void insertIntoRequestTableForTransafer(Request request) {
 		String insert_sql = "Insert into Customer_Request(cust_id,acc_num_1,acc_num_2,is_critical,status,type,Amount) values("
 				+ request.getCust_id() + "," + request.getFirst_acc_num() + "," + request.getSecond_acc_num() + ","
 				+ request.getIs_critical() + ",'" + request.getStatus() + "','" + request.getType() + "',"
@@ -78,8 +78,10 @@ public class CustomerRequestDAO {
 		}
 	}
 
+
+	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public List<Request> retriveAllCustomerspaymentReqs(int custId) {
+	public List<Request> retrieveAllCustomerspaymentReqs(int custId) {
 		List<Request> requests = new ArrayList<>();
 		String paymentRequests = "Select * from Customer_Request where cust_id = " + custId + "and status =" + "'"
 				+ Constants.TRANSACTION_CUSTOMER_ACCEPTANCE + "'" + "and type =" +"'"+Constants.TANSACTION_TYPE_REQUEST+"';";
@@ -105,4 +107,9 @@ public class CustomerRequestDAO {
 		return requests;
 	}
 
+	public List<Request> retrieveAllPendingTransactions(int customer_id, int is_critical) {
+			
+		return null;
+		
+	}
 }
