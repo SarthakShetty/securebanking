@@ -93,19 +93,20 @@ public class InternalUserDAO {
 
 	public void authorizeCustomerTransactions(Request request, String user_name) {
 		if (Constants.TRANSACTION_TYPE_CREATE_ACCOUNT.equals(request.getType())) {
-			accountDAO.activateAccount(request.getReq_id(), user_name);
+			accountDAO.activateAccount(request, user_name);
 		} else if (Constants.TRANSACTION_TYPE_CREDIT.equals(request.getType()) || Constants.TRANSACTION_TYPE_DEBIT.equals(request.getType())){
 			accountDAO.creditOrDebit(request);
-			customerReqDAO.updateRequest(request.getReq_id(), request.getStatus(), user_name);
+			customerReqDAO.updateRequest(request, request.getStatus(), user_name);
 		} else {
 			accountDAO.transferFundsFromAcc(request);
-			customerReqDAO.updateRequest(request.getReq_id(), request.getStatus(), user_name);
+			customerReqDAO.updateRequest(request, request.getStatus(), user_name);
 		}
 	}
 
 	public void deleteCustomerAccount(Account account,int tier) {
-		if(tier == 1)
+		if(tier == 2) {
 			accountDAO.deleteAccount(account.getAcc_id(),account.getCust_id(),account.getIs_active());
+		}
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

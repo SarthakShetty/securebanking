@@ -10,15 +10,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.group12.dao.AccountDAO;
 import com.group12.dao.CustomerDAO;
+import com.group12.dao.CustomerRequestDAO;
 import com.group12.models.Account;
 import com.group12.models.Customer;
+import com.group12.models.Request;
 
 @Controller
 public class CustomerController {
 	
 	@Autowired
 	private CustomerDAO customerDAO;
+	
+	@Autowired
+	private AccountDAO accountDAO;
 	
 	Logger log = LoggerFactory.getLogger(AccountController.class);
 	
@@ -42,6 +48,40 @@ public class CustomerController {
 	}
 	
 	
+	@RequestMapping(value = "/customer/requestfunds")
+	public ModelAndView requestFunds(ModelAndView model, HttpServletRequest request) {
+		// Assumption that UI will be sending the session id of the user
+		int from_account_no = Integer.parseInt(request.getParameter("from_account"));
+		double amount = Double.parseDouble(request.getParameter("amount"));
+		String type = request.getParameter("type");
+		int cust_id = Integer.parseInt(request.getParameter("cust_id"));
+		int isCritical;
+		if (amount > 1000) {
+			isCritical = 1;
+		} else {
+			isCritical = 0;
+		}
+		Request customerRequest = new Request();
+		customerRequest.setAmount(amount);
+		customerRequest.setSecond_acc_num(from_account_no);
+		customerRequest.setType(type);
+		customerRequest.setIs_critical(isCritical);
+		customerRequest.setCust_id(cust_id);
+		accountDAO.transferFunds_create_request(customerRequest);
+		model.addObject("message", "Sucess");
+		return model;
+	}
 	
+	@RequestMapping(value = "/approvecustomerpaymentrequest")
+	public ModelAndView approveCustomerPayment(ModelAndView model, HttpServletRequest request) {
+		int to_account_no = Integer.parseInt(request.getParameter("to_account"));
+		int req_id = Integer.parseInt(request.getParameter("req_id"));
+		Request customerRequest = new Request();
+		customerRequest.setFirst_acc_num(to_account_no);
+		customerRequest.setReq_id(req_id);
+		customerDAO.authorizeRequestCust(customerRequest, null);
+		model.addObject("message", "Sucess");
+		return model;
+	}
 
 }

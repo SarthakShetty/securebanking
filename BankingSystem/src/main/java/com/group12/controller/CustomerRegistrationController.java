@@ -50,7 +50,8 @@ public class CustomerRegistrationController {
 	private Customer createCustomer(HttpServletRequest request) {
 		Customer customer  = new Customer();
 		customer.setAddress(request.getParameter("address"));
-		customer.setAge(Integer.parseInt(request.getParameter("age")));
+		// TODO UI needs to take the age of the customer currently hard coding
+		customer.setAge(21);
 		customer.setCity(request.getParameter("city"));
 		customer.setEmail(request.getParameter("email"));
 		customer.setFirstName(request.getParameter("firstName"));
@@ -59,7 +60,8 @@ public class CustomerRegistrationController {
 		customer.setPassword(request.getParameter("password"));
 		customer.setUsername(request.getParameter("username"));
 		customer.setZipCode(request.getParameter("zip"));
-		customer.setType(request.getParameter(request.getParameter("type")).charAt(0));
+		// TODO Currently hardcoding it as individual
+		customer.setType('I');
 		customer.setState(request.getParameter("state"));
 		
 		return customer;

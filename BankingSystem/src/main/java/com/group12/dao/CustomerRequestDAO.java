@@ -22,7 +22,7 @@ public class CustomerRequestDAO {
 
 	public void insertIntoCustomerReqForAccountCreation(Request request) {
 		String insert_sql = "Insert into Customer_Request(cust_id,acc_num_1,is_critical,status,type) values("
-				+ request.getCust_id() + "," + request.getFirst_acc_num() + "," + 0 + ",'" + request.getStatus() + "','"
+				+ request.getCust_id() + "," + request.getFirst_acc_num() + "," + request.getIs_critical() + ",'" + request.getStatus() + "','"
 				+ request.getType() + "'" + ");";
 
 		try {
@@ -32,35 +32,48 @@ public class CustomerRequestDAO {
 		}
 	}
 
-	public void updateRequest(int requestId, char status, String approved_by) {
+	public void updateRequest(Request request, char status, String approved_by) {
 
-		if (status == Constants.TRANSACTION_COMPLETED) {
-			String updateCustReq = "update Customer_Request set status = " + "'" + status + "'," + "set approved_by "
-					+ "'" + approved_by + "'" + " where req_id = " + requestId + ");";
+		if (status == Constants.TRANSACTION_TERMINATED) {
+
+			String updateCustReq = "update Customer_Request set status = " + "'" + status + "'" + " where req_id = "
+					+ request.getReq_id() + ";";
 			try {
 				jdbcTemplate.update(updateCustReq);
 
 			} catch (DataAccessException ex) {
 				throw new RuntimeException(ex);
+			}
+		} else if(Constants.TANSACTION_TYPE_REQUEST.equals(request.getType())){
+			String updateCustReq = "update Customer_Request set status = " + "'" + status + "'," + "approved_by ="
+					+ "'" + approved_by + "',acc_num_1 = " + request.getFirst_acc_num() + " where req_id = "
+					+ request.getReq_id() + ";";
+			try {
+				jdbcTemplate.update(updateCustReq);
+
+			} catch (DataAccessException ex) {
+				throw new RuntimeException(ex);
+
 			}
 		} else {
-			String updateCustReq = "update Customer_Request set status = " + "'" + status + "'," + " where req_id = "
-					+ requestId + ");";
+			String updateCustReq = "update Customer_Request set status = " + "'" + status + "'," + "approved_by= "
+					+ "'" + approved_by + "' where req_id = "
+					+ request.getReq_id() + ";";
 			try {
 				jdbcTemplate.update(updateCustReq);
 
 			} catch (DataAccessException ex) {
 				throw new RuntimeException(ex);
-			}
 
+			}
 		}
 
 	}
 
 	public void insertIntoRequestForCreditOrDebit(Request request) {
-		String insert_sql = "Insert into Customer_Request(cust_id,acc_num_1,is_critical,status,type) values("
-				+ request.getCust_id() + "," + request.getFirst_acc_num() + "," + 0 + ",'" + request.getStatus() + "','"
-				+ request.getType() + "'," + ");";
+		String insert_sql = "Insert into Customer_Request(cust_id,acc_num_1,is_critical,status,type,Amount) values("
+				+ request.getCust_id() + "," + request.getFirst_acc_num() + "," + request.getIs_critical() + ",'" + request.getStatus() + "','"
+				+ request.getType() + "',"+request.getAmount() + ");";
 		try {
 			jdbcTemplate.update(insert_sql);
 		} catch (DataAccessException ex) {

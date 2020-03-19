@@ -28,13 +28,13 @@ public class CustomerDAO {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
+
 	@Autowired
 	private CustomerRequestDAO customerReqDAO;
-	
+
 	@Autowired
 	private AccountDAO accountDAO;
-	
+
 	Logger logger = LoggerFactory.getLogger(CustomerDAO.class);
 
 	public boolean checkIfMobileNumExists(String parameter) {
@@ -92,26 +92,24 @@ public class CustomerDAO {
 				+ customer.getType() + "'" + ")";
 
 		try {
-			
-			
+
 			jdbcTemplate.update(connection -> {
-		        PreparedStatement ps = connection
-		                .prepareStatement(insert_customer,Statement.RETURN_GENERATED_KEYS);
-		                //ps.setString(1, message);
-		                return ps;
-		              }, keyHolder);
-			
+				PreparedStatement ps = connection.prepareStatement(insert_customer, Statement.RETURN_GENERATED_KEYS);
+				// ps.setString(1, message);
+				return ps;
+			}, keyHolder);
+
 		} catch (DataAccessException ex) {
 			throw new RuntimeException(ex);
 		}
-		logger.info("The primary key" +keyHolder.getKey().intValue());
+		logger.info("The primary key" + keyHolder.getKey().intValue());
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Customer getCustomerProfileDetails(String userName) {
 
 		List<Customer> customer = (List<Customer>) new Customer();
-		String request_customer_information = "Select * from customer where cust_user_id = " + userName + ";";
+		String request_customer_information = "Select * from customer where cust_user_id = '" + userName + "';";
 
 		try {
 			customer = jdbcTemplate.query(request_customer_information, new RowMapper() {
@@ -138,38 +136,39 @@ public class CustomerDAO {
 		return customer.get(0);
 	}
 	
-	public void authorizeRequest(Request request, String customer_userId, int acc_num) {
-
-		if (request.getIs_critical() == 1) {
-			customerReqDAO.updateRequest(request.getReq_id(), Constants.TRANSACTION_PENDING, customer_userId);
-		} else {
-			request.setFirst_acc_num(acc_num);
-			accountDAO.transferFundsFromAcc(request);
-			customerReqDAO.updateRequest(request.getReq_id(), request.getStatus(), customer_userId);
-		}
-
+	public int getCustomerId(String userName) {
+		Customer customer = getCustomerProfileDetails(userName);
+		return customer.getCust_id();
 	}
-	
-	
-	public List<Request> retrieveAllPaymentRequestForCust(int custId){
-	
+
+	public void authorizeRequestCust(Request request, String customer_userId) {
+		customerReqDAO.updateRequest(request, Constants.TRANSACTION_PENDING, customer_userId);
+	}
+
+	public void declineCustRequestCust(Request request, String customer_userId) {
+		customerReqDAO.updateRequest(request, Constants.TRANSACTION_TERMINATED, customer_userId);
+	}
+
+	public List<Request> retrieveAllPaymentRequestForCust(int custId) {
+
 		List<Request> allRequests = new ArrayList<>();
 		allRequests = customerReqDAO.retrieveAllCustomerspaymentReqs(custId);
 		return allRequests;
 	}
-	
-	//Added register method for registration purpose
-		public void register(Customer customer){
-			String insert = "insert into customer values(?,?,?,?,?,?,?,?,?,?,?,?)";
-			try {
+
+	// Added register method for registration purpose
+	public void register(Customer customer) {
+		String insert = "insert into customer values(?,?,?,?,?,?,?,?,?,?,?,?)";
+		try {
 			jdbcTemplate.update(insert,
 					new Object[] { customer.getUsername(), customer.getPassword(), customer.getFirstName(),
 							customer.getLastName(), customer.getAge(), customer.getEmail(), customer.getMobile(),
-							customer.getAddress(), customer.getState(), customer.getCity(), customer.getZipCode(),customer.getType() });
+							customer.getAddress(), customer.getState(), customer.getCity(), customer.getZipCode(),
+							customer.getType() });
 			System.out.println("In register class" + insert);
-			}catch (DataAccessException ex) {
-				throw new RuntimeException(ex);
-			}
+		} catch (DataAccessException ex) {
+			throw new RuntimeException(ex);
 		}
+	}
 
 }
