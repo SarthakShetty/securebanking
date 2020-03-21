@@ -32,9 +32,6 @@ public class CustomerDAO {
 	@Autowired
 	private CustomerRequestDAO customerReqDAO;
 
-	@Autowired
-	private AccountDAO accountDAO;
-
 	Logger logger = LoggerFactory.getLogger(CustomerDAO.class);
 
 	public boolean checkIfMobileNumExists(String parameter) {
@@ -133,12 +130,56 @@ public class CustomerDAO {
 		} catch (DataAccessException ex) {
 			throw new RuntimeException(ex);
 		}
-		return customer.get(0);
+		return customer.size() > 0 ? customer.get(0) : null;
 	}
-	
+
 	public int getCustomerId(String userName) {
 		Customer customer = getCustomerProfileDetails(userName);
 		return customer.getCust_id();
+	}
+
+	@SuppressWarnings("unchecked")
+	public int getCutomerIdFromEmail(String email) {
+
+		List<Customer> customer = new ArrayList<>();
+		String request_customer_information = "Select * from customer where email = '" + email + "';";
+
+		try {
+			customer = jdbcTemplate.query(request_customer_information, new RowMapper() {
+
+				public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
+					Customer cust = new Customer();
+					cust.setCust_id((int) rs.getObject("cust_id"));
+					return cust;
+				}
+			});
+		} catch (DataAccessException ex) {
+			throw new RuntimeException(ex);
+		}
+		return customer.size() > 0 ? customer.get(0).getCust_id() : null;
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public int getCutomerIdFromMobile(String mobile) {
+
+		List<Customer> customer = new ArrayList<>();
+		String request_customer_information = "Select * from customer where mobile = '" + mobile + "';";
+
+		try {
+			customer = jdbcTemplate.query(request_customer_information, new RowMapper() {
+
+				public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
+					Customer cust = new Customer();
+					cust.setCust_id((int) rs.getObject("cust_id"));
+					return cust;
+				}
+			});
+		} catch (DataAccessException ex) {
+			throw new RuntimeException(ex);
+		}
+		return customer.size() > 0 ? customer.get(0).getCust_id() : null;
+
 	}
 
 	public void authorizeRequestCust(Request request, String customer_userId) {

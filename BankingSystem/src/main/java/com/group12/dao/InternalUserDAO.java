@@ -102,6 +102,10 @@ public class InternalUserDAO {
 			customerReqDAO.updateRequest(request, request.getStatus(), user_name);
 		}
 	}
+	
+	public void declineCustomerTransactions(Request request, String user_name) {
+		customerReqDAO.updateRequest(request,Constants.TRANSACTION_TERMINATED, "");
+	}
 
 	public void deleteCustomerAccount(Account account,int tier) {
 		if(tier == 2) {
