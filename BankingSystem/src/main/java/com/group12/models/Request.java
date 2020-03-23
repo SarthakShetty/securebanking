@@ -6,14 +6,14 @@ public class Request {
 	
 	private int req_id;
 	private int cust_id;
-    private int first_acc_num;
-    private int second_acc_num;
-    private int is_critical;
-    private String approved_by;
-    private char status;
-    private String type;
-    private Timestamp transaction_date;
-    private Double amount;
+    	private int first_acc_num;
+    	private int second_acc_num;
+    	private int is_critical;
+    	private String approved_by;
+    	private char status;
+    	private String type;
+    	private Timestamp transaction_date;
+    	private Double amount;
     
 	public int getCust_id() {
 		return cust_id;
