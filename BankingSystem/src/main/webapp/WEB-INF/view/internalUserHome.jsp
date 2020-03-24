@@ -111,7 +111,7 @@
 			  <li class="active" id="pr" onclick="change(this)"><a href="#">Profile</a></li>
 			  <li id="va" onclick="change(this)"><a href="#">View/Authorize Transactions</a></li>
 			  <li id="am" onclick="change(this)"><a href="#">Account Management</a></li>
-			  <li id="tl" onclick="change(this)"><a href="#">View Transaction Log</a></li>
+			  <li id="tl" onclick="change(this)"><a href="#">Requests</a></li>
 			</ul>
 			<div id="profile">
 				<div id="leftDiv">
@@ -346,13 +346,13 @@
 			</div>
 			</div>
 			<div id="log">
-				<h1>Transactions Log</h1>
+				<h1>Requests</h1>
 				<hr class="divider"/>
 				<div id="listDiv" class="table-wrapper-scroll-y my-custom-scrollbar">
 					<table class="table table-bordered mb-0">
 						<thead>
 						  <tr>
-						    <th scope="col">Transactions</th>
+						    <th scope="col">Requests</th>
 						    <th scope="col"></th>
 						  </tr>
 						</thead>

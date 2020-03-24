@@ -54,8 +54,8 @@ public class LoginController {
 		/*
 		 * Need to check for the type of user they are and verify
 		 */
-		// return internalUserHome
-		return "externalUserHome";
+		return "internalUserHome";
+		//return "externalUserHome";
 	}
 	
 	@RequestMapping(value="/registerOTP", method = RequestMethod.GET)
@@ -78,7 +78,7 @@ public class LoginController {
 		return "newAccount";
 	}
 	
-	@RequestMapping(value="/confirmationAccount", method = RequestMethod.POST)
+	@RequestMapping(value="/confirmationAccoun", method = RequestMethod.POST)
 	public String showConfirmationAccount(ModelMap model){
 		return "confirmationAccount";
 	}

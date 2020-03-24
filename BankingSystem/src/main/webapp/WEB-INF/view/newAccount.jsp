@@ -13,9 +13,6 @@
 				text-align: center;
 			}
 			
-			#email{
-				margin: 10px auto 50px auto;
-			}
 			
 			#OTPKey{
 				margin: 10px auto 20px auto;
@@ -59,7 +56,7 @@
 			
 			<div id="form">
 				<hr class="divider">
-				<form action="/confirmationAccount" method="POST">
+				<form action="/confirmationAccoun" method="POST">
 				  <div class="form-group row">
 				    <label for="firstName" class="col-sm-5 col-form-label">First Name:</label>
 				    <div class="col-sm-7">
