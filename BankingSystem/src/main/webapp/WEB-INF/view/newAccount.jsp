@@ -100,7 +100,7 @@
 				    </div>
 				    </div>
 				   <div class="form-group row">
-				    <label for="mobile" class="col-sm-5 col-form-label">Mobile:</label>
+				    <label for="mobile" class="col-sm-5 col-form-label">Phone Number:</label>
 				    <div class="col-sm-7">
 				      <input type="text" name="mobile" class="form-control" id="mobile" >
 				    </div>

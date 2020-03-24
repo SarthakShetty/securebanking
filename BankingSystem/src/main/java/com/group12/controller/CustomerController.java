@@ -32,18 +32,19 @@ public class CustomerController {
 	public ModelAndView getCustomerDetails(ModelAndView model, HttpServletRequest request) {
 		// TODO logging messages 
 		String userName = request.getParameter("user_id");
-		Customer customer = customerDAO.getCustomerProfileDetails(userName);
-		// TODO need to do the integration with the UI parameters
-		model.addObject("First name", customer.getFirstName());
-		model.addObject("Last name", customer.getLastName());
-		model.addObject("phone", customer.getMobile());
-		model.addObject("address", customer.getAddress());
-		model.addObject("city", customer.getCity());
-		model.addObject("state", customer.getState());
-		model.addObject("zip", customer.getZipCode());
-		model.addObject("age", customer.getCity());
-		model.addObject("email", customer.getEmail());
-		model.addObject("user name", customer.getUsername());
+//		Customer customer = customerDAO.getCustomerProfileDetails(userName);
+//		// TODO need to do the integration with the UI parameters
+//		model.addObject("First name", customer.getFirstName());
+//		model.addObject("Last name", customer.getLastName());
+//		model.addObject("phone", customer.getMobile());
+//		model.addObject("address", customer.getAddress());
+//		model.addObject("city", customer.getCity());
+//		model.addObject("state", customer.getState());
+//		model.addObject("zip", customer.getZipCode());
+//		model.addObject("age", customer.getCity());
+//		model.addObject("email", customer.getEmail());
+//		model.addObject("user name", customer.getUsername());
+		model.addObject("FirstName", userName);
 		return model;
 	}
 	

@@ -42,7 +42,7 @@ public class LoginController {
 		reqListNames.add("brandon");
 		reqListNames.add("stephen");
 		
-		model.put("name", name);
+		model.put("user_id", name);
 		model.put("password", password);
 		model.put("employeeID", "1234");
 		model.put("dob", "Today");
@@ -54,8 +54,8 @@ public class LoginController {
 		/*
 		 * Need to check for the type of user they are and verify
 		 */
-		return "internalUserHome";
-		//return "externalUserHome";
+		//return "internalUserHome";
+		return "externalUserHome";
 	}
 	
 	@RequestMapping(value="/registerOTP", method = RequestMethod.GET)
