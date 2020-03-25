@@ -28,7 +28,7 @@ public class CustomerController {
 	
 	Logger log = LoggerFactory.getLogger(AccountController.class);
 	
-	@RequestMapping(value = "/customer/profile")
+	@RequestMapping(value = "/customer/profile", method=RequestMethod.GET)
 	public ModelAndView getCustomerDetails(ModelAndView model, HttpServletRequest request) {
 		// TODO logging messages 
 		String userName = request.getParameter("user_id");
