@@ -9,6 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 public class LoginController {
@@ -18,6 +19,7 @@ public class LoginController {
 	public String showLogin(){
 		return "login";
 	}
+	
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String handleUserLogin(ModelMap model, @RequestParam String name,
@@ -54,8 +56,8 @@ public class LoginController {
 		/*
 		 * Need to check for the type of user they are and verify
 		 */
-		//return "internalUserHome";
-		return "externalUserHome";
+		//return "customerAccount";
+		return "internalUserProfile";
 	}
 	
 	@RequestMapping(value="/registerOTP", method = RequestMethod.GET)

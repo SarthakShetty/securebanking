@@ -62,7 +62,7 @@ public class AccountController {
 	}
 	
 	// customer details
-	@RequestMapping(value= "/customer/Account")	
+	@RequestMapping(value= "/customer/Account", method = RequestMethod.GET)	
 	public ModelAndView getAccount(ModelAndView model, HttpServletRequest request) throws IOException{
 		
 		String userName = request.getParameter("user_name");
