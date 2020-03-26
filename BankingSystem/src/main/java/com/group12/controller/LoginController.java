@@ -56,8 +56,8 @@ public class LoginController {
 		/*
 		 * Need to check for the type of user they are and verify
 		 */
-		//return "customerAccount";
-		return "internalUserProfile";
+		return "customerAccount";
+		//return "internalUserProfile";
 	}
 	
 	@RequestMapping(value="/registerOTP", method = RequestMethod.GET)

@@ -24,55 +24,18 @@
 			h1, h3,p, label{
 				color: white !important;
 			}
+		
 			
-			#leftDiv, #leftDiv div, #rightDiv, #rightDiv div{
-				display: inline-block;
-				width: 48%;
-				font-size: large;
-			}
-			
-			#leftDiv div label{
-				display: block;
-				margin: 0 0 45px 0;
-			}
-			
-			#rightDiv div label{
-				display: block;
-				margin: 0 0 20px 0;
-			}
-			
-			#rightDiv div input,#rightDiv div select {
-				display: block;
-				width: 100%;
-				margin: 0 0 10px 0;
-			}
-			#profile, #transactions, #accounts, #log{
+			#accounts{
+				position: relative;
 				margin: 20px 0 0 0;
 			}
-			
-			
-			table{
-				color: white !important;
-			}
-			
-			#listDiv, #authSide{
-				display: inline-block;
-			}
-			
-			#listDiv{
-				width: 70%;
-				display: inline;
-			}
-			
-			#authSide{
-				width: 100%;
-				text-align: center;
-				
-			}
-			
 			#accountDiv{
 				display: inline;
 				height: 100px;
+				width: 70%;
+				position: absolute;
+				top: 0;
 			}
 			
 			.my-custom-scrollbar {
@@ -84,10 +47,7 @@
 				display: block;
 			}
 			
-			#hm form{
-				margin-bottom: 30px;
-				margin-left: 50px;
-			}
+		
 			
 			#newAccDiv, #modifyAcc{
 				width: 100%;
@@ -113,19 +73,18 @@
 		  </ul>
 		</nav>
 		<div id="container">
-			<h1>Hello internal user - ${name}</h1>
+			<h1>Account Management</h1>
+			<hr class="divider" />
 			
 			<div id="accounts">
-				<h1>Account List</h1>
-				<hr class="divider"/>
 				<div id="accountDiv">
-					<select class="custom-select" size="8" style="width: 60%;">
+					<select class="custom-select" size="8">
 					  <c:forEach items="${accountList}" var="aList">
 					  	<option>${aList}</option>
 					  </c:forEach>
 					</select>
 				</div>
-				<div id="hm" style="display: inline-block; text-align: center;">
+				<div id="hm" style="display: inline; text-align: right;">
 					<form action="">
 						<input type="button" value="Delete" class="btn btn-info "/>
 					</form>
@@ -144,58 +103,64 @@
 						  <div class="form-group row">
 						    <label for="firstName" class="col-sm-5 col-form-label">First Name:</label>
 						    <div class="col-sm-7">
-						      <input type="text" name ="firstName"  class="form-control" id="firstName"  placeholder="FirstName" >
+						      <input type="text" name ="firstNameAdd"  class="form-control" id="firstName1"  placeholder="First Name" >
 						    </div>
 						  </div>
 						  <div class="form-group row">
 						    <label for="lastName" class="col-sm-5 col-form-label">Last Name:</label>
 						    <div class="col-sm-7">
-						      <input type="text" name = "lastName" class="form-control" id="lastName" >
+						      <input type="text" name = "lastNameAdd" class="form-control" id="lastName1" placeholder="Last Name" >
 						    </div>
 						  </div>
 						  <div class="form-group row">
 						    <label for="username" class="col-sm-5 col-form-label">Username:</label>
 						    <div class="col-sm-7">
-						      <input type="text" name = "username" class="form-control" id="username">
+						      <input type="text" name = "usernameAdd" class="form-control" id="username1" placeholder="Username">
 						    </div>
 						  </div>
 						  <div class="form-group row">
 						    <label for="password" class="col-sm-5 col-form-label">Password:</label>
 						    <div class="col-sm-7">
-						      <input type="password" name="password" class="form-control" id="password" >
+						      <input type="password" name="passwordAdd" class="form-control" id="password1" placeholder="Password" >
 						    </div>
 						  </div>
 						  <div class="form-group row">
 						    <label for="cPassword" class="col-sm-5 col-form-label">Confirm Password:</label>
 						    <div class="col-sm-7">
-						      <input type="password" name="cPassword" class="form-control" id="cPassword">
+						      <input type="password" name="cPasswordAdd" class="form-control" id="cPassword1" placeholder="Confirm Password">
 						    </div>
 						  </div>
 						  <div class="form-group row">
 						    <label for="address" class="col-sm-5 col-form-label">Address:</label>
 						    <div class="col-sm-7">
-						      <input type="text" name="address" class="form-control" id="address" >
+						      <input type="text" name="addressAdd" class="form-control" id="address1" placeholder="Address">
 						    </div>
 						    </div>
 						   <div class="form-group row">
 						    <label for="email" class="col-sm-5 col-form-label">Email:</label>
 						    <div class="col-sm-7">
-						      <input type="text" name="email" class="form-control" id="email" >
+						      <input type="text" name="emailAdd" class="form-control" id="email1" placeholder="Email">
 						    </div>
 						    </div>
 						   <div class="form-group row">
 						    <label for="mobile" class="col-sm-5 col-form-label">Phone Number:</label>
 						    <div class="col-sm-7">
-						      <input type="text" name="mobile" class="form-control" id="mobile" >
+						      <input type="text" name="phoneAdd" class="form-control" id="mobile1" placeholder="Phone Number" >
 						    </div>
 						  </div>
+						  <div class="form-group row">
+						    <label for="mobile" class="col-sm-5 col-form-label">Age:</label>
+						    <div class="col-sm-7">
+						      <input type="text" name="ageAdd" class="form-control" id="age1" placeholder="Age" >
+						    </div>
+						  </div>s
 						  <div id="bottom">
 						  	<label>City:</label>
-						  	<input type="text" name="city" class='form-control' id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+						  	<input type="text" name="cityAdd" placeholder="City" class='form-control' id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
 						  	<label>Zip:</label>
-						  	<input type="text" name="zip" class='form-control' id="zip" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+						  	<input type="text" name="zipAdd" placeholder="ZIP" class='form-control' id="zip" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
 						  	<label>State:</label>
-						  	<select class="form-control" name="state" id="state" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+						  	<select class="form-control" name="stateAdd" id="state" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
 						        <option>AL</option>
 						        <option>AK</option>
 						        <option>AZ</option>
@@ -263,52 +228,58 @@
 						  <div class="form-group row">
 						    <label for="firstName" class="col-sm-5 col-form-label">First Name:</label>
 						    <div class="col-sm-7">
-						      <input type="text" name ="firstName"  class="form-control" id="firstName"  placeholder="FirstName" >
+						      <input type="text" name ="firstNameModify"  class="form-control" id="firstName" >
 						    </div>
 						  </div>
 						  <div class="form-group row">
 						    <label for="lastName" class="col-sm-5 col-form-label">Last Name:</label>
 						    <div class="col-sm-7">
-						      <input type="text" name = "lastName" class="form-control" id="lastName" >
+						      <input type="text" name = "lastNameModify" class="form-control" id="lastName" >
 						    </div>
 						  </div>
 						  <div class="form-group row">
 						    <label for="username" class="col-sm-5 col-form-label">Username:</label>
 						    <div class="col-sm-7">
-						      <input type="text" name = "username" class="form-control" id="username">
+						      <input type="text" name = "usernameModify" class="form-control" id="username" >
 						    </div>
 						  </div>
 						  <div class="form-group row">
 						    <label for="password" class="col-sm-5 col-form-label">Password:</label>
 						    <div class="col-sm-7">
-						      <input type="password" name="password" class="form-control" id="password" >
+						      <input type="password" name="passwordModify" class="form-control" id="password" >
 						    </div>
 						  </div>
 						  <div class="form-group row">
 						    <label for="address" class="col-sm-5 col-form-label">Address:</label>
 						    <div class="col-sm-7">
-						      <input type="text" name="address" class="form-control" id="address" >
+						      <input type="text" name="addressModify" class="form-control" id="address" >
 						    </div>
 						    </div>
 						   <div class="form-group row">
 						    <label for="email" class="col-sm-5 col-form-label">Email:</label>
 						    <div class="col-sm-7">
-						      <input type="text" name="email" class="form-control" id="email" >
+						      <input type="text" name="emailModify" class="form-control" id="email" >
 						    </div>
 						    </div>
 						   <div class="form-group row">
 						    <label for="mobile" class="col-sm-5 col-form-label">Phone Number:</label>
 						    <div class="col-sm-7">
-						      <input type="text" name="mobile" class="form-control" id="mobile" >
+						      <input type="text" name="phoneModify" class="form-control" id="mobile" >
+						    </div>
+						  </div>
+						  <div class="form-group row">
+						    <label for="mobile" class="col-sm-5 col-form-label">Age:</label>
+						    <div class="col-sm-7">
+						      <input type="text" name="ageModify" class="form-control" id="mobile" >
 						    </div>
 						  </div>
 						  <div id="bottom">
 						  	<label>City:</label>
-						  	<input type="text" name="city" class='form-control' id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+						  	<input type="text" name="cityModify" class='form-control' id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
 						  	<label>Zip:</label>
-						  	<input type="text" name="zip" class='form-control' id="zip" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+						  	<input type="text" name="zipModify" class='form-control' id="zip" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
 						  	<label>State:</label>
-						  	<select class="form-control" name="state" id="state" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+						  	<select class="form-control" name="stateModify" id="state" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
 						        <option>AL</option>
 						        <option>AK</option>
 						        <option>AZ</option>
@@ -372,7 +343,15 @@
 			 
 		</div>
 	<script>
-		
+	function showNewAcc(){
+		document.getElementById('newAccDiv').style.display = 'block';
+		document.getElementById('modifyAcc').style.display = 'none';
+	}
+	
+	function modifyAcc(){
+		document.getElementById('modifyAcc').style.display = 'block';
+		document.getElementById('newAccDiv').style.display = 'none';
+	}
 	</script>
 	</body>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

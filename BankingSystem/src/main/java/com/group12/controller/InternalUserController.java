@@ -1,5 +1,8 @@
 package com.group12.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -34,6 +37,8 @@ public class InternalUserController {
 //		model.addObject("id", employee.getEmp_id());
 //		model.addObject("email", employee.getEmail());
 //		model.addObject("user name", employee.getEmp_user_id());
+		model.addObject("firstName", "bob");
+		model.addObject("lastName", "billy");
 		model.setViewName("internalUserProfile");
 		return model;
    }
@@ -43,6 +48,10 @@ public class InternalUserController {
 		/*
 		 * Need to return the list of transactions
 		 */
+		List<String> l = new ArrayList<String>();
+		l.add("beep");
+		l.add("boop");
+		model.addObject("list", l);
 		model.setViewName("internalUserViewTransactions");
 		return model;
    }
@@ -62,6 +71,56 @@ public class InternalUserController {
 		 * Need to return the list of all requests.
 		 */
 		model.setViewName("internalUserRequests");
+		return model;
+   }
+	
+	@RequestMapping(value = "/internalUser/modifyAccount", method = RequestMethod.POST)
+	public ModelAndView modifyInternalUserAccount(ModelAndView model, HttpServletRequest request) {
+		/*
+		 * Need to be able to modify employees account
+		 * then return list of employee accounts and a message saying account modified
+		 */
+		model.setViewName("internalUserAccountManagement");
+		return model;
+   }
+	
+	@RequestMapping(value = "/internalUser/createdEmployee", method = RequestMethod.POST)
+	public ModelAndView createInternalUserAccount(ModelAndView model, HttpServletRequest request) {
+		/*
+		 * Need to be able to create an employees account
+		 * then return the list of employees and a message saying account created
+		 */
+		model.setViewName("internalUserAccountManagement");
+		return model;
+   }
+	
+	@RequestMapping(value = "/internalUser/deletedEmployee", method = RequestMethod.POST)
+	public ModelAndView deleteInternalUserAccount(ModelAndView model, HttpServletRequest request) {
+		/*
+		 * Need to be able to delete an employees account
+		 * then return the list of employees and a message saying account deleted
+		 */
+		model.setViewName("internalUserAccountManagement");
+		return model;
+   }
+	
+	@RequestMapping(value = "/internalUser/authorizeEmployeeRequests", method = RequestMethod.POST)
+	public ModelAndView authorizeInternalUserRequests(ModelAndView model, HttpServletRequest request) {
+		/*
+		 * Need to be able to authorize employee request and erase it from the requests
+		 * then return the list of requests and a message saying request authorized
+		 */
+		model.setViewName("internalUserAccountManagement");
+		return model;
+   }
+	
+	@RequestMapping(value = "/internalUser/declineEmployeeRequests", method = RequestMethod.POST)
+	public ModelAndView declineInternalUserRequests(ModelAndView model, HttpServletRequest request) {
+		/*
+		 * Need to be able to decline employee request and erase it from the requests
+		 * then return the list of requests and a message saying request decline
+		 */
+		model.setViewName("internalUserAccountManagement");
 		return model;
    }
 	

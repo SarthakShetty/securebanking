@@ -7,7 +7,7 @@
 		<style>
 			#container{
 				width: 70%;
-				margin: 100px auto;
+				margin: 50px auto;
 			}
 			
 			.divider{
@@ -161,19 +161,18 @@
 			  <li id="rp" class =" nav-item" ><a class="nav-link" href="/customer/transferEmailPhone">Transfer/Make Payment</a></li>
 			  <li id="tba" class =" nav-item"  ><a class="nav-link" href="/customer/transferBA">Transfer Between Accounts</a></li>
 			  <li id="cd" class ="nav-item" ><a class="nav-link" href="/customer/CreditDebit">Credit/Debit</a></li>
-			  <li id="mp" class ="nav-item" ><a class="nav-link" href="/customer/payment">Make Payment</a></li>
+			  <li id="mp" class ="nav-item" ><a class="nav-link" href="/customer/payment">Payment Requests</a></li>
 			  <li id="pr" class ="nav-item" ><a class="nav-link" id="" href="/customer/profile">Profile</a></li>
 			  <li id="am" class ="nav-item" ><a class="nav-link" href="/customer/accountManagement">Account Management</a></li>
 			  <li id="hs" class ="nav-item" ><a class="nav-link" href="/customer/helpSupport">Help and Support</a></li>
 		  </ul>
 		</nav>
-		<%
+		<%-- <%
 			out.print(session.getAttribute("user_id"));
-		%>
+		%> --%>
 		<div id="container">
-			<h1>Hello ${user_id}</h1>
-			<h2>${FirstName}</h2>
-			
+			<h1>Account</h1>
+			<hr class="divider" />
 			<div id="account">
 				<h2 style="color: white;">Balance</h3>
 				<div id="leftDiv">

@@ -98,10 +98,6 @@
 				margin: 0 10px 0 10px !important;			
 			}
 			
-			#transferB div, #credit div, #payment div{
-				display: inline-block;
-				margin: 0 100px 0 0;
-			}
 			
 			#credit input, #payment label, #payment select{
 				display: block;
@@ -162,113 +158,63 @@
 			  <li id="rp" class =" nav-item" ><a class="nav-link" href="/customer/transferEmailPhone">Transfer/Make Payment</a></li>
 			  <li id="tba" class =" nav-item"  ><a class="nav-link" href="/customer/transferBA">Transfer Between Accounts</a></li>
 			  <li id="cd" class ="nav-item" ><a class="nav-link" href="/customer/CreditDebit">Credit/Debit</a></li>
-			  <li id="mp" class ="active nav-item" ><a class="nav-link" href="/customer/payment">Make Payment</a></li>
+			  <li id="mp" class ="active nav-item" ><a class="nav-link" href="/customer/payment">Payment Requests</a></li>
 			  <li id="pr" class ="nav-item" ><a class="nav-link" id="" href="/customer/profile">Profile</a></li>
 			  <li id="am" class ="nav-item" ><a class="nav-link" href="/customer/accountManagement">Account Management</a></li>
 			  <li id="hs" class ="nav-item" ><a class="nav-link" href="/customer/helpSupport">Help and Support</a></li>
 		  </ul>
 		</nav>
-		<%
+		<%-- <%
 			out.print(session.getAttribute("user_id"));
-		%>
+		%> --%>
 		<div id="container">
-			<h1>Hello ${user_id}</h1>
-			<h2>${FirstName}</h2>
-			
-			<div id="payment">
-				<div>
-					<h2>Requested From</h2>
-					<c:forEach items="${requestListNames}" var="nList">
-						<label>${nList}</label>
-					</c:forEach>
+			<h1>Payment Requests</h1>
+			<hr class="divider" />
+			<form action="">
+				<div id="payment" class="row">
+					<div class='col-4'>
+						<h2>Requested From</h2>
+						<c:forEach items="${requestListNames}" var="nList">
+							<label>${nList}</label>
+						</c:forEach>
+					</div>
+					<div class='col-3'>
+						<h2>Amount</h2>
+						<c:forEach items="${requestListAmount}" var="aList">
+							<label>${aList}</label>
+						</c:forEach>
+					</div>
+					<div class="col-5">
+						<h2>Account to Pay From</h2>
+						<c:forEach items="${requestListNames}" var="x">
+							<select>
+								<c:forEach items="${accountList}" var="aList">
+									<option>${aList}</option>
+								</c:forEach>
+							</select>
+						</c:forEach>
+					</div>
+					<div class="col" style="margin: 0 0 0 0 !important;">
+						<c:forEach items="${requestListNames}" var="x">
+							<input id="checkbox" type="radio" name="payment_choice" value="request_id">
+						</c:forEach>
+					</div>
 				</div>
-				<div >
-					<h2>Amount</h2>
-					<c:forEach items="${requestListAmount}" var="aList">
-						<label>${aList}</label>
-					</c:forEach>
+				<div style="text-align: center; margin: 20px 0 0 0;">
+					<label>
+					    	<input type="radio" name="auth"  value="credit" autocomplete="off"> Accept
+					  	</label>
+					  	<label>
+					    	<input type="radio" name="auth"  value="debit" autocomplete="off"> Decline
+					  	</label>
 				</div>
-				<div>
-					<h2>Account to Pay From</h2>
-					<c:forEach items="${requestListNames}" var="x">
-						<select>
-							<c:forEach items="${accountList}" var="aList">
-								<option>${aList}</option>
-							</c:forEach>
-						</select>
-					</c:forEach>
+				<div style="text-align: center; margin: 20px 0 0 0;">
+					<input type="submit" class="btn btn-info btn-md" id="sub" value="Submit" disabled>
 				</div>
-				<div class="col" style="margin: 0 0 0 0 !important;">
-					<c:forEach items="${requestListNames}" var="x">
-						<button class="btn btn-sm btn-info">Make Payment</button>
-					</c:forEach>
-				</div>
-			</div>
+			</form>
 		</div>
 	<script>
-		
-		
-		
-		$("#cdbutton").on("click", function(){
-			if(document.getElementById("cdAmount").value > 1000){
-				document.getElementById("modalmsg").innerText = "This will be considered a critical transaction and will need to be approved. Credit or Debit?";
-				document.getElementById("modalHead").innerText = "Attention";
-				document.getElementById("modalHead").style.color = "red";
-			}
-			else
-			{
-				document.getElementById("modalmsg").innerText = "Credit or Debit?";
-				document.getElementById("modalHead").innerText = "Which Account?";
-				document.getElementById("modalHead").style.color = "black";
-			}
-		});
-	
-		function checkModal(el){
-			if(el.id == "tButton"){
-				if(document.getElementById("tbAmount").value > 1000){
-					document.getElementById("hiddenBut").click();
-					
-				}
-				else
-					document.getElementById("tButtonH").click();
-			}
-			else if(el.id == "accButton"){
-				if(document.getElementById("accAmount").value > 1000){
-					document.getElementById("hiddenBut2").click();
-				}
-				else
-					document.getElementById("accButtonH").click();
-			}
-			else if(el.id == "peButton"){
-				if(document.getElementById("peAmount").value > 1000){
-					document.getElementById("hiddenBut3").click();
-				}
-				else
-					document.getElementById("peButtonH").click();
-			}
-		}
-		
-		$('#myModal2').on('hidden.bs.modal', function () {
-			document.getElementById("tButtonH").click();
-		});
-		$('#myModal3').on('hidden.bs.modal', function () {
-			document.getElementById("peButtonH").click();
-		});
-		$('#myModal4').on('hidden.bs.modal', function () {
-			document.getElementById("accButtonH").click();
-		});
-		
-		$("#profileLink").click(function(){
-		    $.ajax({
-		        url : '/login',
-		        method : 'POST',
-		        async : false,
-		        complete : function(data) {
-		            console.log(data.responseText);
-		        }
-		    });
-
-		});
+	$("#checkbox").change(function () {$("#sub").prop("disabled", false);});
 	</script>
 	</body>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

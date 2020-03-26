@@ -133,7 +133,7 @@ public class CustomerController {
 		 * Need to return list of accounts of the user
 		 */
 		
-	    model.setViewName("makePayment");	 	    	    
+	    model.setViewName("accountManagement");	 	    	    
 		return model;
 	}
 	
@@ -179,6 +179,16 @@ public class CustomerController {
 		customerRequest.setReq_id(req_id);
 		customerDAO.authorizeRequestCust(customerRequest, null);
 		model.addObject("message", "Sucess");
+		return model;
+	}
+	
+	@RequestMapping(value = "/customer/schedule")
+	public ModelAndView schheduleAppointment(ModelAndView model, HttpServletRequest request) {
+		/*
+		 * Need to allow the customer to schedule an appointment then return a message saying appointment
+		 * entered.
+		 */
+		model.setViewName("customer/helpSupport");
 		return model;
 	}
 

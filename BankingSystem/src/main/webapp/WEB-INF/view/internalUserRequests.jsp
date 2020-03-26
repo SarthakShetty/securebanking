@@ -25,30 +25,6 @@
 				color: white !important;
 			}
 			
-			#leftDiv, #leftDiv div, #rightDiv, #rightDiv div{
-				display: inline-block;
-				width: 48%;
-				font-size: large;
-			}
-			
-			#leftDiv div label{
-				display: block;
-				margin: 0 0 45px 0;
-			}
-			
-			#rightDiv div label{
-				display: block;
-				margin: 0 0 20px 0;
-			}
-			
-			#rightDiv div input,#rightDiv div select {
-				display: block;
-				width: 100%;
-				margin: 0 0 10px 0;
-			}
-			#profile, #transactions, #accounts, #log{
-				margin: 20px 0 0 0;
-			}
 		
 			
 			table{
@@ -69,11 +45,7 @@
 				text-align: center;
 				
 			}
-			
-			#accountDiv{
-				display: inline;
-				height: 100px;
-			}
+				
 			
 			.my-custom-scrollbar {
 				position: relative;
@@ -84,15 +56,6 @@
 				display: block;
 			}
 			
-			#hm form{
-				margin-bottom: 30px;
-				margin-left: 50px;
-			}
-			
-			#newAccDiv, #modifyAcc{
-				width: 100%;
-				display: none;
-			}
 		</style>
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 		<link href="https://fonts.googleapis.com/css?family=Squada+One&display=swap" rel="stylesheet">
@@ -112,11 +75,11 @@
 			  </ul>
 			</nav>
 		<div id="container">
-			<h1>Hello internal user - ${name}</h1>
+			<h1>Requests</h1>
+			<hr class="divider"/>
 			
 			<div id="log">
-				<h1>Requests</h1>
-				<hr class="divider"/>
+				
 				<div id="listDiv" class="table-wrapper-scroll-y my-custom-scrollbar">
 					<table class="table table-bordered mb-0">
 						<thead>
@@ -131,13 +94,14 @@
 						  		<td>
 						  			${tList}
 						  		</td>
-						  		<td><input type="checkbox" class="form-check-input"></td>
+						  		<td><input type="radio" name="options"></td>
 						  	</tr>
 						  </c:forEach>
 						</tbody>
 					</table>
-					<div style="text-align: center !important;">
-						<button class="btn btn-info btn-md">Authorize</button>
+					<div style="text-align: center !important; margin: 20px 0 0 0;">
+						<button class="btn btn-info btn-md" id="auth" disabled>Authorize</button>
+						<button class="btn btn-info btn-md" id="decline" disabled>Decline</button>
 					</div>
 					
 				</div>
@@ -145,7 +109,8 @@
 			 
 		</div>
 	<script>
-		
+		$("input:radio").change(function () {$("#auth").prop("disabled", false);});
+		$("input:radio").change(function () {$("#decline").prop("disabled", false);});
 	</script>
 	</body>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

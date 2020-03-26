@@ -20,9 +20,17 @@
 				
 			}
 			
+			#profile{
+				position: relative;
+			}
 			
 			h1, h3,p, label{
 				color: white !important;
+			}
+			
+			#rightDiv{
+				position: absolute;
+				top: 0;
 			}
 			
 			#leftDiv, #leftDiv div, #rightDiv, #rightDiv div{
@@ -111,28 +119,38 @@
 		  </ul>
 		</nav>
 		<div id="container">
-			<h1>Hello internal user</h1>
-			
+			<h1>Profile</h1>
+			<hr class="divider">
 			<div id="profile">
 				<div id="leftDiv">
 					<div>
 						<label>Name:</label>
 						<label>EmployeeID:</label>
+						<label>Username: </label>
+						<label>Phone Number: </label>
 					</div>
 					<div>
 						<label>${name}</label>
 						<label>${employeeID}</label>
+						<label>username</label>
+						<label>Phone Number</label>
 					</div>
 				</div>
 				<div id="rightDiv">
 					<div>
+						<label>Email: </label>
 						<label>Address:</label>	
 						<label>City:</label>
 						<label>Zip:</label>
 						<label>State:</label>
 					</div>
 					<div>
-					    <input type="text" class="form-control" id="address" >
+						<label>Email</label>
+						<label>Address</label>
+						<label>City</label>
+						<label>Zip</label>
+						<label>State</label>
+					    <!-- <input type="text" class="form-control" id="address" >
 					    <input type="text" class='form-control' id="city">
 					  	<input type="text" class='form-control' id="zip" >
 				  		<select class="form-control" id="state" >
@@ -186,7 +204,7 @@
 					        <option>WV</option>
 					        <option>WI</option>
 					        <option>WY</option>
-				      	</select>
+				      	</select> -->
 					</div>
 				</div>
 			</div>

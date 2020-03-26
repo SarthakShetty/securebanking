@@ -162,34 +162,37 @@
 			  <li id="rp" class ="nav-item" ><a class="nav-link" href="/customer/transferEmailPhone">Transfer/Make Payment</a></li>
 			  <li id="tba" class =" nav-item"  ><a class="nav-link" href="/customer/transferBA">Transfer Between Accounts</a></li>
 			  <li id="cd" class ="nav-item" ><a class="nav-link" href="/customer/CreditDebit">Credit/Debit</a></li>
-			  <li id="mp" class ="nav-item" ><a class="nav-link" href="/customer/payment">Make Payment</a></li>
+			  <li id="mp" class ="nav-item" ><a class="nav-link" href="/customer/payment">Payment Requests</a></li>
 			  <li id="pr" class ="nav-item" ><a class="nav-link" id="" href="/customer/profile">Profile</a></li>
 			  <li id="am" class ="active nav-item" ><a class="nav-link" href="/customer/accountManagement">Account Management</a></li>
 			  <li id="hs" class ="nav-item" ><a class="nav-link" href="/customer/helpSupport">Help and Support</a></li>
 		  </ul>
 		</nav>
-		<%
+	<%-- 	<%
 			out.print(session.getAttribute("user_id"));
-		%>
+		%> --%>
 		<div id="container">
-			<h1>Hello ${user_id}</h1>
-			<h2>${FirstName}</h2>
-			
+			<h1>Account Management</h1>
+			<hr class="divider" />
 			<div id="accMan" style="text-align: center;">
 				<div style="margin: 20px 0 0 0; display: block;">
-					<h2>Banking Statements</h2>
-					<hr class="divider"/>
-				  	<button class="btn btn-info btn-md">Download Banking Statements</button>
+					<form action="">
+						<h2>Banking Statements</h2>
+						<hr class="divider"/>
+					  	<input type="submit" class="btn btn-info btn-md" value="Download Banking Statements"/>
+				  	</form>
 				</div>
 				<div style="margin: 40px 0 0 0; display: block;">
-					<h2>Delete an Account</h2>
-					<hr class="divider"/>
-				  	<select style="display: block; margin: 20px auto;">
-				  		<c:forEach items="${accountList}" var="aList">
-				  			<option>${aList}</option>
-				  		</c:forEach>
-				  	</select>
-				  	<button class="btn btn-md btn-info">Submit Request</button>
+					<form action="/customer/accountMangement/0">
+						<h2>Delete an Account</h2>
+						<hr class="divider"/>
+					  	<select name="account" style="display: block; margin: 20px auto;">
+					  		<c:forEach items="${accountList}" var="aList">
+					  			<option>${aList}</option>
+					  		</c:forEach>
+					  	</select>
+					  	<input type="submit" class="btn btn-info btn-md" value="Submit Request"/>
+				  	</form>
 				</div>
 				<div style="margin: 40px 0 0 0; display: block;">
 					<h2>Create New Account</h2>
@@ -198,7 +201,7 @@
 				
 				<div id="form">
 					
-					<form action="/confirmationAccoun" method="POST">
+					<form action="/customer/accountMangement/1" method="POST">
 					  <div class="form-group row">
 					    <label for="firstName" class="col-sm-5 col-form-label">First Name:</label>
 					    <div class="col-sm-7">
@@ -208,50 +211,56 @@
 					  <div class="form-group row">
 					    <label for="lastName" class="col-sm-5 col-form-label">Last Name:</label>
 					    <div class="col-sm-7">
-					      <input type="text" name = "lastName" class="form-control" id="lastName" >
+					      <input type="text" name = "lastName" class="form-control" id="lastName" placeholder="Last Name">
 					    </div>
 					  </div>
 					  <div class="form-group row">
 					    <label for="username" class="col-sm-5 col-form-label">Username:</label>
 					    <div class="col-sm-7">
-					      <input type="text" name = "username" class="form-control" id="username">
+					      <input type="text" name = "username" class="form-control" id="username" placeholder="Username">
 					    </div>
 					  </div>
 					  <div class="form-group row">
 					    <label for="password" class="col-sm-5 col-form-label">Password:</label>
 					    <div class="col-sm-7">
-					      <input type="password" name="password" class="form-control" id="password" >
+					      <input type="password" name="password" class="form-control" id="password" placeholder="Password">
 					    </div>
 					  </div>
 					  <div class="form-group row">
 					    <label for="cPassword" class="col-sm-5 col-form-label">Confirm Password:</label>
 					    <div class="col-sm-7">
-					      <input type="password" name="cPassword" class="form-control" id="cPassword">
+					      <input type="password" name="cPassword" class="form-control" id="cPassword" placeholder="Confirm Password">
 					    </div>
 					  </div>
 					  <div class="form-group row">
 					    <label for="address" class="col-sm-5 col-form-label">Address:</label>
 					    <div class="col-sm-7">
-					      <input type="text" name="address" class="form-control" id="address" >
+					      <input type="text" name="address" class="form-control" id="address" placeholder="Address">
 					    </div>
 					    </div>
 					   <div class="form-group row">
 					    <label for="email" class="col-sm-5 col-form-label">Email:</label>
 					    <div class="col-sm-7">
-					      <input type="text" name="email" class="form-control" id="email" >
+					      <input type="text" name="email" class="form-control" id="email" placeholder="Email">
 					    </div>
 					   </div>
 					   <div class="form-group row">
 					    <label for="mobile" class="col-sm-5 col-form-label">Phone Number:</label>
 					    <div class="col-sm-7">
-					      <input type="text" name="mobile" class="form-control" id="mobile" >
+					      <input type="text" name="mobile" class="form-control" id="mobile" placeholder="Phone Number">
 					    </div>
 					  </div>
+					  <div class="form-group row">
+					    <label for="email" class="col-sm-5 col-form-label">Age:</label>
+					    <div class="col-sm-7">
+					      <input type="text" name="age" class="form-control" id="age" placeholder="Age">
+					    </div>
+					   </div>
 					  <div id="bottom">
 					  	<label>City:</label>
-					  	<input type="text" name="city" class='form-control' id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+					  	<input type="text" name="city" placeholder="City" class='form-control' id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
 					  	<label>Zip:</label>
-					  	<input type="text" name="zip" class='form-control' id="zip" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+					  	<input type="text" name="zip" placeholder="ZIP" class='form-control' id="zip" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
 					  	<label>State:</label>
 					  	<select class="form-control" name="state" id="state" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
 					        <option>AL</option>

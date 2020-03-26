@@ -97,21 +97,12 @@
 			input[type=radio]{
 				margin: 0 10px 0 10px !important;			
 			}
-			
-
-			
-			
-			
-			#editInfo{
-				position: absolute;
-				top: 0%;
-				right: 30%;
-			}
+	
 			
 			#submitInfo{
-				position: absolute;
-				right: 0%;
-				top: 15%;
+				display: block;
+				text-align: center;
+				margin: 20px 0 0 0;
 			}
 			
 			#profile{
@@ -135,26 +126,25 @@
 			  <li id="rp" class =" nav-item" ><a class="nav-link" href="/customer/transferEmailPhone">Transfer/Make Payment</a></li>
 			  <li id="tba" class =" nav-item"  ><a class="nav-link" href="/customer/transferBA">Transfer Between Accounts</a></li>
 			  <li id="cd" class ="nav-item" ><a class="nav-link" href="/customer/CreditDebit">Credit/Debit</a></li>
-			  <li id="mp" class ="nav-item" ><a class="nav-link" href="/customer/payment">Make Payment</a></li>
+			  <li id="mp" class ="nav-item" ><a class="nav-link" href="/customer/payment">Payment Requests</a></li>
 			  <li id="pr" class ="active nav-item" ><a class="nav-link" id="" href="/customer/profile">Profile</a></li>
 			  <li id="am" class ="nav-item" ><a class="nav-link" href="/customer/accountManagement">Account Management</a></li>
 			  <li id="hs" class ="nav-item" ><a class="nav-link" href="/customer/helpSupport">Help and Support</a></li>
 		  </ul>
 		</nav>
-		<%
+		<%-- <%
 			out.print(session.getAttribute("user_id"));
-		%>
+		%> --%>
 		<div id="container">
 			<h1>Profile</h1>
 			<hr class="divider"/>
+			<form action="customer/changeProfile">
 			<div id="profile">
-				<div id="nameInfo">
-					<div>
-						<label style="display: inline-block;">Name:</label>
-						<%-- <label style="display: inline-block;">${name}</label> --%>
-					</div>
-				</div>
 				<div id="editInfo">
+					<div class="form-group row">
+						<label class="col-sm-5 col-form-label">Name:</label>
+						<label class="col=sm-7">${name}</label>
+					</div>
 					<div class="form-group row">
 				    <label for="phone" class="col-sm-5 col-form-label">Phone Number:</label>
 				    <div class="col-sm-7">
@@ -173,6 +163,19 @@
 				      <input type="text" name="email" class="form-control" id="email" >
 				    </div>
 				   </div>
+				   <div class="form-group row">
+				    <label for="address" class="col-sm-5 col-form-label">Age:</label>
+				    <div class="col-sm-7">
+				      <input type="text" class="form-control" id="age" >
+				    </div>
+				  </div>
+				  <div class="form-group row">
+				    <label for="address" class="col-sm-5 col-form-label">Username:</label>
+				    <div class="col-sm-7">
+				      <input type="text" class="form-control" id="username" >
+				    </div>
+				  </div>
+				</div>
 				  <div id="bottom">
 				  	<label>City:</label>
 				  	<input type="text" class='form-control' id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
@@ -234,10 +237,10 @@
 			      
 				  </div>
 				</div>
-				<div id="submitInfo">
-					<button class="btn btn-md btn-info">Make Changes</button>
-				</div>
+			<div id="submitInfo">
+					<input type="submit" class="btn btn-md btn-info" value="Submit Changes">
 			</div>
+			</form>
 		</div>
 	</body>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

@@ -160,56 +160,72 @@
 			  <li id="rp" class ="nav-item" ><a class="nav-link" href="/customer/transferEmailPhone">Transfer/Make Payment</a></li>
 			  <li id="tba" class =" nav-item"  ><a class="nav-link" href="/customer/transferBA">Transfer Between Accounts</a></li>
 			  <li id="cd" class ="active nav-item" ><a class="nav-link" href="/customer/CreditDebit">Credit/Debit</a></li>
-			  <li id="mp" class ="nav-item" ><a class="nav-link" href="/customer/payment">Make Payment</a></li>
+			  <li id="mp" class ="nav-item" ><a class="nav-link" href="/customer/payment">Payment Requests</a></li>
 			  <li id="pr" class ="nav-item" ><a class="nav-link" id="" href="/customer/profile">Profile</a></li>
 			  <li id="am" class ="nav-item" ><a class="nav-link" href="/customer/accountManagement">Account Management</a></li>
 			  <li id="hs" class ="nav-item" ><a class="nav-link" href="/customer/helpSupport">Help and Support</a></li>
 		  </ul>
 		</nav>
-		<%
+		<%-- <%
 			out.print(session.getAttribute("user_id"));
-		%>
+		%> --%>
 		<div id="container">
-			<h1>Hello ${user_id}</h1>
-			<h2>${FirstName}</h2>
+			<h1>Credit/Debit</h1>
+			<hr class="divider" />
+			<form action="/customer/creditOrDebit">
+				<div id="transferB" class="row" style="position: relative;">
+					<div class="col">
+						<h2>From Account</h2>
+						<select name="account">
+							<c:forEach items="${accounts}" var="aList">
+								<option value="${aList}">${aList}</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="col">
+						<h2>Amount</h2>
+						<input type="text" placeholder="Amount" name="transferAmount" id="tbAmount" style="display: block;" value="0" />
+					</div>
+					<div class="col" style="margin: 30px 0 0 0;">
+						<label>
+					    	<input type="radio" name="type_request" id="treq" value="credit" autocomplete="off" checked> Credit
+					  	</label>
+					  	<label>
+					    	<input type="radio" name="type_request" id="preq" value="debit" autocomplete="off"> Debit
+					  	</label>
+					</div>
+				</div>
+				<div style="display: block; text-align: center; margin: 20px 0 0 0;">
+						<input type="button" class="btn btn-md btn-info" value="Request" id="tButton" onclick="checkModal(this)" style="margin: 20px 0 0 0;">
+						<input type="submit" style="display: none;" id="tButtonH">
+				</div>
+			</form>
 			
-			<div id="credit" style="position: relative;">
-				<div>
-					<h2>From Account</h2>
-					<select>
-						<c:forEach items="${accountList}" var="aList">
-							<option>${aList}</option>
-						</c:forEach>
-					</select>
-				</div>
-				<div >
-					<h2>Amount</h2>
-					<input type="text" placeholder="Amount" name="transferAmount" id="cdAmount" style="display: block;" />
-				</div>
-				<div class="col" style="position: absolute; right: 35%; top: 25%;">
-					<form action="">
-						<input type="button" id="cdbutton" class="btn btn-md btn-info" data-toggle="modal" data-target="#myModal" value="Credit/Debit" style="margin: 20px 0 0 0;">
-					</form>
-				</div>
-			</div>
+			<div class="modal fade" id="myModal1" role="dialog" style="display: none;">
+			    <div class="modal-dialog" >
+			    
+			      <!-- Modal content-->
+			      <div class="modal-content">
+			        <div class="modal-header">
+						<h4 class="modal-title" style="color: red;" id="modalHead">Attention</h4>
+			          	<button type="button" class="close" data-dismiss="modal">&times;</button>
+			          
+			        </div>
+			        <div class="modal-body">
+			          <p style="color: black !important;" id="modalmsg">The specified amount caused this request to be considered a critical transaction.</p>
+			        </div>
+			        <div class="modal-footer">
+			          
+			        </div>
+			      </div>
+			      
+			    </div>
+			 </div>
+			 <input type="button" style="display: none;" data-toggle="modal" data-target="#myModal1" id="hiddenBut">
 		</div>
 	<script>
 		
 		
-		
-		$("#cdbutton").on("click", function(){
-			if(document.getElementById("cdAmount").value > 1000){
-				document.getElementById("modalmsg").innerText = "This will be considered a critical transaction and will need to be approved. Credit or Debit?";
-				document.getElementById("modalHead").innerText = "Attention";
-				document.getElementById("modalHead").style.color = "red";
-			}
-			else
-			{
-				document.getElementById("modalmsg").innerText = "Credit or Debit?";
-				document.getElementById("modalHead").innerText = "Which Account?";
-				document.getElementById("modalHead").style.color = "black";
-			}
-		});
 	
 		function checkModal(el){
 			if(el.id == "tButton"){
@@ -220,43 +236,12 @@
 				else
 					document.getElementById("tButtonH").click();
 			}
-			else if(el.id == "accButton"){
-				if(document.getElementById("accAmount").value > 1000){
-					document.getElementById("hiddenBut2").click();
-				}
-				else
-					document.getElementById("accButtonH").click();
-			}
-			else if(el.id == "peButton"){
-				if(document.getElementById("peAmount").value > 1000){
-					document.getElementById("hiddenBut3").click();
-				}
-				else
-					document.getElementById("peButtonH").click();
-			}
 		}
 		
-		$('#myModal2').on('hidden.bs.modal', function () {
+		$('#myModal1').on('hidden.bs.modal', function () {
 			document.getElementById("tButtonH").click();
 		});
-		$('#myModal3').on('hidden.bs.modal', function () {
-			document.getElementById("peButtonH").click();
-		});
-		$('#myModal4').on('hidden.bs.modal', function () {
-			document.getElementById("accButtonH").click();
-		});
 		
-		$("#profileLink").click(function(){
-		    $.ajax({
-		        url : '/login',
-		        method : 'POST',
-		        async : false,
-		        complete : function(data) {
-		            console.log(data.responseText);
-		        }
-		    });
-
-		});
 	</script>
 	</body>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

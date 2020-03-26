@@ -7,7 +7,7 @@
 		<style>
 			#container{
 				width: 70%;
-				margin: 100px auto;
+				margin: 50px auto;
 			}
 			
 			.divider{
@@ -26,120 +26,25 @@
 				color: white !important;
 			}
 			
-			#leftDiv, #leftDiv div, #rightDiv, #rightDiv div{
-				display: inline-block;
-				width: 48%;
-				font-size: large;
-			}
 			
-			#leftDiv label{
-				display: block;
-				margin: 0 0 20px 0;
-			}
-			
-			#rightDiv label{
-				display: block;
-				margin: 0 0 20px 0;
-			}
-			
-			#rightDiv div input,#rightDiv div select {
-				display: block;
-				width: 100%;
-				margin: 0 0 10px 0;
-			}
-			#profile, #transactions, #accounts, #log{
-				margin: 20px 0 0 0;
-			}
-			
-			table{
-				color: white !important;
-			}
-			
-			#listDiv, #authSide{
-				display: inline-block;
-			}
-			
-			#listDiv{
-				width: 70%;
-				display: inline;
-			}
-			
-			#authSide{
-				width: 100%;
-				text-align: center;
-				
-			}
-			
-			#accountDiv{
-				display: inline;
-				height: 100px;
-			}
-			
-			.my-custom-scrollbar {
-				position: relative;
-				height: 300px;
-				overflow: auto;
-			}
-			.table-wrapper-scroll-y {
-				display: block;
-			}
-			
-			#hm form{
-				margin-bottom: 30px;
-				margin-left: 50px;
-			}
-			
-			#newAccDiv{
-				width: 100%;
-				display: none;
-			}
 			input[type=radio]{
 				margin: 0 10px 0 10px !important;			
 			}
+
 			
-			#transferB div, #credit div, #payment div{
-				display: inline-block;
-				margin: 0 100px 0 0;
-			}
-			
-			#payment button{
-				display: block;
-				margin: 10px 0 0 0;
-			}
-			
-			#nameInfo, #editInfo, #submitInfo{
-				display: inline-block;
-			}
-			
-			#editInfo{
-				position: absolute;
-				top: 0%;
-				right: 30%;
-			}
-			
-			#submitInfo{
-				position: absolute;
-				right: 0%;
-				top: 15%;
-			}
-			
-			#profile{
-				position: relative;
-			}
 			
 			#acctransfer, #emailphonetransfer{
 				display: block;
-				width: 80%;
 				text-align: center;
 			}
 			
 			#transfer input{
 				margin: auto;
 			}
-			#acctransfer{
-				margin: 0 50px 0 0;
-			}
 			
+			h3{
+				margin: 30px 0 5px 0 !important;
+			}
 		</style>
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 		<link href="https://fonts.googleapis.com/css?family=Squada+One&display=swap" rel="stylesheet">
@@ -156,40 +61,32 @@
 			  <li id="rp" class ="active nav-item" ><a class="nav-link" href="/customer/transferEmailPhone">Transfer/Make Payment</a></li>
 			  <li id="tba" class =" nav-item"  ><a class="nav-link" href="/customer/transferBA">Transfer Between Accounts</a></li>
 			  <li id="cd" class ="nav-item" ><a class="nav-link" href="/customer/CreditDebit">Credit/Debit</a></li>
-			  <li id="mp" class ="nav-item" ><a class="nav-link" href="/customer/payment">Make Payment</a></li>
+			  <li id="mp" class ="nav-item" ><a class="nav-link" href="/customer/payment">Payment Requests</a></li>
 			  <li id="pr" class ="nav-item" ><a class="nav-link" id="" href="/customer/profile">Profile</a></li>
 			  <li id="am" class ="nav-item" ><a class="nav-link" href="/customer/accountManagement">Account Management</a></li>
 			  <li id="hs" class ="nav-item" ><a class="nav-link" href="/customer/helpSupport">Help and Support</a></li>
 		  </ul>
 		</nav>
-		<%
+		<%-- <%
 			out.print(session.getAttribute("user_id"));
-		%>
+		%> --%>
 		<div id="container">
-			<h1>Hello ${user_id}</h1>
-			<h2>${FirstName}</h2>
 			
 			<div id="transfer">
 				<div id="accTransfer">
 					<h2>Transfer Via Account Number</h2>
 					<hr class="divider"/>
-					<form action="">
+					<form action="/customer/transferFundsOtherAccount">
 						<div>
 							<h3>From Account</h3>
 							<select>
-								<c:forEach items="${accountList}" var="aList">
+								<c:forEach items="${accounts}" var="aList">
 									<option>${aList}</option>
 								</c:forEach>
 							</select>
 						</div>
 						<div>
-							<h3>To</h3>
-							<label>
-						    	<input type="radio" name="custoptions" id="treq" autocomplete="off"> Customer
-						  	</label>
-						  	<label>
-						    	<input type="radio" name="custoptions" id="preq" autocomplete="off"> Merchant
-						  	</label>
+							<h3>To Account</h3>
 						  	<input type="text" placeholder="Account Number" name="accNumber" style="display: block;"/>
 						</div>
 						<div>
@@ -203,7 +100,7 @@
 						</div>
 						<div >
 							<h2>Amount</h2>
-							<input type="text" placeholder="Amount" name="accAmount" style="display: block;" />
+							<input type="text" placeholder="Amount" name="accAmount" id="accAmount" style="display: block;" />
 						</div>
 						<div style="text-align: center;">
 							<input  type="button" value="Request" class="btn btn-md btn-info" id="accButton" onclick="checkModal(this)" style="margin: 25px 0 0 0;">
@@ -214,14 +111,23 @@
 				<div id="emailphonetransfer">
 					<h2>Transfer Via Email/Phone</h2>
 					<hr class="divider"/>
-					<form action="">
+					<form action="/customer/transferFundsEmailPhone">
 						<div>
 							<h3>From Account</h3>
 							<select>
-								<c:forEach items="${accountList}" var="aList">
+								<c:forEach items="${accounts}" var="aList">
 									<option>${aList}</option>
 								</c:forEach>
 							</select>
+						</div>
+						<div>
+							<h3>Phone/Email</h3>
+							<label>
+						    	<input type="radio" name="medium" id="phone" autocomplete="off"> Phone
+						  	</label>
+						  	<label>
+						    	<input type="radio" name="medium" id="email" autocomplete="off"> Email
+						  	</label>
 						</div>
 						<div>
 							<h3>To</h3>
@@ -240,7 +146,7 @@
 						</div>
 						<div >
 							<h2>Amount</h2>
-							<input type="text" placeholder="Amount" name="peAmount" style="display: block;" />
+							<input type="text" placeholder="Amount" name="peAmount" id="peAmount" style="display: block;" />
 						</div>
 						<div style="text-align: center;">
 							<input  type="button" value="Request" class="btn btn-md btn-info" id="peButton" onclick="checkModal(this)" style="margin: 25px 0 0 0;">
@@ -249,36 +155,57 @@
 					</form>
 				</div>
 			</div>
+			<div class="modal fade" id="myModal3" role="dialog" style="display: none;">
+			    <div class="modal-dialog" >
+			    
+			      <!-- Modal content-->
+			      <div class="modal-content">
+			        <div class="modal-header">
+			         <h4 class="modal-title" style="color: red;" id="modalHead">Attention</h4>
+			          <button type="button" class="close" data-dismiss="modal">&times;</button>
+			         
+			        </div>
+			        <div class="modal-body">
+			          <p style="color: black !important;" id="modalmsg">The specified amount caused this request to be considered a critical transaction.</p>
+			        </div>
+			        <div class="modal-footer">
+			          <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+			        </div>
+			      </div>
+			      
+			    </div>
+			 </div>
+			 <input type="button" style="display: none;" data-toggle="modal" data-target="#myModal3" id="hiddenBut2">
+			 
+			 <div class="modal fade" id="myModal4" role="dialog" style="display: none;">
+			    <div class="modal-dialog" >
+			    
+			      <!-- Modal content-->
+			      <div class="modal-content">
+			        <div class="modal-header">
+			        <h4 class="modal-title" style="color: red;" id="modalHead">Attention</h4>
+			          <button type="button" class="close" data-dismiss="modal">&times;</button>
+			          
+			        </div>
+			        <div class="modal-body">
+			          <p style="color: black !important;" id="modalmsg">The specified amount caused this request to be considered a critical transaction.</p>
+			        </div>
+			        <div class="modal-footer">
+			          <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+			        </div>
+			      </div>
+			      
+			    </div>
+			 </div>
+			 <input type="button" style="display: none;" data-toggle="modal" data-target="#myModal4" id="hiddenBut3">
 		</div>
 	<script>
 		
-		
-		
-		$("#cdbutton").on("click", function(){
-			if(document.getElementById("cdAmount").value > 1000){
-				document.getElementById("modalmsg").innerText = "This will be considered a critical transaction and will need to be approved. Credit or Debit?";
-				document.getElementById("modalHead").innerText = "Attention";
-				document.getElementById("modalHead").style.color = "red";
-			}
-			else
-			{
-				document.getElementById("modalmsg").innerText = "Credit or Debit?";
-				document.getElementById("modalHead").innerText = "Which Account?";
-				document.getElementById("modalHead").style.color = "black";
-			}
-		});
 	
 		function checkModal(el){
-			if(el.id == "tButton"){
-				if(document.getElementById("tbAmount").value > 1000){
-					document.getElementById("hiddenBut").click();
-					
-				}
-				else
-					document.getElementById("tButtonH").click();
-			}
-			else if(el.id == "accButton"){
+			if(el.id == "accButton"){
 				if(document.getElementById("accAmount").value > 1000){
+					console.log("wef");
 					document.getElementById("hiddenBut2").click();
 				}
 				else
@@ -293,27 +220,14 @@
 			}
 		}
 		
-		$('#myModal2').on('hidden.bs.modal', function () {
+		$('#myModal3').on('hidden.bs.modal', function () {
 			document.getElementById("tButtonH").click();
 		});
-		$('#myModal3').on('hidden.bs.modal', function () {
+		$('#myModal4').on('hidden.bs.modal', function () {
 			document.getElementById("peButtonH").click();
 		});
-		$('#myModal4').on('hidden.bs.modal', function () {
-			document.getElementById("accButtonH").click();
-		});
 		
-		$("#profileLink").click(function(){
-		    $.ajax({
-		        url : '/login',
-		        method : 'POST',
-		        async : false,
-		        complete : function(data) {
-		            console.log(data.responseText);
-		        }
-		    });
-
-		});
+		
 	</script>
 	</body>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
