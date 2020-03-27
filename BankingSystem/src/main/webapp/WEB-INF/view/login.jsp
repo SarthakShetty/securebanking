@@ -87,7 +87,7 @@
 					
 				</form>
 				<hr class="divider">
-				<p>New User? Sign up here - <a href="/registerOTP">Register</a></p>
+				<p>New User? Sign up here - <a href="/bankingsystem/registerOTP">Register</a></p>
 			</div>
 		</div>
 		
