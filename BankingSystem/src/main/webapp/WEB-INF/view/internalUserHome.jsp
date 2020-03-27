@@ -21,7 +21,7 @@
 			}
 			
 			
-			h1, p, label{
+			h1, h3,p, label{
 				color: white !important;
 			}
 			
@@ -92,7 +92,7 @@
 				margin-left: 50px;
 			}
 			
-			#newAccDiv{
+			#newAccDiv, #modifyAcc{
 				width: 100%;
 				display: none;
 			}
@@ -111,7 +111,7 @@
 			  <li class="active" id="pr" onclick="change(this)"><a href="#">Profile</a></li>
 			  <li id="va" onclick="change(this)"><a href="#">View/Authorize Transactions</a></li>
 			  <li id="am" onclick="change(this)"><a href="#">Account Management</a></li>
-			  <li id="tl" onclick="change(this)"><a href="#">View Transaction Log</a></li>
+			  <li id="tl" onclick="change(this)"><a href="#">Requests</a></li>
 			</ul>
 			<div id="profile">
 				<div id="leftDiv">
@@ -193,7 +193,7 @@
 				</div>
 			</div>
 			<div id="transactions">
-				<h1>Pending Transactions</h1>
+				<h1>Transactions</h1>
 				<hr class="divider"/>
 				<div id="listDiv" class="table-wrapper-scroll-y my-custom-scrollbar">
 					<table class="table table-bordered mb-0">
@@ -230,129 +230,257 @@
 					</select>
 				</div>
 				<div id="hm" style="display: inline-block; text-align: center;">
-					<form action="/deleteAccount">
-						<input type="submit" value="Delete" class="btn btn-info "/>
+					<form action="">
+						<input type="button" value="Delete" class="btn btn-info "/>
 					</form>
-					<form action="/modifyAccount">
-						<input type="submit" value="Modify" class="btn btn-info" /> 
+					<form action="">
+						<input type="button" onclick="modifyAcc()" value="Modify" class="btn btn-info" /> 
 					</form>
 					<form action="">
 						<input type="button" onclick="showNewAcc()" value="Add Account" class="btn btn-info"/>
 					</form>
 				</div>
 				<div id="newAccDiv">
-					<hr class="divider">
-					<form action="/confirmationAccount" method="POST">
-					  <div class="form-group row">
-					    <label for="firstName" class="col-sm-5 col-form-label">First Name:</label>
-					    <div class="col-sm-7">
-					      <input type="text"  class="form-control" id="firstName" >
-					    </div>
-					  </div>
-					  <div class="form-group row">
-					    <label for="lastName" class="col-sm-5 col-form-label">Last Name:</label>
-					    <div class="col-sm-7">
-					      <input type="text" class="form-control" id="lastName" >
-					    </div>
-					  </div>
-					  <div class="form-group row">
-					    <label for="username" class="col-sm-5 col-form-label">Username:</label>
-					    <div class="col-sm-7">
-					      <input type="text"  class="form-control" id="username">
-					    </div>
-					  </div>
-					  <div class="form-group row">
-					    <label for="password" class="col-sm-5 col-form-label">Password:</label>
-					    <div class="col-sm-7">
-					      <input type="password" class="form-control" id="password" >
-					    </div>
-					  </div>
-					  <div class="form-group row">
-					    <label for="cPassword" class="col-sm-5 col-form-label">Confirm Password:</label>
-					    <div class="col-sm-7">
-					      <input type="password"  class="form-control" id="cPassword">
-					    </div>
-					  </div>
-					  <div class="form-group row">
-					    <label for="address" class="col-sm-5 col-form-label">Address:</label>
-					    <div class="col-sm-7">
-					      <input type="text" class="form-control" id="address" >
-					    </div>
-					  </div>
-					  <div id="bottom">
-					  	<label>City:</label>
-					  	<input type="text" class='form-control' id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
-					  	<label>Zip:</label>
-					  	<input type="text" class='form-control' id="zip" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
-					  	<label>State:</label>
-					  	<select class="form-control" id="state" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
-					        <option>AL</option>
-					        <option>AK</option>
-					        <option>AZ</option>
-					        <option>AR</option>
-					        <option>CA</option>
-					        <option>CO</option>
-					        <option>CT</option>
-					        <option>DE</option>
-					        <option>FL</option>
-					        <option>GA</option>
-					        <option>HI</option>
-					        <option>ID</option>
-					        <option>IL</option>
-					        <option>IN</option>
-					        <option>IA</option>
-					        <option>KS</option>
-					        <option>KY</option>
-					        <option>LA</option>
-					        <option>ME</option>
-					        <option>MD</option>
-					        <option>MA</option>
-					        <option>MI</option>
-					        <option>MN</option>
-					        <option>MS</option>
-					        <option>MO</option>
-					        <option>MT</option>
-					        <option>NE</option>
-					        <option>NV</option>
-					        <option>NH</option>
-					        <option>NJ</option>
-					        <option>NM</option>
-					        <option>NY</option>
-					        <option>NC</option>
-					        <option>ND</option>
-					        <option>OH</option>
-					        <option>OK</option>
-					        <option>OR</option>
-					        <option>PA</option>
-					        <option>RI</option>
-					        <option>SC</option>
-					        <option>SD</option>
-					        <option>TN</option>
-					        <option>TX</option>
-					        <option>UT</option>
-					        <option>VT</option>
-					        <option>VA</option>
-					        <option>WA</option>
-					        <option>WV</option>
-					        <option>WI</option>
-					        <option>WY</option>
-				      	</select>
-				      
-						<div>
-							<input type="submit" value="Add" class="btn btn-primary btn-md" style="margin: 30px auto 0 auto;">
-						</div>
-					  </div>
-				</form>
-			</div>
+					<h3>Add Account</h3>
+					<div id="form">
+						<hr class="divider">
+						<form action="/confirmationAccoun" method="POST">
+						  <div class="form-group row">
+						    <label for="firstName" class="col-sm-5 col-form-label">First Name:</label>
+						    <div class="col-sm-7">
+						      <input type="text" name ="firstName"  class="form-control" id="firstName"  placeholder="FirstName" >
+						    </div>
+						  </div>
+						  <div class="form-group row">
+						    <label for="lastName" class="col-sm-5 col-form-label">Last Name:</label>
+						    <div class="col-sm-7">
+						      <input type="text" name = "lastName" class="form-control" id="lastName" >
+						    </div>
+						  </div>
+						  <div class="form-group row">
+						    <label for="username" class="col-sm-5 col-form-label">Username:</label>
+						    <div class="col-sm-7">
+						      <input type="text" name = "username" class="form-control" id="username">
+						    </div>
+						  </div>
+						  <div class="form-group row">
+						    <label for="password" class="col-sm-5 col-form-label">Password:</label>
+						    <div class="col-sm-7">
+						      <input type="password" name="password" class="form-control" id="password" >
+						    </div>
+						  </div>
+						  <div class="form-group row">
+						    <label for="cPassword" class="col-sm-5 col-form-label">Confirm Password:</label>
+						    <div class="col-sm-7">
+						      <input type="password" name="cPassword" class="form-control" id="cPassword">
+						    </div>
+						  </div>
+						  <div class="form-group row">
+						    <label for="address" class="col-sm-5 col-form-label">Address:</label>
+						    <div class="col-sm-7">
+						      <input type="text" name="address" class="form-control" id="address" >
+						    </div>
+						    </div>
+						   <div class="form-group row">
+						    <label for="email" class="col-sm-5 col-form-label">Email:</label>
+						    <div class="col-sm-7">
+						      <input type="text" name="email" class="form-control" id="email" >
+						    </div>
+						    </div>
+						   <div class="form-group row">
+						    <label for="mobile" class="col-sm-5 col-form-label">Phone Number:</label>
+						    <div class="col-sm-7">
+						      <input type="text" name="mobile" class="form-control" id="mobile" >
+						    </div>
+						  </div>
+						  <div id="bottom">
+						  	<label>City:</label>
+						  	<input type="text" name="city" class='form-control' id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+						  	<label>Zip:</label>
+						  	<input type="text" name="zip" class='form-control' id="zip" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+						  	<label>State:</label>
+						  	<select class="form-control" name="state" id="state" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+						        <option>AL</option>
+						        <option>AK</option>
+						        <option>AZ</option>
+						        <option>AR</option>
+						        <option>CA</option>
+						        <option>CO</option>
+						        <option>CT</option>
+						        <option>DE</option>
+						        <option>FL</option>
+						        <option>GA</option>
+						        <option>HI</option>
+						        <option>ID</option>
+						        <option>IL</option>
+						        <option>IN</option>
+						        <option>IA</option>
+						        <option>KS</option>
+						        <option>KY</option>
+						        <option>LA</option>
+						        <option>ME</option>
+						        <option>MD</option>
+						        <option>MA</option>
+						        <option>MI</option>
+						        <option>MN</option>
+						        <option>MS</option>
+						        <option>MO</option>
+						        <option>MT</option>
+						        <option>NE</option>
+						        <option>NV</option>
+						        <option>NH</option>
+						        <option>NJ</option>
+						        <option>NM</option>
+						        <option>NY</option>
+						        <option>NC</option>
+						        <option>ND</option>
+						        <option>OH</option>
+						        <option>OK</option>
+						        <option>OR</option>
+						        <option>PA</option>
+						        <option>RI</option>
+						        <option>SC</option>
+						        <option>SD</option>
+						        <option>TN</option>
+						        <option>TX</option>
+						        <option>UT</option>
+						        <option>VT</option>
+						        <option>VA</option>
+						        <option>WA</option>
+						        <option>WV</option>
+						        <option>WI</option>
+						        <option>WY</option>
+					      	</select>
+					      
+					      <div>
+					      	<input type="submit" value="Finish" class="btn btn-primary btn-md" style="margin: 30px auto 0 auto;">
+					      </div>
+						  </div>
+						</form>
+					</div>
+				</div>
+				<div id="modifyAcc">
+					<h3>Modify</h3>
+					<div id="form">
+						<hr class="divider">
+						<form action="/confirmationAccoun" method="POST">
+						  <div class="form-group row">
+						    <label for="firstName" class="col-sm-5 col-form-label">First Name:</label>
+						    <div class="col-sm-7">
+						      <input type="text" name ="firstName"  class="form-control" id="firstName"  placeholder="FirstName" >
+						    </div>
+						  </div>
+						  <div class="form-group row">
+						    <label for="lastName" class="col-sm-5 col-form-label">Last Name:</label>
+						    <div class="col-sm-7">
+						      <input type="text" name = "lastName" class="form-control" id="lastName" >
+						    </div>
+						  </div>
+						  <div class="form-group row">
+						    <label for="username" class="col-sm-5 col-form-label">Username:</label>
+						    <div class="col-sm-7">
+						      <input type="text" name = "username" class="form-control" id="username">
+						    </div>
+						  </div>
+						  <div class="form-group row">
+						    <label for="password" class="col-sm-5 col-form-label">Password:</label>
+						    <div class="col-sm-7">
+						      <input type="password" name="password" class="form-control" id="password" >
+						    </div>
+						  </div>
+						  <div class="form-group row">
+						    <label for="address" class="col-sm-5 col-form-label">Address:</label>
+						    <div class="col-sm-7">
+						      <input type="text" name="address" class="form-control" id="address" >
+						    </div>
+						    </div>
+						   <div class="form-group row">
+						    <label for="email" class="col-sm-5 col-form-label">Email:</label>
+						    <div class="col-sm-7">
+						      <input type="text" name="email" class="form-control" id="email" >
+						    </div>
+						    </div>
+						   <div class="form-group row">
+						    <label for="mobile" class="col-sm-5 col-form-label">Phone Number:</label>
+						    <div class="col-sm-7">
+						      <input type="text" name="mobile" class="form-control" id="mobile" >
+						    </div>
+						  </div>
+						  <div id="bottom">
+						  	<label>City:</label>
+						  	<input type="text" name="city" class='form-control' id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+						  	<label>Zip:</label>
+						  	<input type="text" name="zip" class='form-control' id="zip" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+						  	<label>State:</label>
+						  	<select class="form-control" name="state" id="state" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+						        <option>AL</option>
+						        <option>AK</option>
+						        <option>AZ</option>
+						        <option>AR</option>
+						        <option>CA</option>
+						        <option>CO</option>
+						        <option>CT</option>
+						        <option>DE</option>
+						        <option>FL</option>
+						        <option>GA</option>
+						        <option>HI</option>
+						        <option>ID</option>
+						        <option>IL</option>
+						        <option>IN</option>
+						        <option>IA</option>
+						        <option>KS</option>
+						        <option>KY</option>
+						        <option>LA</option>
+						        <option>ME</option>
+						        <option>MD</option>
+						        <option>MA</option>
+						        <option>MI</option>
+						        <option>MN</option>
+						        <option>MS</option>
+						        <option>MO</option>
+						        <option>MT</option>
+						        <option>NE</option>
+						        <option>NV</option>
+						        <option>NH</option>
+						        <option>NJ</option>
+						        <option>NM</option>
+						        <option>NY</option>
+						        <option>NC</option>
+						        <option>ND</option>
+						        <option>OH</option>
+						        <option>OK</option>
+						        <option>OR</option>
+						        <option>PA</option>
+						        <option>RI</option>
+						        <option>SC</option>
+						        <option>SD</option>
+						        <option>TN</option>
+						        <option>TX</option>
+						        <option>UT</option>
+						        <option>VT</option>
+						        <option>VA</option>
+						        <option>WA</option>
+						        <option>WV</option>
+						        <option>WI</option>
+						        <option>WY</option>
+					      	</select>
+					      
+					      <div>
+					      	<input type="submit" value="Modify" class="btn btn-primary btn-md" style="margin: 30px auto 0 auto;">
+					      </div>
+						  </div>
+						</form>
+					</div>
+				</div>
 			</div>
 			<div id="log">
-				<h1>Transactions Log</h1>
+				<h1>Requests</h1>
 				<hr class="divider"/>
 				<div id="listDiv" class="table-wrapper-scroll-y my-custom-scrollbar">
 					<table class="table table-bordered mb-0">
 						<thead>
 						  <tr>
-						    <th scope="col">Transactions</th>
+						    <th scope="col">Requests</th>
 						    <th scope="col"></th>
 						  </tr>
 						</thead>
@@ -367,8 +495,13 @@
 						  </c:forEach>
 						</tbody>
 					</table>
+					<div style="text-align: center !important;">
+						<button class="btn btn-info btn-md">Authorize</button>
+					</div>
+					
 				</div>
 			</div>
+			 
 		</div>
 	<script>
 		var active = "pr";
@@ -402,6 +535,12 @@
 		
 		function showNewAcc(){
 			document.getElementById('newAccDiv').style.display = 'block';
+			document.getElementById('modifyAcc').style.display = 'none';
+		}
+		
+		function modifyAcc(){
+			document.getElementById('modifyAcc').style.display = 'block';
+			document.getElementById('newAccDiv').style.display = 'none';
 		}
 	</script>
 	</body>
