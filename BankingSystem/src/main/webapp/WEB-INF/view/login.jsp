@@ -5,7 +5,7 @@
 		<style>
 			#container{
 				width: 40%;
-				margin: 100px auto;
+				margin: 20px auto;
 			}
 			
 			#loginForm{
@@ -57,9 +57,20 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	</head>
 	<body>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		  <label class="navbar-brand" style="margin: 0 !important;">Group 12 Bank</label>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarNav">
+		    <ul class="nav navbar-nav ml-auto">
+		      <li class="nav-item"><a  class="nav-link" href="/"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+		    </ul>
+		   </div>
+    	</nav>
 		<div id="container">
 			<div>
-				<h1>Sign In</h3>
+				<h1>Sign In</h1>
 			</div>
 			<hr class="divider">
 			<div id="loginForm">
@@ -70,13 +81,10 @@
 						<label for="pass" style="margin: 0 auto 30px auto">Forgot Password? Click here - <a href="/forgotPassword">Recover Password</a></label>
 					</div>
 					<div class="btn-group btn-group-toggle" data-toggle="buttons" id="radioGroup">
-					  <label class="btn btn-info active">
+					  <label>
 					    <input type="radio" name="options" id="customer" autocomplete="off" checked> Customer
 					  </label>
-					  <label class="btn btn-info">
-					    <input type="radio" name="options" id="merchant" autocomplete="off"> Merchant
-					  </label>
-					  <label class="btn btn-info">
+					  <label>
 					    <input type="radio" name="options" id="employee" autocomplete="off"> Employee
 					  </label>
 					</div>
@@ -87,7 +95,7 @@
 					
 				</form>
 				<hr class="divider">
-				<p>New User? Sign up here - <a href="/registerOTP">Register</a></p>
+				<p>New User? Sign up here - <a href="/newAccount">Register</a></p>
 			</div>
 		</div>
 		

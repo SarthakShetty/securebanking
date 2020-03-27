@@ -47,6 +47,17 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	</head>
 	<body>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		  <label class="navbar-brand" style="margin: 0 !important;">Group 12 Bank</label>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarNav">
+		    <ul class="nav navbar-nav ml-auto">
+		      <li class="nav-item"><a  class="nav-link" href="/"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+		    </ul>
+		   </div>
+    	</nav>
 		<div id="container">
 			<div>
 				<h1>Forgot Password</h1>
@@ -54,9 +65,10 @@
 			</div>
 			<hr class="divider" />
 			<div>
-				<form action="/verifyOTP" method="POST">
+				<form action="/verifyfpOTP" method="POST">
 					<label>OTP:</label>
-					<input type="text" placeholder="OTP" name="otp" id="pattern" class="form-control">
+					<input name="email" type="text" value="${customer_email}" id="email" class="form-control" readonly="readonly">
+						<input name="OTP" type="password" placeholder="OTP Key"  id="OTPKey" class="form-control"/>
 					<label id="error">${errorMessage}</label>
 					<div style="text-align: center;"> 
 						<input type="submit" class="btn btn-primary btn-md" value="Submit" style="margin: 30px auto 0 auto;">

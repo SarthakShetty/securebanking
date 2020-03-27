@@ -39,7 +39,10 @@ public class CustomerController {
 	public ModelAndView getCustomerDetails(ModelAndView model, HttpServletRequest request) {
 		// TODO logging messages 
 		
-		
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
 		//String userName = request.getParameter("user_id");
 //		//Customer customer = customerDAO.getCustomerProfileDetails(userName);
 //		// TODO need to do the integration with the UI parameters
@@ -53,6 +56,16 @@ public class CustomerController {
 //		model.addObject("age", customer.getCity());
 //		model.addObject("email", customer.getEmail());
 //		model.addObject("user name", customer.getUsername());
+		model.addObject("Firstname", "Brandon");
+		model.addObject("Lastname", "Pacheco");
+		model.addObject("phone", "951-212-4912");
+		model.addObject("address", "your street");
+		model.addObject("city", "phoenix");
+		model.addObject("state", "az");
+		model.addObject("zip", "85281");
+		model.addObject("age", "22");
+		model.addObject("email", "akads");
+		model.addObject("username", "hackerman");
 		model.setViewName("profile");
 		//model.addObject("FirstName", userName);
 		return model;
@@ -61,7 +74,10 @@ public class CustomerController {
 	@RequestMapping(value = "/customer/transferEmailPhone", method=RequestMethod.GET)
 	public ModelAndView getCustomerDetailsEmailPhone(ModelAndView model, HttpServletRequest request) {
 		// TODO logging messages 
-		
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
 //		String userName = request.getParameter("user_name");
 //		// Get the details of the customer using the userName
 //	    Customer customer = customerDAO.getCustomerProfileDetails(userName);
@@ -79,7 +95,10 @@ public class CustomerController {
 	@RequestMapping(value = "/customer/transferBA", method=RequestMethod.GET)
 	public ModelAndView getCustomerDetailsBA(ModelAndView model, HttpServletRequest request) {
 		// TODO logging messages 
-		
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
 //		String userName = request.getParameter("user_name");
 //		// Get the details of the customer using the userName
 //	    Customer customer = customerDAO.getCustomerProfileDetails(userName);
@@ -97,7 +116,10 @@ public class CustomerController {
 	@RequestMapping(value = "/customer/CreditDebit", method=RequestMethod.GET)
 	public ModelAndView getCustomerDetailsCreditDebit(ModelAndView model, HttpServletRequest request) {
 		// TODO logging messages 
-		
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
 //		String userName = request.getParameter("user_name");
 //		// Get the details of the customer using the userName
 //	    Customer customer = customerDAO.getCustomerProfileDetails(userName);
@@ -116,7 +138,10 @@ public class CustomerController {
 	@RequestMapping(value = "/customer/payment", method=RequestMethod.GET)
 	public ModelAndView getCustomerDetailsPayment(ModelAndView model, HttpServletRequest request) {
 		
-		
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
 		/*
 		 * Need to return list of requests for a specific customer
 		 */
@@ -127,7 +152,10 @@ public class CustomerController {
 	
 	@RequestMapping(value = "/customer/accountManagement", method=RequestMethod.GET)
 	public ModelAndView getCustomerDetailsAccMan(ModelAndView model, HttpServletRequest request) {
-		
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
 		
 		/*
 		 * Need to return list of accounts of the user
@@ -139,9 +167,11 @@ public class CustomerController {
 	
 	@RequestMapping(value = "/customer/helpSupport", method=RequestMethod.GET)
 	public ModelAndView getCustomerDetailsHelpSupp(ModelAndView model, HttpServletRequest request) {
-		
 
-		
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
 	    model.setViewName("helpsupport");	 	    	    
 		return model;
 	}
@@ -184,6 +214,10 @@ public class CustomerController {
 	
 	@RequestMapping(value = "/customer/schedule")
 	public ModelAndView schheduleAppointment(ModelAndView model, HttpServletRequest request) {
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
 		/*
 		 * Need to allow the customer to schedule an appointment then return a message saying appointment
 		 * entered.

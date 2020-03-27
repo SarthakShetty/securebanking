@@ -65,15 +65,16 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 	</head>
 	<body>
-	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-			  <ul class="navbar-nav">
-				<li class=" nav-item"  ><a class="nav-link" href="/internalUser/profile">Profile</a></li>
-				  <li class ="  nav-item" ><a class="nav-link" href="/internalUser/transactions">View/Authorize Transactions</a></li>
-				  <li class ="  nav-item"  ><a class="nav-link" href="/internalUser/accountManagement">Account Management</a></li>
-				  <li class ="active nav-item" ><a class="nav-link" href="/internalUser/Requests">Requests</a></li>
-				  
-			  </ul>
-			</nav>
+		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+		<label class="navbar-brand" style="margin: 0 !important;">Group 12 Bank</label>
+		  <ul class="navbar-nav">
+			<li class=" nav-item"  ><a class="nav-link" href="/internalUser/profile">Profile</a></li>
+			  <li class ="  nav-item" ><a class="nav-link" href="/internalUser/transactions">View/Authorize Transactions</a></li>
+			  <li class ="  nav-item"  ><a class="nav-link" href="/internalUser/accountManagement">Account Management</a></li>
+			  <li class ="active nav-item" ><a class="nav-link" href="/internalUser/Requests">Requests</a></li>
+			  
+		  </ul>
+		</nav>
 		<div id="container">
 			<h1>Requests</h1>
 			<hr class="divider"/>

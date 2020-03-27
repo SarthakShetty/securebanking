@@ -9,7 +9,7 @@
 			}
 			
 			#container{
-				margin: 100px auto;
+				margin: 20px auto;
 				text-align: center;
 			}
 			
@@ -49,6 +49,17 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	</head>
 	<body>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		  <label class="navbar-brand" style="margin: 0 !important;">Group 12 Bank</label>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarNav">
+		    <ul class="nav navbar-nav ml-auto">
+		      <li class="nav-item"><a  class="nav-link" href="/"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+		    </ul>
+		   </div>
+    	</nav>
 		<div id="container">
 			<div style="width: 50%; margin: auto;">
 				<h1>Create New Account - Information</h1>
@@ -56,7 +67,7 @@
 			
 			<div id="form">
 				<hr class="divider">
-				<form action="/confirmationAccoun" method="POST">
+				<form action="/otp" method="POST">
 				  <div class="form-group row">
 				    <label for="firstName" class="col-sm-5 col-form-label">First Name:</label>
 				    <div class="col-sm-7">
@@ -103,6 +114,12 @@
 				    <label for="mobile" class="col-sm-5 col-form-label">Phone Number:</label>
 				    <div class="col-sm-7">
 				      <input type="text" name="mobile" class="form-control" id="mobile" >
+				    </div>
+				  </div>
+				  <div class="form-group row">
+				    <label for="mobile" class="col-sm-5 col-form-label">Age:</label>
+				    <div class="col-sm-7">
+				      <input type="text" name="age" class="form-control" id="age" >
 				    </div>
 				  </div>
 				  <div id="bottom">
@@ -163,9 +180,17 @@
 				        <option>WI</option>
 				        <option>WY</option>
 			      	</select>
-			      
 			      <div>
-			      	<input type="submit" value="Finish" class="btn btn-primary btn-md" style="margin: 30px auto 0 auto;">
+							<h3 style="margin: 20px 0 20px 0; color: white;">Type of User</h3>
+							<label>
+						    	<input type="radio" name="type_user" id="treq" autocomplete="off" checked> Customer
+						  	</label>
+						  	<label>
+						    	<input type="radio" name="type_user" id="preq" autocomplete="off"> Employee
+						  	</label>
+						</div>
+			      <div>
+			      	<input type="submit" value="Next" class="btn btn-primary btn-md" style="margin: 30px auto 0 auto;">
 			      </div>
 				  </div>
 				</form>

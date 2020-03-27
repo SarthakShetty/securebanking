@@ -26,6 +26,10 @@ public class InternalUserController {
 	
 	@RequestMapping(value = "/internalUser/profile", method = RequestMethod.GET)
 	public ModelAndView getInternalUserDetails(ModelAndView model, HttpServletRequest request) {
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
 		// TODO logging messages 
 //		String userName = request.getParameter("user_id");
 //		InternalUser employee = employeeDAO.getEmployeeProfileDetails(userName);
@@ -45,6 +49,10 @@ public class InternalUserController {
 	
 	@RequestMapping(value = "/internalUser/transactions", method = RequestMethod.GET)
 	public ModelAndView getInternalUserDetailsTransactions(ModelAndView model, HttpServletRequest request) {
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
 		/*
 		 * Need to return the list of transactions
 		 */
@@ -58,6 +66,10 @@ public class InternalUserController {
 	
 	@RequestMapping(value = "/internalUser/accountManagement", method = RequestMethod.GET)
 	public ModelAndView getInternalUserDetailsAccounts(ModelAndView model, HttpServletRequest request) {
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
 		/*
 		 * Need to return the list of employee accounts and their information
 		 */
@@ -67,6 +79,10 @@ public class InternalUserController {
 	
 	@RequestMapping(value = "/internalUser/Requests", method = RequestMethod.GET)
 	public ModelAndView getInternalUserDetailsRequests(ModelAndView model, HttpServletRequest request) {
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
 		/*
 		 * Need to return the list of all requests.
 		 */
@@ -76,6 +92,10 @@ public class InternalUserController {
 	
 	@RequestMapping(value = "/internalUser/modifyAccount", method = RequestMethod.POST)
 	public ModelAndView modifyInternalUserAccount(ModelAndView model, HttpServletRequest request) {
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
 		/*
 		 * Need to be able to modify employees account
 		 * then return list of employee accounts and a message saying account modified
@@ -86,6 +106,10 @@ public class InternalUserController {
 	
 	@RequestMapping(value = "/internalUser/createdEmployee", method = RequestMethod.POST)
 	public ModelAndView createInternalUserAccount(ModelAndView model, HttpServletRequest request) {
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
 		/*
 		 * Need to be able to create an employees account
 		 * then return the list of employees and a message saying account created
@@ -96,6 +120,10 @@ public class InternalUserController {
 	
 	@RequestMapping(value = "/internalUser/deletedEmployee", method = RequestMethod.POST)
 	public ModelAndView deleteInternalUserAccount(ModelAndView model, HttpServletRequest request) {
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
 		/*
 		 * Need to be able to delete an employees account
 		 * then return the list of employees and a message saying account deleted
@@ -106,6 +134,10 @@ public class InternalUserController {
 	
 	@RequestMapping(value = "/internalUser/authorizeEmployeeRequests", method = RequestMethod.POST)
 	public ModelAndView authorizeInternalUserRequests(ModelAndView model, HttpServletRequest request) {
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
 		/*
 		 * Need to be able to authorize employee request and erase it from the requests
 		 * then return the list of requests and a message saying request authorized
@@ -116,6 +148,10 @@ public class InternalUserController {
 	
 	@RequestMapping(value = "/internalUser/declineEmployeeRequests", method = RequestMethod.POST)
 	public ModelAndView declineInternalUserRequests(ModelAndView model, HttpServletRequest request) {
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
 		/*
 		 * Need to be able to decline employee request and erase it from the requests
 		 * then return the list of requests and a message saying request decline

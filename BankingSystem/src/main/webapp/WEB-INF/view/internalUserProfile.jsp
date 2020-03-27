@@ -110,6 +110,7 @@
 	</head>
 	<body>
 		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+		<label class="navbar-brand" style="margin: 0 !important;">Group 12 Bank</label>
 		  <ul class="navbar-nav">
 			<li class="active nav-item"  ><a class="nav-link" href="/internalUser/profile">Profile</a></li>
 			  <li class =" nav-item" ><a class="nav-link" href="/internalUser/transactions">View/Authorize Transactions</a></li>

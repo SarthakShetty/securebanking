@@ -49,6 +49,7 @@
 	</head>
 	<body>
 		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+		<label class="navbar-brand" style="margin: 0 !important;">Group 12 Bank</label>
 		  <ul class="navbar-nav">
 		    <li class="nav-item" id="acc" ><a class="nav-link" href="/customer/Account">Account</a></li>
 			  <li id="rp" class =" nav-item" ><a class="nav-link" href="/customer/transferEmailPhone">Transfer/Make Payment</a></li>

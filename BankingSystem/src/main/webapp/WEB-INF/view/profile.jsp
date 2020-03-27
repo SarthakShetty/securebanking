@@ -121,6 +121,10 @@
 	</head>
 	<body>
 		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+			<a class="navbar-brand" href="#">Group 12 Bank</a>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
 		  <ul class="navbar-nav">
 			<li class="nav-item" id="acc" ><a class="nav-link" href="/customer/Account">Account</a></li>
 			  <li id="rp" class =" nav-item" ><a class="nav-link" href="/customer/transferEmailPhone">Transfer/Make Payment</a></li>
@@ -143,46 +147,46 @@
 				<div id="editInfo">
 					<div class="form-group row">
 						<label class="col-sm-5 col-form-label">Name:</label>
-						<label class="col=sm-7">${name}</label>
+						<label class="col=sm-7" style="padding: 0 15px;"><% out.print(request.getSession().getAttribute("admin")); %></label>
 					</div>
 					<div class="form-group row">
 				    <label for="phone" class="col-sm-5 col-form-label">Phone Number:</label>
 				    <div class="col-sm-7">
-				      <input type="text"  class="form-control" id="phone">
+				      <input type="text"  class="form-control" id="phone" value="${phone}">
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="address" class="col-sm-5 col-form-label">Address:</label>
 				    <div class="col-sm-7">
-				      <input type="text" class="form-control" id="address" >
+				      <input type="text" class="form-control" id="address" value="${address}">
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="email" class="col-sm-5 col-form-label">Email:</label>
 				    <div class="col-sm-7">
-				      <input type="text" name="email" class="form-control" id="email" >
+				      <input type="text" name="email" class="form-control" id="email" value="${email }">
 				    </div>
 				   </div>
 				   <div class="form-group row">
 				    <label for="address" class="col-sm-5 col-form-label">Age:</label>
 				    <div class="col-sm-7">
-				      <input type="text" class="form-control" id="age" >
+				      <input type="text" class="form-control" id="age" value="${age}">
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="address" class="col-sm-5 col-form-label">Username:</label>
 				    <div class="col-sm-7">
-				      <input type="text" class="form-control" id="username" >
+				      <input type="text" class="form-control" id="username" value="${username }">
 				    </div>
 				  </div>
 				</div>
 				  <div id="bottom">
 				  	<label>City:</label>
-				  	<input type="text" class='form-control' id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+				  	<input type="text" class='form-control' id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;" value="${city}">
 				  	<label>Zip:</label>
-				  	<input type="text" class='form-control' id="zip" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+				  	<input type="text" class='form-control' id="zip" style="display: inline-block; width: 100px; margin: 0 30px 0 0;" value="${zip}">
 				  	<label>State:</label>
-				  	<select class="form-control" id="state" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+				  	<select class="form-control" id="state" style="display: inline-block; width: 100px; margin: 0 30px 0 0;" value="${state}">
 				        <option>AL</option>
 				        <option>AK</option>
 				        <option>AZ</option>
