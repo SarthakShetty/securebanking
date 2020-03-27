@@ -152,25 +152,32 @@
 		</style>
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 		<link href="https://fonts.googleapis.com/css?family=Squada+One&display=swap" rel="stylesheet">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 		
 	</head>
 	<body>
+		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+		  <ul class="navbar-nav">
+		    <li class="active nav-item" id="acc" onclick="change(this)"><a class="nav-link" href="#">Account</a></li>
+			  <li id="rp" class ="nav-item" onclick="change(this)"><a class="nav-link" href="#">Transfer/Make Payment</a></li>
+			  <li id="tba" class ="nav-item"  onclick="change(this)"><a class="nav-link" href="#">Transfer Between Accounts</a></li>
+			  <li id="cd" class ="nav-item" onclick="change(this)"><a class="nav-link" href="#">Credit/Debit</a></li>
+			  <li id="mp" class ="nav-item" onclick="change(this)"><a class="nav-link" href="#">Make Payment</a></li>
+			  <li id="pr" class ="nav-item" onclick="change(this)"><a class="nav-link" id="" href="/customer/profile">Profile</a></li>
+			  <li id="am" class ="nav-item" onclick="change(this)"><a class="nav-link" href="#">Account Management</a></li>
+			  <li id="hs" class ="nav-item" onclick="change(this)"><a class="nav-link" href="#">Help and Support</a></li>
+		  </ul>
+		</nav>
+		<%
+			out.print(session.getAttribute("user_id"));
+		%>
 		<div id="container">
 			<h1>Hello ${user_id}</h1>
-			<ul class="nav nav-tabs">
-			  <li class="active" id="acc" onclick="change(this)"><a href="#">Account</a></li>
-			  <li id="rp" onclick="change(this)"><a href="#">Transfer/Make Payment</a></li>
-			  <li id="tba" onclick="change(this)"><a href="#">Transfer Between Accounts</a></li>
-			  <li id="cd" onclick="change(this)"><a href="#">Credit/Debit</a></li>
-			  <li id="mp" onclick="change(this)"><a href="#">Make Payment</a></li>
-			  <li id="pr" onclick="change(this)"><a id="profileLink" href="#">Profile</a></li>
-			  <li id="am" onclick="change(this)"><a href="#">Account Management</a></li>
-			  <li id="hs" onclick="change(this)"><a href="#">Help and Support</a></li>
-			</ul>
 			<h2>${FirstName}</h2>
+			
 			<div id="account">
 				<h2 style="color: white;">Balance</h3>
 				<div id="leftDiv">
@@ -768,8 +775,8 @@
 		
 		$("#profileLink").click(function(){
 		    $.ajax({
-		        url : '/customer/profile',
-		        method : 'GET',
+		        url : '/login',
+		        method : 'POST',
 		        async : false,
 		        complete : function(data) {
 		            console.log(data.responseText);
