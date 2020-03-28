@@ -12,6 +12,10 @@ public class Constants {
 	
 	public static String TRANSACTION_TYPE_DEBIT = "Debit";
 	
+	public static String TRANSACTION_SUCCESFUL = "Transaction Sucess";
+	
+	public static String TRANSACTION_FAILED = "Transaction Failed";
+	
 	public static char TRANSACTION_TERMINATED = 'T';
 
 	public static char TRANSACTION_PENDING = 'P';
@@ -19,6 +23,7 @@ public class Constants {
 	public static char TRANSACTION_COMPLETED = 'C';
 
 	public static char TRANSACTION_CUSTOMER_ACCEPTANCE = 'X';
+	
 	
 	
 
