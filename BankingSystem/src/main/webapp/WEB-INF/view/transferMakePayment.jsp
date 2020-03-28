@@ -80,7 +80,7 @@
 					<form action="/customer/transferFundsOtherAccount">
 						<div>
 							<h3>From Account</h3>
-							<select>
+							<select name="from_acc">
 								<c:forEach items="${accounts}" var="aList">
 									<option>${aList}</option>
 								</c:forEach>
@@ -89,24 +89,33 @@
 						<div>
 							<h3>To Account</h3>
 						  	<input type="text" placeholder="Account Number" name="accNumber" style="display: block;"/>
+						  	<div id="errorTo" style="display: none;">
+							<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid account number.</font></p>
+						</div>
 						</div>
 						<div>
 							<h3>Type of Request</h3>
 							<label>
-						    	<input type="radio" name="request" id="treq" autocomplete="off"> Transfer
+						    	<input type="radio" name="request" id="treq" autocomplete="off" value="transfer"> Transfer
 						  	</label>
 						  	<label>
-						    	<input type="radio" name="request" id="preq" autocomplete="off"> Request Payment
+						    	<input type="radio" name="request" id="preq" autocomplete="off" value="request"> Request Payment
 						  	</label>
 						</div>
 						<div >
 							<h2>Amount</h2>
 							<input type="text" placeholder="Amount" name="accAmount" id="accAmount" style="display: block;" />
+							<div id="error" style="display: none;">
+							<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid amount.</font></p>
+						</div>
 						</div>
 						<div style="text-align: center;">
 							<input  type="button" value="Request" class="btn btn-md btn-info" id="accButton" onclick="checkModal(this)" style="margin: 25px 0 0 0;">
 							<input  type="submit" id="accButtonH"  style="display: none;">
+							<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
+							<p style="margin: 20px 0 0 0;"><font color="green">${msg}</font></p>
 						</div>
+						
 					</form>
 				</div>
 				<div id="emailphonetransfer">
@@ -115,7 +124,7 @@
 					<form action="/customer/transferFundsEmailPhone">
 						<div>
 							<h3>From Account</h3>
-							<select>
+							<select name="from_accP">
 								<c:forEach items="${accounts}" var="aList">
 									<option>${aList}</option>
 								</c:forEach>
@@ -124,34 +133,45 @@
 						<div>
 							<h3>Phone/Email</h3>
 							<label>
-						    	<input type="radio" name="medium" id="phone" autocomplete="off"> Phone
+						    	<input type="checkbox" name="byPhone" id="phone" autocomplete="off" value="phone"> Phone
 						  	</label>
 						  	<label>
-						    	<input type="radio" name="medium" id="email" autocomplete="off"> Email
+						    	<input type="checkbox" name="byEmail" id="email" autocomplete="off" value="email"> Email
 						  	</label>
+						  	<div id="error3" style="display: none;">
+							<p style="margin: 20px 0 0 0;"><font color="red">Please select at least one of the options.</font></p>
+							</div>
 						</div>
 						<div>
 							<h3>To</h3>
 							
-						  	<input type="text" placeholder="Phone Number" name="phoneNumver" style="display: block; margin: 0 auto 30px auto;"/>
-						  	<input type="text" placeholder="Email Address" name="emailAddress" style="display: block;"/>
+						  	<input type="text" placeholder="Phone Number" name="phoneNumber" id="pn" style="display: block; margin: 0 auto 30px auto;"/>
+						  	<input type="text" placeholder="Email Address" name="emailAddress" id="ea" style="display: block;"/>
+						  	<div id="error2" style="display: none;">
+							<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid phone number or email.</font></p>
+							</div>
 						</div>
 						<div>
 							<h3>Type of Request</h3>
 							<label>
-						    	<input type="radio" name="request" id="treq" autocomplete="off"> Transfer
+						    	<input type="radio" name="request1" id="treq" autocomplete="off" value="transfer"> Transfer
 						  	</label>
 						  	<label>
-						    	<input type="radio" name="request" id="preq" autocomplete="off"> Request Payment
+						    	<input type="radio" name="request1" id="preq" autocomplete="off" value="request"> Request Payment
 						  	</label>
 						</div>
 						<div >
 							<h2>Amount</h2>
 							<input type="text" placeholder="Amount" name="peAmount" id="peAmount" style="display: block;" />
+							<div id="error1" style="display: none;">
+							<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid amount.</font></p>
+						</div>
 						</div>
 						<div style="text-align: center;">
 							<input  type="button" value="Request" class="btn btn-md btn-info" id="peButton" onclick="checkModal(this)" style="margin: 25px 0 0 0;">
 							<input  type="submit" id="peButtonH"  style="display: none;">
+							<p style="margin: 20px 0 0 0;"><font color="red">${error_msg1}</font></p>
+							<p style="margin: 20px 0 0 0;"><font color="green">${msg1}</font></p>
 						</div>
 					</form>
 				</div>
@@ -204,20 +224,50 @@
 		
 	
 		function checkModal(el){
-			if(el.id == "accButton"){
-				if(document.getElementById("accAmount").value > 1000){
-					console.log("wef");
-					document.getElementById("hiddenBut2").click();
-				}
-				else
-					document.getElementById("accButtonH").click();
+				if(el.id == "accButton"){
+					if(document.getElementById("accAmount").value < 0 || document.getElementById("accAmount").value.length == 0){
+						document.getElementById("error").style.display = 'block';
+						
+					}
+					else if(document.getElementById("accNumber").value < 0 || document.getElementById("accNumber").value.length == 0){
+						document.getElementById("error").style.display = 'block';
+						
+					}
+					else if(document.getElementById("accAmount").value > 1000){
+						
+						document.getElementById("hiddenBut2").click();
+					}
+					else
+						document.getElementById("accButtonH").click();
 			}
 			else if(el.id == "peButton"){
-				if(document.getElementById("peAmount").value > 1000){
+				if(!document.getElementById("byPhone").checked && !document.getElementById("byEmail").checked){
+					document.getElementById("error3").style.display = 'block';
+				}
+				else if(document.getElementById("byPhone").checked){
+					if(document.getElementById("emailAddress").value.length == 0){
+						document.getElementById("error2").style.display = 'block';
+						
+					}
+					
+				}
+				else if(document.getElementById("byEmail").checked){
+					if(document.getElementById("emailAddress").value.length == 0){
+						document.getElementById("error2").style.display = 'block';
+						
+					}
+				}
+				if(document.getElementById("peAmount").value < 0 || document.getElementById("peAmount").value.length == 0){
+					document.getElementById("error1").style.display = 'block';
+					
+				}
+				else if(document.getElementById("peAmount").value > 1000){
 					document.getElementById("hiddenBut3").click();
 				}
 				else
 					document.getElementById("peButtonH").click();
+				
+				
 			}
 		}
 		

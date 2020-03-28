@@ -186,6 +186,9 @@
 					<div class="col">
 						<h2>Amount</h2>
 						<input type="text" placeholder="Amount" name="transferAmount" id="tbAmount" style="display: block;" value="0" />
+						<div id="error" style="display: none;">
+							<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid amount.</font></p>
+						</div>
 					</div>
 					<div class="col" style="margin: 30px 0 0 0;">
 						<label>
@@ -200,6 +203,8 @@
 						<input type="button" class="btn btn-md btn-info" value="Request" id="tButton" onclick="checkModal(this)" style="margin: 20px 0 0 0;">
 						<input type="submit" style="display: none;" id="tButtonH">
 				</div>
+				<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
+				<p style="margin: 20px 0 0 0;"><font color="green">${msg}</font></p>
 			</form>
 			
 			<div class="modal fade" id="myModal1" role="dialog" style="display: none;">
@@ -230,7 +235,11 @@
 	
 		function checkModal(el){
 			if(el.id == "tButton"){
-				if(document.getElementById("tbAmount").value > 1000){
+				if(document.getElementById("tbAmount").value < 0 || document.getElementById("tbAmount").value.length == 0){
+					document.getElementById("error").style.display = 'block';
+					
+				}
+				else if(document.getElementById("tbAmount").value > 1000){
 					document.getElementById("hiddenBut").click();
 					
 				}

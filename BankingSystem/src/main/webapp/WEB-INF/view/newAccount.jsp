@@ -67,66 +67,66 @@
 			
 			<div id="form">
 				<hr class="divider">
-				<form action="/otp" method="POST">
+				<form action="/confirmationAccount" method="POST">
 				  <div class="form-group row">
 				    <label for="firstName" class="col-sm-5 col-form-label">First Name:</label>
 				    <div class="col-sm-7">
-				      <input type="text" name ="firstName"  class="form-control" id="firstName"  placeholder="FirstName" >
+				      <input type="text" name ="firstName"  class="form-control" id="firstName"  placeholder="First Name" >
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="lastName" class="col-sm-5 col-form-label">Last Name:</label>
 				    <div class="col-sm-7">
-				      <input type="text" name = "lastName" class="form-control" id="lastName" >
+				      <input type="text" name = "lastName" class="form-control" id="lastName" placeholder="Last Name">
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="username" class="col-sm-5 col-form-label">Username:</label>
 				    <div class="col-sm-7">
-				      <input type="text" name = "username" class="form-control" id="username">
+				      <input type="text" name = "username" class="form-control" id="username" placeholder="Username">
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="password" class="col-sm-5 col-form-label">Password:</label>
 				    <div class="col-sm-7">
-				      <input type="password" name="password" class="form-control" id="password" >
+				      <input type="password" name="password" class="form-control" id="password" placeholder="Password">
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="cPassword" class="col-sm-5 col-form-label">Confirm Password:</label>
 				    <div class="col-sm-7">
-				      <input type="password" name="cPassword" class="form-control" id="cPassword">
+				      <input type="password" name="cPassword" class="form-control" id="cPassword" placeholder="Confirm Password">
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="address" class="col-sm-5 col-form-label">Address:</label>
 				    <div class="col-sm-7">
-				      <input type="text" name="address" class="form-control" id="address" >
+				      <input type="text" name="address" class="form-control" id="address" placeholder="Address">
 				    </div>
 				    </div>
 				   <div class="form-group row">
 				    <label for="email" class="col-sm-5 col-form-label">Email:</label>
 				    <div class="col-sm-7">
-				      <input type="text" name="email" class="form-control" id="email" >
+				      <input type="text" name="email" class="form-control" id="email" placeholder="Email">
 				    </div>
 				    </div>
 				   <div class="form-group row">
 				    <label for="mobile" class="col-sm-5 col-form-label">Phone Number:</label>
 				    <div class="col-sm-7">
-				      <input type="text" name="mobile" class="form-control" id="mobile" >
+				      <input type="text" name="mobile" class="form-control" id="mobile" placeholder="Phone Number">
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="mobile" class="col-sm-5 col-form-label">Age:</label>
 				    <div class="col-sm-7">
-				      <input type="text" name="age" class="form-control" id="age" >
+				      <input type="text" name="age" class="form-control" id="age" placeholder="Age">
 				    </div>
 				  </div>
 				  <div id="bottom">
 				  	<label>City:</label>
-				  	<input type="text" name="city" class='form-control' id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+				  	<input type="text" name="city" placeholder="City" class='form-control' id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
 				  	<label>Zip:</label>
-				  	<input type="text" name="zip" class='form-control' id="zip" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+				  	<input type="text" name="zip" placeholder="Zip" class='form-control' id="zip" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
 				  	<label>State:</label>
 				  	<select class="form-control" name="state" id="state" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
 				        <option>AL</option>
@@ -180,17 +180,28 @@
 				        <option>WI</option>
 				        <option>WY</option>
 			      	</select>
+			      	<div>
+							<h3 style="margin: 20px 0 20px 0; color: white;">Type of Account</h3>
+							<label>
+						    	<input type="radio" name="type_account" id="treq" autocomplete="off" checked value="credit"> Credit
+						  	</label>
+						  	<label>
+						    	<input type="radio" name="type_account" id="preq" autocomplete="off" value="debit"> Debit
+						  	</label>
+						</div>
+			      <div>
 			      <div>
 							<h3 style="margin: 20px 0 20px 0; color: white;">Type of User</h3>
 							<label>
-						    	<input type="radio" name="type_user" id="treq" autocomplete="off" checked> Customer
+						    	<input type="radio" name="type_user" id="treq" autocomplete="off" checked value="customer"> Customer
 						  	</label>
 						  	<label>
-						    	<input type="radio" name="type_user" id="preq" autocomplete="off"> Employee
+						    	<input type="radio" name="type_user" id="preq" autocomplete="off" value="employee"> Employee
 						  	</label>
 						</div>
 			      <div>
 			      	<input type="submit" value="Next" class="btn btn-primary btn-md" style="margin: 30px auto 0 auto;">
+			      	<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
 			      </div>
 				  </div>
 				</form>

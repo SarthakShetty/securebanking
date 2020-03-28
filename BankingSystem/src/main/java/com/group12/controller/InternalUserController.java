@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.group12.dao.InternalUserDAO;
 import com.group12.models.InternalUser;
@@ -91,34 +94,78 @@ public class InternalUserController {
    }
 	
 	@RequestMapping(value = "/internalUser/modifyAccount", method = RequestMethod.POST)
-	public ModelAndView modifyInternalUserAccount(ModelAndView model, HttpServletRequest request) {
+	public RedirectView modifyInternalUserAccount(RedirectView model,HttpServletRequest request, @RequestParam("accNumber") String accNum,
+			@RequestParam("firstNameModify") String fName, @RequestParam("lastNameModify") String lName, @RequestParam("usernameModify") String uName,
+			@RequestParam("passwordModify") String password, @RequestParam("cPasswordModify") String cPassword, @RequestParam("addressModify") String address,
+			@RequestParam("emailModify") String email, @RequestParam("mobileModify") String phoneNumber, @RequestParam("ageModify") String age,
+			@RequestParam("cityModify") String city, @RequestParam("zipModify") String zip, @RequestParam("stateModify") String state, RedirectAttributes attr) {
 		if(request.getSession().getAttribute("role") == null){
-			model = new ModelAndView("redirect:/");
+			model = new RedirectView("/");
 			return model;
 		}
+		
+		boolean empty = checkEmptyFields(fName, lName, uName, password, cPassword, address, email, phoneNumber, age, city, zip);
+		boolean noMatch = checkMatchFields(fName, lName, uName, password, cPassword, address, email, phoneNumber, age, city, zip);
+		
+		if(empty){
+			model = new RedirectView("/internalUser/accountManagement", true);
+			attr.addFlashAttribute("error_msg", "Please fill out all the fields.");
+			
+			return model;
+		}
+		else if(noMatch){
+			model = new RedirectView("/internalUser/accountManagement", true);
+			attr.addFlashAttribute("error_msg", "Invalid characters entered, please use valid characters.");
+			
+			return model;
+		}
+		
 		/*
 		 * Need to be able to modify employees account
 		 * then return list of employee accounts and a message saying account modified
 		 */
-		model.setViewName("internalUserAccountManagement");
+		model = new RedirectView("/internalUser/accountManagement");
+		attr.addFlashAttribute("msg","Account modified.");
 		return model;
    }
 	
-	@RequestMapping(value = "/internalUser/createdEmployee", method = RequestMethod.POST)
-	public ModelAndView createInternalUserAccount(ModelAndView model, HttpServletRequest request) {
+	@RequestMapping(value = "/internalUser/createEmployee", method = RequestMethod.POST)
+	public RedirectView createInternalUserAccount(RedirectView model,HttpServletRequest request,
+			@RequestParam("firstNameAdd") String fName, @RequestParam("lastNameAdd") String lName, @RequestParam("usernameAdd") String uName,
+			@RequestParam("passwordAdd") String password, @RequestParam("cPasswordAdd") String cPassword, @RequestParam("addressAdd") String address,
+			@RequestParam("emailAdd") String email, @RequestParam("mobileAdd") String phoneNumber, @RequestParam("ageAdd") String age,
+			@RequestParam("cityAdd") String city, @RequestParam("zipAdd") String zip, @RequestParam("stateAdd") String state, RedirectAttributes attr) {
 		if(request.getSession().getAttribute("role") == null){
-			model = new ModelAndView("redirect:/");
+			model = new RedirectView("/");
+			return model;
+		}
+		
+		boolean empty = checkEmptyFields(fName, lName, uName, password, cPassword, address, email, phoneNumber, age, city, zip);
+		boolean noMatch = checkMatchFields(fName, lName, uName, password, cPassword, address, email, phoneNumber, age, city, zip);
+		
+		if(empty){
+			model = new RedirectView("/internalUser/accountManagement", true);
+			attr.addFlashAttribute("error_msg", "Please fill out all the fields.");
+			
+			return model;
+		}
+		else if(noMatch){
+			model = new RedirectView("/internalUser/accountManagement", true);
+			attr.addFlashAttribute("error_msg", "Invalid characters entered, please use valid characters.");
+			
 			return model;
 		}
 		/*
 		 * Need to be able to create an employees account
-		 * then return the list of employees and a message saying account created
+		 * 
 		 */
-		model.setViewName("internalUserAccountManagement");
+		
+		model = new RedirectView("/internalUser/accountManagement");
+		attr.addFlashAttribute("msg","Account created.");
 		return model;
    }
 	
-	@RequestMapping(value = "/internalUser/deletedEmployee", method = RequestMethod.POST)
+	@RequestMapping(value = "/internalUser/deleteAccount", method = RequestMethod.POST)
 	public ModelAndView deleteInternalUserAccount(ModelAndView model, HttpServletRequest request) {
 		if(request.getSession().getAttribute("role") == null){
 			model = new ModelAndView("redirect:/");
@@ -159,5 +206,26 @@ public class InternalUserController {
 		model.setViewName("internalUserAccountManagement");
 		return model;
    }
+	
+	private boolean checkEmptyFields(String fName, String lName, String uName, String password, String cPassword,
+			String address, String email, String phoneNumber, String age, String city, String zip){
+		if(fName.isEmpty() || lName.isEmpty() || uName.isEmpty() || password.isEmpty() || cPassword.isEmpty() || address.isEmpty()
+				|| email.isEmpty() || phoneNumber.isEmpty() || age.isEmpty() || city.isEmpty() || zip.isEmpty()){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	private boolean checkMatchFields(String fName, String lName, String uName, String password, String cPassword,
+			String address, String email, String phoneNumber, String age, String city, String zip){
+		if(!fName.matches("^[a-zA-Z]+$") || !lName.matches("^[a-zA-Z]+$") || !uName.matches("^[a-zA-Z0-9]+$") || !password.matches("^[a-zA-Z0-9]+$") 
+				|| !cPassword.matches("^[a-zA-Z0-9]+$") || !address.matches("^[a-zA-Z0-9# ]+$") || !email.matches("^[a-zA-Z0-9@.]+$") || !phoneNumber.matches("^[-0-9]+$")
+				|| !age.matches("^[0-9]+$") || !city.matches("^[a-zA-Z]+$") || !zip.matches("^[0-9]+$")){
+			return true;
+		}
+		
+		return false;
+	}
 	
 }

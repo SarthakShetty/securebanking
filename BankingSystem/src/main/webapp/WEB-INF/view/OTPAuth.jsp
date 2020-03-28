@@ -74,6 +74,7 @@
 					<hr class="divider">
 					<div>
 						<input type="submit" class="btn btn-primary btn-md" value="Next" style="margin: 20px auto 0 auto;"/>
+						<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
 					</div>
 				</form>
 			</div>

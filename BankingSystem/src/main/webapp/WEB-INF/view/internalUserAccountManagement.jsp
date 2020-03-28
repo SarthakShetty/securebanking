@@ -86,8 +86,8 @@
 					</select>
 				</div>
 				<div id="hm" style="display: inline; text-align: right;">
-					<form action="">
-						<input type="button" value="Delete" class="btn btn-info "/>
+					<form action="/internalUser/deleteAccount">
+						<input type="submit" value="Delete" class="btn btn-info "/>
 					</form>
 					<form action="">
 						<input type="button" onclick="modifyAcc()" value="Modify" class="btn btn-info" /> 
@@ -100,7 +100,7 @@
 					<h3>Add Account</h3>
 					<div id="form">
 						<hr class="divider">
-						<form action="/confirmationAccoun" method="POST">
+						<form action="/confirmationAccount" method="POST">
 						  <div class="form-group row">
 						    <label for="firstName" class="col-sm-5 col-form-label">First Name:</label>
 						    <div class="col-sm-7">
@@ -213,7 +213,16 @@
 						        <option>WI</option>
 						        <option>WY</option>
 					      	</select>
-					      
+					      <div>
+							<h3 style="margin: 20px 0 20px 0; color: white;">Type of Account</h3>
+							<label>
+						    	<input type="radio" name="type_account" id="treq" autocomplete="off" checked value="customer"> Credit
+						  	</label>
+						  	<label>
+						    	<input type="radio" name="type_account" id="preq" autocomplete="off" value="employee"> Debit
+						  	</label>
+						</div>
+			      <div>
 					      <div>
 					      	<input type="submit" value="Finish" class="btn btn-primary btn-md" style="margin: 30px auto 0 auto;">
 					      </div>
@@ -225,7 +234,8 @@
 					<h3>Modify</h3>
 					<div id="form">
 						<hr class="divider">
-						<form action="/confirmationAccoun" method="POST">
+						<form action="/internalUser/modifyAccount" method="POST">
+							<input type="hidden" name="accNumber" value="${account.number}">
 						  <div class="form-group row">
 						    <label for="firstName" class="col-sm-5 col-form-label">First Name:</label>
 						    <div class="col-sm-7">
@@ -248,6 +258,12 @@
 						    <label for="password" class="col-sm-5 col-form-label">Password:</label>
 						    <div class="col-sm-7">
 						      <input type="password" name="passwordModify" class="form-control" id="password" >
+						    </div>
+						  </div>
+						  <div class="form-group row">
+						    <label for="cPassword" class="col-sm-5 col-form-label">Confirm Password:</label>
+						    <div class="col-sm-7">
+						      <input type="password" name="cPasswordModify" class="form-control" id="cPassword1" placeholder="Confirm Password">
 						    </div>
 						  </div>
 						  <div class="form-group row">
@@ -333,8 +349,10 @@
 						        <option>WY</option>
 					      	</select>
 					      
+			      <div>
 					      <div>
 					      	<input type="submit" value="Modify" class="btn btn-primary btn-md" style="margin: 30px auto 0 auto;">
+					      	<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
 					      </div>
 						  </div>
 						</form>

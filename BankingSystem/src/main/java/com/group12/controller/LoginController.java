@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,8 +24,15 @@ public class LoginController {
 	
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
-	public String showLogin(){
-		return "login";
+	public ModelAndView showLogin(Model model){
+		ModelAndView mod = new ModelAndView();
+		
+		if(model.asMap().get("error_msg") != null){
+			mod.addObject("error_msg", model.asMap().get("error_msg"));
+		}
+		
+		mod.setViewName("login");
+		return mod;
 	}
 	
 	
@@ -68,7 +76,8 @@ public class LoginController {
 //	}
 	
 	@RequestMapping(value = "/login", method=RequestMethod.POST)
-	public ModelAndView getCustomerDetails(ModelAndView model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+	public RedirectView getCustomerDetails(RedirectView model, HttpServletRequest request, @RequestParam("name") String name,
+			@RequestParam("password") String password, RedirectAttributes redir) {
 		/*
 		 * Need to check credentials of the user and set the session variable of the role they have
 		 * ie: customer, merchant, administrator 
@@ -81,30 +90,49 @@ public class LoginController {
 		 * and use redirectView.attributes and stuff
 		 * 
 		 */
-		
+		if(name.isEmpty() || password.isEmpty()){
+			//model = new ModelAndView("redirect:/", "error_msg", "Invalid characters entered, please enter valid characters.");
+			model = new RedirectView("/", true);
+			redir.addFlashAttribute("error_msg", "Please fill out all the fields.");
+			return model;
+		}
+		if(!name.matches("^[a-zA-Z0-9]+$") || !password.matches("^[a-zA-Z0-9]+$")){
+			//model = new ModelAndView("redirect:/", "error_msg", "Invalid characters entered, please enter valid characters.");
+			model = new RedirectView("/", true);
+			redir.addFlashAttribute("error_msg", "Invalid characters entered, please enter valid characters.");
+			return model;
+		}
+	
 		//We only want to set these if the user is a valid one!
-		request.getSession().setAttribute("user_name", "Brandon");
+		request.getSession().setAttribute("user_name", name);
 		request.getSession().setAttribute("role", "admin");
 		
-		model = new ModelAndView("redirect:/customer/profile");
-
+		//model = new ModelAndView("redirect:/customer/profile");
+		model = new RedirectView("/customer/profile", true);
 		return model;
 	}
 	
 
 
-	//this is for testing purposes.
-	@RequestMapping(value="/otp", method = RequestMethod.POST)
-	public String showAuthScreen(ModelMap model){
-		return "OTPAuth";
+	@RequestMapping(value="/otp", method = RequestMethod.GET)
+	public ModelAndView showAuthScreen(Model model){
+		ModelAndView mod = new ModelAndView();
+		if(model.asMap().get("error_msg") != null )
+			mod.addObject("error_msg", model.asMap().get("error_msg"));
+		mod.setViewName("OTPAuth");
+		return mod;
 	}
 	
 	@RequestMapping(value="/newAccount", method = RequestMethod.GET)
-	public String showNewAccount(ModelMap model){
-		return "newAccount";
+	public ModelAndView showNewAccount(Model model){
+		ModelAndView mod = new ModelAndView();
+		if(model.asMap().get("error_msg") != null )
+			mod.addObject("error_msg", model.asMap().get("error_msg"));
+		mod.setViewName("newAccount");
+		return mod;
 	}
-	//NOT GOING TO BE USED JUST FOR TESTING PURPOSES
-	@RequestMapping(value="/confirmationAccoun", method = RequestMethod.POST)
+
+	@RequestMapping(value="/conAcc", method = RequestMethod.POST)
 	public String showConfirmationAccount(ModelMap model){
 		return "confirmationAccount";
 	}

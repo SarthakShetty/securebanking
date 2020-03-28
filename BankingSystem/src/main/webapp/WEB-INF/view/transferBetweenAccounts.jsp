@@ -71,7 +71,7 @@
 				<div id="transferB" class="row" style="position: relative;">
 					<div class="col">
 						<h2>From Account</h2>
-						<select>
+						<select name="from_acc">
 							<c:forEach items="${accountList}" var="aList">
 								<option>${aList}</option>
 							</c:forEach>
@@ -79,7 +79,7 @@
 					</div>
 					<div class="col">
 						<h2>To Account</h2>
-						<select>
+						<select name="to_acc">
 							<c:forEach items="${accountList}" var="aList">
 								<option>${aList}</option>
 							</c:forEach>
@@ -88,14 +88,18 @@
 					<div class="col">
 						<h2>Amount</h2>
 						<input type="text" placeholder="Amount" name="transferAmount" id="tbAmount" style="display: block;" value="0" />
+						<div id="error" style="display: none;">
+							<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid amount.</font></p>
+						</div>
 					</div>
 				</div>
 				<div style="display: block; text-align: center; margin: 20px 0 0 0;">
 						
-							<input type="button" class="btn btn-md btn-info" value="Transfer" id="tButton" onclick="checkModal(this)" style="margin: 20px 0 0 0;">
-							<input type="submit" style="display: none;" id="tButtonH">
-						
-					</div>
+					<input type="button" class="btn btn-md btn-info" value="Transfer" id="tButton" onclick="checkModal(this)" style="margin: 20px 0 0 0;">
+					<input type="submit" style="display: none;" id="tButtonH">
+					<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
+					<p style="margin: 20px 0 0 0;"><font color="green">${msg}</font></p>
+				</div>
 			</form>
 			<div class="modal fade" id="myModal1" role="dialog" style="display: none;">
 			    <div class="modal-dialog" >
@@ -123,7 +127,11 @@
 		
 	function checkModal(el){
 		if(el.id == "tButton"){
-			if(document.getElementById("tbAmount").value > 1000){
+			if(document.getElementById("tbAmount").value < 0 || document.getElementById("tbAmount").value.length == 0){
+				document.getElementById("error").style.display = 'block';
+				
+			}
+			else if(document.getElementById("tbAmount").value > 1000){
 				document.getElementById("hiddenBut").click();
 				
 			}

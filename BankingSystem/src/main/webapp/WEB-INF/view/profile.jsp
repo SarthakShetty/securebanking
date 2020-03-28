@@ -147,46 +147,56 @@
 				<div id="editInfo">
 					<div class="form-group row">
 						<label class="col-sm-5 col-form-label">Name:</label>
-						<label class="col=sm-7" style="padding: 0 15px;"><% out.print(request.getSession().getAttribute("admin")); %></label>
+						<label class="col=sm-7" style="padding: 0 15px;"> <% out.print(request.getSession().getAttribute("user_name")); %> </label>
 					</div>
 					<div class="form-group row">
 				    <label for="phone" class="col-sm-5 col-form-label">Phone Number:</label>
 				    <div class="col-sm-7">
-				      <input type="text"  class="form-control" id="phone" value="${phone}">
+				      <input type="text"  class="form-control" name="mobile" id="phone" value="${phone}">
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="address" class="col-sm-5 col-form-label">Address:</label>
 				    <div class="col-sm-7">
-				      <input type="text" class="form-control" id="address" value="${address}">
+				      <input type="text" class="form-control" id="address" name="address" value="${address}">
 				    </div>
 				  </div>
 				  <div class="form-group row">
+				    <label for="phone" class="col-sm-5 col-form-label">Password:</label>
+				    <div class="col-sm-7">
+				      <input type="password"  class="form-control" name="password" id="phone">
+				    </div>
+				    <div class="form-group row">
+				    <label for="phone" class="col-sm-5 col-form-label">Confirm Password:</label>
+				    <div class="col-sm-7">
+				      <input type="password"  class="form-control" name="cPassword" id="phone">
+				    </div>
+				  <div class="form-group row">
 				    <label for="email" class="col-sm-5 col-form-label">Email:</label>
 				    <div class="col-sm-7">
-				      <input type="text" name="email" class="form-control" id="email" value="${email }">
+				      <input type="text" name="email" class="form-control" name="email" id="email" value="${email }">
 				    </div>
 				   </div>
 				   <div class="form-group row">
 				    <label for="address" class="col-sm-5 col-form-label">Age:</label>
 				    <div class="col-sm-7">
-				      <input type="text" class="form-control" id="age" value="${age}">
+				      <input type="text" class="form-control" id="age" name="age" value="${age}">
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="address" class="col-sm-5 col-form-label">Username:</label>
 				    <div class="col-sm-7">
-				      <input type="text" class="form-control" id="username" value="${username }">
+				      <input type="text" class="form-control" name="username" id="username" value="${username }">
 				    </div>
 				  </div>
 				</div>
 				  <div id="bottom">
 				  	<label>City:</label>
-				  	<input type="text" class='form-control' id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;" value="${city}">
+				  	<input type="text" class='form-control' name="city" id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;" value="${city}">
 				  	<label>Zip:</label>
-				  	<input type="text" class='form-control' id="zip" style="display: inline-block; width: 100px; margin: 0 30px 0 0;" value="${zip}">
+				  	<input type="text" class='form-control' name="zip" id="zip" style="display: inline-block; width: 100px; margin: 0 30px 0 0;" value="${zip}">
 				  	<label>State:</label>
-				  	<select class="form-control" id="state" style="display: inline-block; width: 100px; margin: 0 30px 0 0;" value="${state}">
+				  	<select class="form-control" id="state" name="state" style="display: inline-block; width: 100px; margin: 0 30px 0 0;" value="${state}">
 				        <option>AL</option>
 				        <option>AK</option>
 				        <option>AZ</option>
