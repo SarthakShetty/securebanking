@@ -212,4 +212,15 @@ public class CustomerDAO {
 		}
 	}
 
+	public void activateCustomer(String user_Name) {
+		
+		String update_customer  = "update customer set is_active =1 where cust_user_id = " + "'" +user_Name+"';";
+		//log.info(update_customer);
+		try {
+			jdbcTemplate.update(update_customer);
+		} catch(DataAccessException ex) {
+			throw new RuntimeException(ex);
+		}
+	}
+
 }

@@ -18,11 +18,24 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.group12.dao.CustomerDAO;
+import com.group12.dao.LoginDAO;
+import com.group12.models.Customer;
+import com.group12.services.EmailService;
+import com.group12.utils.Constants;
+
 @Controller
 public class LoginController {
+	@Autowired
+	private LoginDAO loginDAO;
+	@Autowired
+	private CustomerDAO customerDAO;
+	@Autowired
+	private EmailService emailService;
 	
 	
-	@RequestMapping(value="/bankingsystem", method=RequestMethod.GET)
+	
+	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String showLogin(){
 		return "login";
 	}
@@ -82,11 +95,25 @@ public class LoginController {
 		 * 
 		 */
 		
+		String user_name = request.getParameter("user_name");
+		String password = request.getParameter("password");
+		if(Constants.EMPLOYEE.equals(request.getParameter("type"))) {
+			
+		}else {
+			try {
+			if(loginDAO.checkIfTheCustomerIsValid(user_name,password)) {
+				model = new ModelAndView("redirect:/customer/profile");
+			}else {
+				
+			}
+			}catch(RuntimeException ex) {
+				throw ex;
+			}
+		}
+		
 		//We only want to set these if the user is a valid one!
 		request.getSession().setAttribute("user_name", "Brandon");
 		request.getSession().setAttribute("role", "admin");
-		
-		model = new ModelAndView("redirect:/customer/profile");
 
 		return model;
 	}
@@ -95,16 +122,53 @@ public class LoginController {
 
 	//this is for testing purposes.
 	@RequestMapping(value="/otp", method = RequestMethod.POST)
-	public String showAuthScreen(ModelMap model){
-		return "OTPAuth";
+	public String showAuthScreen(ModelMap model, HttpServletRequest request) {
+
+		if (customerDAO.checkIfMobileNumExists(request.getParameter("mobile"))) {
+			return "";
+		}
+		if (customerDAO.checkIfEmailExists(request.getParameter("email"))) {
+			return "";
+		}
+		if (customerDAO.checkIfUserNameExists(request.getParameter("username"))) {
+			return "";
+		}
+		Customer customer = createCustomer(request);
+		customerDAO.insertCutomerData(customer);
+		emailService.sendMail(request.getParameter("email"),
+				"Please Click/ copy paste The link To Activate Banking Account",
+				Constants.HOST_NAME_ACTIVATE + request.getParameter("username"));
+
+		return "emailSentNotification";
 	}
+	
+	
+	private Customer createCustomer(HttpServletRequest request) {
+		Customer customer  = new Customer();
+		customer.setAddress(request.getParameter("address"));
+		customer.setAge(Integer.parseInt(request.getParameter("age")));
+		customer.setCity(request.getParameter("city"));
+		customer.setEmail(request.getParameter("email"));
+		customer.setFirstName(request.getParameter("firstName"));
+		customer.setMobile(request.getParameter("mobile"));
+		customer.setLastName(request.getParameter("lastName"));
+		customer.setPassword(request.getParameter("password"));
+		customer.setUsername(request.getParameter("username"));
+		customer.setZipCode(request.getParameter("zip"));
+		customer.setType('I');
+		customer.setState(request.getParameter("state"));
+
+		return customer;
+	}
+	
+	
 	
 	@RequestMapping(value="/newAccount", method = RequestMethod.GET)
 	public String showNewAccount(ModelMap model){
 		return "newAccount";
 	}
 	//NOT GOING TO BE USED JUST FOR TESTING PURPOSES
-	@RequestMapping(value="/confirmationAccoun", method = RequestMethod.POST)
+	@RequestMapping(value="/confirmationAccount", method = RequestMethod.GET)
 	public String showConfirmationAccount(ModelMap model){
 		return "confirmationAccount";
 	}

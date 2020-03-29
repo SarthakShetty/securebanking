@@ -77,49 +77,49 @@
 				  <div class="form-group row">
 				    <label for="lastName" class="col-sm-5 col-form-label">Last Name:</label>
 				    <div class="col-sm-7">
-				      <input type="text" name = "lastName" class="form-control" id="lastName" >
+				      <input type="text" name = "lastName" class="form-control" id="lastName" placeholder="lastName" >
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="username" class="col-sm-5 col-form-label">Username:</label>
 				    <div class="col-sm-7">
-				      <input type="text" name = "username" class="form-control" id="username">
+				      <input type="text" name = "username" class="form-control" id="username" placeholder="username">
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="password" class="col-sm-5 col-form-label">Password:</label>
 				    <div class="col-sm-7">
-				      <input type="password" name="password" class="form-control" id="password" >
+				      <input type="password" name="password" class="form-control" id="password"  placeholder="password">
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="cPassword" class="col-sm-5 col-form-label">Confirm Password:</label>
 				    <div class="col-sm-7">
-				      <input type="password" name="cPassword" class="form-control" id="cPassword">
+				      <input type="password" name="cPassword" class="form-control" id="cPassword"  placeholder="confirm password">
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="address" class="col-sm-5 col-form-label">Address:</label>
 				    <div class="col-sm-7">
-				      <input type="text" name="address" class="form-control" id="address" >
+				      <input type="text" name="address" class="form-control" id="address" placeholder="address" >
 				    </div>
 				    </div>
 				   <div class="form-group row">
 				    <label for="email" class="col-sm-5 col-form-label">Email:</label>
 				    <div class="col-sm-7">
-				      <input type="text" name="email" class="form-control" id="email" >
+				      <input type="text" name="email" class="form-control" id="email" placeholder="email">
 				    </div>
 				    </div>
 				   <div class="form-group row">
 				    <label for="mobile" class="col-sm-5 col-form-label">Phone Number:</label>
 				    <div class="col-sm-7">
-				      <input type="text" name="mobile" class="form-control" id="mobile" >
+				      <input type="text" name="mobile" class="form-control" id="mobile" placeholder="mobile" >
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="mobile" class="col-sm-5 col-form-label">Age:</label>
 				    <div class="col-sm-7">
-				      <input type="text" name="age" class="form-control" id="age" >
+				      <input type="text" name="age" class="form-control" id="age"  placeholder="age">
 				    </div>
 				  </div>
 				  <div id="bottom">

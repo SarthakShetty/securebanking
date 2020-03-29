@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -70,6 +71,20 @@ public class CustomerController {
 		//model.addObject("FirstName", userName);
 		return model;
 	}
+	
+	
+	@RequestMapping(path="/activate/{user_Name}",method = {RequestMethod.GET, RequestMethod.POST})
+    public String activateCustomer(@PathVariable("user_Name") String user_Name) {
+		
+		ModelAndView model = new ModelAndView();
+		try {
+		customerDAO.activateCustomer(user_Name);
+		} catch(Exception ex) {
+			throw ex;
+		}
+		return "redirect:/confirmationAccount";
+     
+    }
 	
 	@RequestMapping(value = "/customer/transferEmailPhone", method=RequestMethod.GET)
 	public ModelAndView getCustomerDetailsEmailPhone(ModelAndView model, HttpServletRequest request) {

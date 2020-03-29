@@ -2,6 +2,8 @@ package com.group12.utils;
 
 public class Constants {
 
+	public static final String EMPLOYEE = "Employee";
+
 	public static String TRANSACTION_TYPE_CREATE_ACCOUNT = "Create";
 
 	public static String TRANSACTION_TYPE_TRANSFER = "Transfer";
@@ -23,6 +25,8 @@ public class Constants {
 	public static char TRANSACTION_COMPLETED = 'C';
 
 	public static char TRANSACTION_CUSTOMER_ACCEPTANCE = 'X';
+	
+	public static String HOST_NAME_ACTIVATE = "http://localhost:8080/activate/";
 	
 	
 	

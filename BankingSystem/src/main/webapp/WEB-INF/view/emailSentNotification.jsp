@@ -41,10 +41,10 @@
     	</nav>
 		<div id="container">
 			<div>
-				<h1>Confirmation</h1>
+				<h1>Email Sent</h1>
 			</div>
 			<div>
-				<p>Your Account has been Activated. Please login to your account using your username.</p>
+				<p>An Email has been sent to the given email Id. Please Click on the link to Activate the Account.</p>
 				<button class="btn btn-info btn-md" onclick="window.location.href='/'">Login</button>
 			</div>
 		</div>
