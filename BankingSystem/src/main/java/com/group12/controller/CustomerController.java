@@ -10,7 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+<<<<<<< HEAD
 import org.springframework.web.bind.annotation.PathVariable;
+=======
+>>>>>>> 556280e... changes to controller
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -72,6 +75,7 @@ public class CustomerController {
 		return model;
 	}
 	
+<<<<<<< HEAD
 	
 	@RequestMapping(path="/activate/{user_Name}",method = {RequestMethod.GET, RequestMethod.POST})
     public String activateCustomer(@PathVariable("user_Name") String user_Name) {
@@ -86,6 +90,8 @@ public class CustomerController {
      
     }
 	
+=======
+>>>>>>> 556280e... changes to controller
 	@RequestMapping(value = "/customer/transferEmailPhone", method=RequestMethod.GET)
 	public ModelAndView getCustomerDetailsEmailPhone(ModelAndView model, HttpServletRequest request) {
 		// TODO logging messages 
@@ -104,6 +110,7 @@ public class CustomerController {
 		s.add("hele");
 		model.addObject("accounts", s);
 	    model.setViewName("transferMakePayment");	 	    	    
+<<<<<<< HEAD
 		return model;
 	}
 	
@@ -165,6 +172,69 @@ public class CustomerController {
 		return model;
 	}
 	
+=======
+		return model;
+	}
+	
+	@RequestMapping(value = "/customer/transferBA", method=RequestMethod.GET)
+	public ModelAndView getCustomerDetailsBA(ModelAndView model, HttpServletRequest request) {
+		// TODO logging messages 
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
+//		String userName = request.getParameter("user_name");
+//		// Get the details of the customer using the userName
+//	    Customer customer = customerDAO.getCustomerProfileDetails(userName);
+//	    // Get the accounts from customer id 
+//	    List<Account> accounts = accountDAO.getAccountDetails(customer.getCust_id());
+//	    // set the session id with the customer id
+//	    model.addObject("getAccount", accounts);
+		List<String> s = new ArrayList<String>();
+		s.add("hele");
+		model.addObject("accounts", s);
+	    model.setViewName("transferBetweenAccounts");	 	    	    
+		return model;
+	}
+	
+	@RequestMapping(value = "/customer/CreditDebit", method=RequestMethod.GET)
+	public ModelAndView getCustomerDetailsCreditDebit(ModelAndView model, HttpServletRequest request) {
+		// TODO logging messages 
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
+//		String userName = request.getParameter("user_name");
+//		// Get the details of the customer using the userName
+//	    Customer customer = customerDAO.getCustomerProfileDetails(userName);
+//	    // Get the accounts from customer id 
+//	    List<Account> accounts = accountDAO.getAccountDetails(customer.getCust_id());
+//	    // set the session id with the customer id
+//	    model.addObject("getAccount", accounts);
+		
+		List<String> s = new ArrayList<String>();
+		s.add("hele");
+		model.addObject("accounts", s);
+	    model.setViewName("creditDebit");	 	    	    
+		return model;
+	}
+	
+	@RequestMapping(value = "/customer/payment", method=RequestMethod.GET)
+	public ModelAndView getCustomerDetailsPayment(ModelAndView model, HttpServletRequest request) {
+		
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
+		/*
+		 * Need to return list of requests for a specific customer
+		 */
+		
+	    model.setViewName("makePayment");	 	    	    
+		return model;
+	}
+	
+>>>>>>> 556280e... changes to controller
 	@RequestMapping(value = "/customer/accountManagement", method=RequestMethod.GET)
 	public ModelAndView getCustomerDetailsAccMan(ModelAndView model, HttpServletRequest request) {
 		if(request.getSession().getAttribute("role") == null){

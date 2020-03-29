@@ -86,8 +86,13 @@
 					</select>
 				</div>
 				<div id="hm" style="display: inline; text-align: right;">
+<<<<<<< HEAD
 					<form action="">
 						<input type="button" value="Delete" class="btn btn-info "/>
+=======
+					<form action="/internalUser/deleteAccount">
+						<input type="submit" value="Delete" class="btn btn-info "/>
+>>>>>>> 556280e... changes to controller
 					</form>
 					<form action="">
 						<input type="button" onclick="modifyAcc()" value="Modify" class="btn btn-info" /> 
@@ -100,7 +105,11 @@
 					<h3>Add Account</h3>
 					<div id="form">
 						<hr class="divider">
+<<<<<<< HEAD
 						<form action="/confirmationAccoun" method="POST">
+=======
+						<form action="/confirmationAccount" method="POST">
+>>>>>>> 556280e... changes to controller
 						  <div class="form-group row">
 						    <label for="firstName" class="col-sm-5 col-form-label">First Name:</label>
 						    <div class="col-sm-7">
@@ -213,7 +222,20 @@
 						        <option>WI</option>
 						        <option>WY</option>
 					      	</select>
+<<<<<<< HEAD
 					      
+=======
+					      <div>
+							<h3 style="margin: 20px 0 20px 0; color: white;">Type of Account</h3>
+							<label>
+						    	<input type="radio" name="type_account" id="treq" autocomplete="off" checked value="customer"> Credit
+						  	</label>
+						  	<label>
+						    	<input type="radio" name="type_account" id="preq" autocomplete="off" value="employee"> Debit
+						  	</label>
+						</div>
+			      <div>
+>>>>>>> 556280e... changes to controller
 					      <div>
 					      	<input type="submit" value="Finish" class="btn btn-primary btn-md" style="margin: 30px auto 0 auto;">
 					      </div>
@@ -225,7 +247,12 @@
 					<h3>Modify</h3>
 					<div id="form">
 						<hr class="divider">
+<<<<<<< HEAD
 						<form action="/confirmationAccoun" method="POST">
+=======
+						<form action="/internalUser/modifyAccount" method="POST">
+							<input type="hidden" name="accNumber" value="${account.number}">
+>>>>>>> 556280e... changes to controller
 						  <div class="form-group row">
 						    <label for="firstName" class="col-sm-5 col-form-label">First Name:</label>
 						    <div class="col-sm-7">
@@ -251,6 +278,15 @@
 						    </div>
 						  </div>
 						  <div class="form-group row">
+<<<<<<< HEAD
+=======
+						    <label for="cPassword" class="col-sm-5 col-form-label">Confirm Password:</label>
+						    <div class="col-sm-7">
+						      <input type="password" name="cPasswordModify" class="form-control" id="cPassword1" placeholder="Confirm Password">
+						    </div>
+						  </div>
+						  <div class="form-group row">
+>>>>>>> 556280e... changes to controller
 						    <label for="address" class="col-sm-5 col-form-label">Address:</label>
 						    <div class="col-sm-7">
 						      <input type="text" name="addressModify" class="form-control" id="address" >
@@ -333,8 +369,15 @@
 						        <option>WY</option>
 					      	</select>
 					      
+<<<<<<< HEAD
 					      <div>
 					      	<input type="submit" value="Modify" class="btn btn-primary btn-md" style="margin: 30px auto 0 auto;">
+=======
+			      <div>
+					      <div>
+					      	<input type="submit" value="Modify" class="btn btn-primary btn-md" style="margin: 30px auto 0 auto;">
+					      	<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
+>>>>>>> 556280e... changes to controller
 					      </div>
 						  </div>
 						</form>

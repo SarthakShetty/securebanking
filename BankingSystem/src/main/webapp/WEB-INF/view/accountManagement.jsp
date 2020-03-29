@@ -315,9 +315,25 @@
 					        <option>WI</option>
 					        <option>WY</option>
 				      	</select>
+<<<<<<< HEAD
 				      
 				      <div>
 				      	<input type="submit" value="Submit Request" class="btn btn-info btn-md" style="margin: 30px auto 0 auto;">
+=======
+				      <div>
+							<h3 style="margin: 20px 0 20px 0; color: white;">Type of Account</h3>
+							<label>
+						    	<input type="radio" name="type_account" id="treq" autocomplete="off" checked value="credit"> Credit
+						  	</label>
+						  	<label>
+						    	<input type="radio" name="type_account" id="preq" autocomplete="off" value="debit"> Debit
+						  	</label>
+						</div>
+			      <div>
+				      <div>
+				      	<input type="submit" value="Submit Request" class="btn btn-info btn-md" style="margin: 30px auto 0 auto;">
+				      	<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
+>>>>>>> 556280e... changes to controller
 				      </div>
 					  </div>
 					</form>

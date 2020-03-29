@@ -1,7 +1,7 @@
 <%@ page isELIgnored="false"%>
 <html>
 	<head>
-		<title>Login</title>
+		<title>Sign In</title>
 		<style>
 			#container{
 				width: 40%;
@@ -91,7 +91,7 @@
 					<div>
 						<input type="submit" class="btn btn-primary btn-md" value="Sign In" style="margin: 30px auto 0 auto;"/>
 					</div>
-					<p><font color="red">${errorMessage}</font></p>s
+					<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
 					
 				</form>
 				<hr class="divider">

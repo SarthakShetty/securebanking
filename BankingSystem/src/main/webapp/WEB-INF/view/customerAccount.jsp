@@ -190,6 +190,7 @@
 			</div>
 		</div>
 	<script>
+<<<<<<< HEAD
 		var active = "acc";
 		var mDiv = "account";
 		function change(el){
@@ -293,6 +294,9 @@
 		    });
 
 		});
+=======
+	
+>>>>>>> 556280e... changes to controller
 	</script>
 	</body>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

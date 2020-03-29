@@ -203,10 +203,17 @@
 				</div>
 				<div style="text-align: center; margin: 20px 0 0 0;">
 					<label>
+<<<<<<< HEAD
 					    	<input type="radio" name="auth"  value="credit" autocomplete="off"> Accept
 					  	</label>
 					  	<label>
 					    	<input type="radio" name="auth"  value="debit" autocomplete="off"> Decline
+=======
+					    	<input type="radio" name="auth"  value="accept" autocomplete="off"> Accept
+					  	</label>
+					  	<label>
+					    	<input type="radio" name="auth"  value="decline" autocomplete="off"> Decline
+>>>>>>> 556280e... changes to controller
 					  	</label>
 				</div>
 				<div style="text-align: center; margin: 20px 0 0 0;">

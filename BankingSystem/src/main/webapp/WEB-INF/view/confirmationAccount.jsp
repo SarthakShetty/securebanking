@@ -44,8 +44,13 @@
 				<h1>Confirmation</h1>
 			</div>
 			<div>
+<<<<<<< HEAD
 				<p>Your Account has been Activated. Please login to your account using your username.</p>
 				<button class="btn btn-info btn-md" onclick="window.location.href='/'">Login</button>
+=======
+				<p>Thank you for signing up. You will receive an email once your account has been created. You may then login in once you receive the email.</p>
+				<button class="btn btn-info btn-md" onclick="window.location.href='/'">Home</button>
+>>>>>>> 556280e... changes to controller
 			</div>
 		</div>
 		
