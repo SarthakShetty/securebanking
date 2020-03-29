@@ -120,15 +120,7 @@ public class AccountController {
 //		String message = accountDAO.creditOrDebit(accountNumber, typeOftransfer, amount);
 //		model.addObject("message",message);
 //		return model;
-		
-<<<<<<< HEAD
-		/*
-		 * Then must return all of customers accounts back.
-		 */
-		
-=======
 		attr.addFlashAttribute("msg", msg);
->>>>>>> 556280e... changes to controller
 		return model;
 	}
 	
@@ -198,14 +190,6 @@ public class AccountController {
 	 * Need to check for the email or phone radio button then check the field of the correlating one
 	 */
 	@RequestMapping(value ="/customer/transferFundsEmailPhone", method = RequestMethod.POST)
-<<<<<<< HEAD
-	public ModelAndView customerTransferFundsEmailOrPhone(ModelAndView model, HttpServletRequest request) {
-		// TODO the assumptions that the UI is doing the checks for the valid amount
-	    // Invalid amount should not travel through the controller
-		int fromAccountNumber = Integer.parseInt(request.getParameter("from_acc"));
-		int toAccountNumber = Integer.parseInt(request.getParameter("to_acc"));
-		double amount = Double.parseDouble(request.getParameter("amount"));
-=======
 	public RedirectView customerTransferFundsEmailOrPhone(RedirectView model, HttpServletRequest request, @RequestParam("peAmount") String transferAmount,
 			@RequestParam("from_accP") String from, @RequestParam("byPhone") String phoneCheck, @RequestParam("byEmail") String emailCheck, 
 			@RequestParam("phoneNumber") String phoneNum, @RequestParam("emailAddress") String emailAddress, @RequestParam("request1") String type_request,
@@ -241,7 +225,6 @@ public class AccountController {
 		int fromAccountNumber = Integer.parseInt(from);
 		//int toAccountNumber = Integer.parseInt(to);
 		double amount = Double.parseDouble(transferAmount);
->>>>>>> 556280e... changes to controller
 		// TODO data base has this field as character either change the database or the logic
 		int isCritical;
 		if(amount > 1000) {
@@ -252,15 +235,9 @@ public class AccountController {
 			isCritical = 0;
 		}
 			
-<<<<<<< HEAD
-		String typeOftransfer  = request.getParameter("type_transfer");
-		Request  customerRequest = createRequest(amount, fromAccountNumber, toAccountNumber, typeOftransfer);
-		accountDAO.transferFunds_create_request(customerRequest);
-=======
 		String typeOftransfer  = type_request;
 		//Request  customerRequest = createRequest(amount, fromAccountNumber, toAccountNumber, typeOftransfer);
 		//accountDAO.transferFunds_create_request(customerRequest);
->>>>>>> 556280e... changes to controller
 		// TODO we need to change the status from char since it is more readable for users to have success
 		// TODO we need to add object to the model depending upon response
 //			String message = accountDAO.transferFundsFromAcc(fromAccountNumber, toAccountNumber, amount, typeOftransfer);
@@ -273,14 +250,6 @@ public class AccountController {
 	 * Have to check the account number first to make sure its an account
 	 */
 	@RequestMapping(value ="/customer/transferFundsOtherAccount", method = RequestMethod.POST)
-<<<<<<< HEAD
-	public ModelAndView customerTransferFundsToOtherCustomer(ModelAndView model, HttpServletRequest request) {
-		// TODO the assumptions that the UI is doing the checks for the valid amount
-	    // Invalid amount should not travel through the controller
-		int fromAccountNumber = Integer.parseInt(request.getParameter("from_acc"));
-		int toAccountNumber = Integer.parseInt(request.getParameter("to_acc"));
-		double amount = Double.parseDouble(request.getParameter("amount"));
-=======
 	public RedirectView customerTransferFundsToOtherCustomer(RedirectView model, HttpServletRequest request, @RequestParam("accAmount") String transferAmount,
 			@RequestParam("from_accP") String from, @RequestParam("request") String type_request, @RequestParam("accNumber") String to,
 			RedirectAttributes attr) {
@@ -295,7 +264,6 @@ public class AccountController {
 		int fromAccountNumber = Integer.parseInt(from);
 		int toAccountNumber = Integer.parseInt(to);
 		double amount = Double.parseDouble(transferAmount);
->>>>>>> 556280e... changes to controller
 		// TODO data base has this field as character either change the database or the logic
 		int isCritical;
 		if(amount > 1000) {
@@ -313,15 +281,7 @@ public class AccountController {
 		// TODO we need to add object to the model depending upon response
 //			String message = accountDAO.transferFundsFromAcc(fromAccountNumber, toAccountNumber, amount, typeOftransfer);
 //			model.addObject("message",message);
-<<<<<<< HEAD
-		return model;
-	}
-	
-	
-	
-	@RequestMapping(value ="/customer/accountManagement/{flag}", method = RequestMethod.POST)
-	public ModelAndView accountManagement(ModelAndView model, HttpServletRequest request, @PathVariable("flag") String flag) {
-=======
+
 		
 		/*
 		 * Need to return a message.
@@ -339,7 +299,6 @@ public class AccountController {
 			@RequestParam("email") String email, @RequestParam("mobile") String phoneNumber, @RequestParam("age") String age,
 			@RequestParam("city") String city, @RequestParam("zip") String zip, @RequestParam("state") String state, 
 			@RequestParam("type_account") String type_account, RedirectAttributes attr) {
->>>>>>> 556280e... changes to controller
 		// This helps to track the customer for which we need either create account or delete account
 		String userName = (String) request.getSession().getAttribute("user_name");
 		
@@ -386,8 +345,6 @@ public class AccountController {
 			accountDAO.deleteAccount(account_no, customer.getCust_id(), 0);
 			// TODO check the status from the DAO and then update the status to the model
 			msg = "Account deleted.";
-<<<<<<< HEAD
-=======
 			
 		}
 		
@@ -426,47 +383,12 @@ public class AccountController {
 		else if(noMatch){
 			
 			attr.addFlashAttribute("error_msg", "Invalid characters entered, please use valid characters.");
->>>>>>> 556280e... changes to controller
-			
 			return model;
 		}
-<<<<<<< HEAD
-		model = new ModelAndView("/customer/accountManagement");
-		model.addObject("message", msg);
-		return model;
-	}
-	
-	@RequestMapping(value ="/customer/authorizeRequest", method = RequestMethod.POST)
-	public ModelAndView acceptRequest(ModelAndView model, HttpServletRequest request, @ModelAttribute("auth") String accOrdec) {
-		/*
-		 * Need to be able to allow customer to accept/decline a transfer request from another customer
-		 * and take it out of the request list and take money from account. Then return the list of requests
-		 * and a message based on accept/decline.
-		 */
-		model.setViewName("makePayment");
-		return model;
-	}
-	
-	@RequestMapping(value ="/customer/changeProfile", method = RequestMethod.POST)
-	public ModelAndView changeProfile(ModelAndView model, HttpServletRequest request, @ModelAttribute("auth") String accOrdec) {
-		/*
-		 * Need to allow customer to put in a request to change their profile information and send back 
-		 * their profile information and a message saying their request has been submitted.
-		 * 
-		 * Think instead of sending back the same info we can use
-		 * model = new ModelAndView("/customer/profile") which calls the url and will return the information and 
-		 * add the message to the model. 
-		 */
 		
 		return model;
 	}
 	
-=======
-		
-		return model;
-	}
-	
->>>>>>> 556280e... changes to controller
 	@RequestMapping(value ="/customer/donwloadBankingStatements", method = RequestMethod.POST)
 	public ModelAndView downloadStatements(ModelAndView model, HttpServletRequest request, @ModelAttribute("auth") String accOrdec) {
 		/*

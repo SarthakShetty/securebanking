@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-<<<<<<< HEAD
-=======
 import org.springframework.web.bind.annotation.RequestParam;
->>>>>>> 556280e... changes to controller
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -102,13 +99,6 @@ public class InternalUserController {
    }
 	
 	@RequestMapping(value = "/internalUser/modifyAccount", method = RequestMethod.POST)
-<<<<<<< HEAD
-	public ModelAndView modifyInternalUserAccount(ModelAndView model, HttpServletRequest request) {
-		if(request.getSession().getAttribute("role") == null){
-			model = new ModelAndView("redirect:/");
-			return model;
-		}
-=======
 	public RedirectView modifyInternalUserAccount(RedirectView model,HttpServletRequest request, @RequestParam("accNumber") String accNum,
 			@RequestParam("firstNameModify") String fName, @RequestParam("lastNameModify") String lName, @RequestParam("usernameModify") String uName,
 			@RequestParam("passwordModify") String password, @RequestParam("cPasswordModify") String cPassword, @RequestParam("addressModify") String address,
@@ -135,13 +125,10 @@ public class InternalUserController {
 			return model;
 		}
 		
->>>>>>> 556280e... changes to controller
 		/*
 		 * Need to be able to modify employees account
 		 * then return list of employee accounts and a message saying account modified
 		 */
-<<<<<<< HEAD
-=======
 		model = new RedirectView("/internalUser/accountManagement");
 		attr.addFlashAttribute("msg","Account modified.");
 		return model;
@@ -221,7 +208,6 @@ public class InternalUserController {
 		 * Need to be able to decline employee request and erase it from the requests
 		 * then return the list of requests and a message saying request decline
 		 */
->>>>>>> 556280e... changes to controller
 		model.setViewName("internalUserAccountManagement");
 		return model;
    }
@@ -266,65 +252,6 @@ public class InternalUserController {
    }
 
 	
-<<<<<<< HEAD
-	@RequestMapping(value = "/internalUser/createdEmployee", method = RequestMethod.POST)
-	public ModelAndView createInternalUserAccount(ModelAndView model, HttpServletRequest request) {
-		if(request.getSession().getAttribute("role") == null){
-			model = new ModelAndView("redirect:/");
-			return model;
-		}
-		/*
-		 * Need to be able to create an employees account
-		 * then return the list of employees and a message saying account created
-		 */
-		model.setViewName("internalUserAccountManagement");
-		return model;
-   }
-	
-	@RequestMapping(value = "/internalUser/deletedEmployee", method = RequestMethod.POST)
-	public ModelAndView deleteInternalUserAccount(ModelAndView model, HttpServletRequest request) {
-		if(request.getSession().getAttribute("role") == null){
-			model = new ModelAndView("redirect:/");
-			return model;
-		}
-		/*
-		 * Need to be able to delete an employees account
-		 * then return the list of employees and a message saying account deleted
-		 */
-		model.setViewName("internalUserAccountManagement");
-		return model;
-   }
-	
-	@RequestMapping(value = "/internalUser/authorizeEmployeeRequests", method = RequestMethod.POST)
-	public ModelAndView authorizeInternalUserRequests(ModelAndView model, HttpServletRequest request) {
-		if(request.getSession().getAttribute("role") == null){
-			model = new ModelAndView("redirect:/");
-			return model;
-		}
-		/*
-		 * Need to be able to authorize employee request and erase it from the requests
-		 * then return the list of requests and a message saying request authorized
-		 */
-		model.setViewName("internalUserAccountManagement");
-		return model;
-   }
-	
-	@RequestMapping(value = "/internalUser/declineEmployeeRequests", method = RequestMethod.POST)
-	public ModelAndView declineInternalUserRequests(ModelAndView model, HttpServletRequest request) {
-		if(request.getSession().getAttribute("role") == null){
-			model = new ModelAndView("redirect:/");
-			return model;
-		}
-		/*
-		 * Need to be able to decline employee request and erase it from the requests
-		 * then return the list of requests and a message saying request decline
-		 */
-		model.setViewName("internalUserAccountManagement");
-		return model;
-   }
-	
-}
-=======
 	private boolean checkEmptyFields(String fName, String lName, String uName, String password, String cPassword,
 			String address, String email, String phoneNumber, String age, String city, String zip){
 		if(fName.isEmpty() || lName.isEmpty() || uName.isEmpty() || password.isEmpty() || cPassword.isEmpty() || address.isEmpty()
@@ -347,4 +274,3 @@ public class InternalUserController {
 	}
 	
 }
->>>>>>> 556280e... changes to controller

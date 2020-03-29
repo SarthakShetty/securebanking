@@ -30,50 +30,17 @@ public class CustomerRegistrationController {
 	Logger logger = LoggerFactory.getLogger(AccountController.class);
 	
 	@RequestMapping(value="/confirmationAccount", method = RequestMethod.POST)
-<<<<<<< HEAD
-	public ModelAndView showConfirmationAccount(ModelAndView model,HttpServletRequest request, @ModelAttribute("type_user") String type_user) {
-=======
 	public RedirectView showConfirmationAccount(RedirectView model,HttpServletRequest request, @RequestParam("type_user") String type_user,
 			@RequestParam("firstName") String fName, @RequestParam("lastName") String lName, @RequestParam("username") String uName,
 			@RequestParam("password") String password, @RequestParam("cPassword") String cPassword, @RequestParam("address") String address,
 			@RequestParam("email") String email, @RequestParam("mobile") String phoneNumber, @RequestParam("age") String age,
 			@RequestParam("city") String city, @RequestParam("zip") String zip, @RequestParam("state") String state, RedirectAttributes attr) {
->>>>>>> 556280e... changes to controller
 			logger.info(request.getParameter("firstName"));
 			/*
 			 * Type_user refers to the type of user either customer or employee
 			 * Also going to need to send the email in here for the OTP and store the OTP.
 			 */
-			
-<<<<<<< HEAD
-			model.setViewName("newAccount");
-			if(customerDAO.checkIfMobileNumExists(request.getParameter("mobile"))) {
-				model.addObject("message", "Sorry phone number already used please enter another one.");
-				return model;
-			}
-			if(customerDAO.checkIfEmailExists(request.getParameter("email"))) {
-				model.addObject("message", "Sorry email already used please enter another one.");
-				return model;
-			}
-			if(customerDAO.checkIfUserNameExists(request.getParameter("username"))) {
-				model.addObject("message", "Sorry username already used please enter another one.");
-				return model;
-			}
-			Customer customer  = createCustomer(request);
-			customerDAO.insertCutomerData(customer); // should actually call customerDAO.register(customer)
-			model.addObject("email", "customers email");
-			model.setViewName("OTPAuth");
-			return model;
-			
-}
-	
-	@RequestMapping(value="/verifyOTP", method = RequestMethod.POST)
-	public ModelAndView verifyOTP(ModelAndView model,HttpServletRequest request, @ModelAttribute("type_user") String type_user) {
-			/*
-			 * Need to verify the OTP with the OTP assigned to specified customer
-			 */
-			model.setViewName("confirmationAccount");
-=======
+
 			boolean empty = checkEmptyFields(fName, lName, uName, password, cPassword, address, email, phoneNumber, age, city, zip, state, type_user);
 			boolean noMatch = checkMatchFields(fName, lName, uName, password, cPassword, address, email, phoneNumber, age, city, zip, state, type_user);
 			if(empty){
@@ -178,7 +145,6 @@ public class CustomerRegistrationController {
 			}
 			
 			model = new RedirectView("/conAcc");
->>>>>>> 556280e... changes to controller
 			return model;
 			
 	}
@@ -201,16 +167,6 @@ public class CustomerRegistrationController {
 		customer.setAddress(address);
 		// TODO UI needs to take the age of the customer currently hard coding
 		customer.setAge(21);
-<<<<<<< HEAD
-		customer.setCity(request.getParameter("city"));
-		customer.setEmail(request.getParameter("email"));
-		customer.setFirstName(request.getParameter("firstName"));
-		customer.setMobile(request.getParameter("mobile"));
-		customer.setLastName(request.getParameter("lastName"));
-		customer.setPassword(request.getParameter("password"));
-		customer.setUsername(request.getParameter("username"));
-		customer.setZipCode(request.getParameter("zip"));
-=======
 		customer.setCity(city);
 		customer.setEmail(email);
 		customer.setFirstName(fName);
@@ -219,7 +175,6 @@ public class CustomerRegistrationController {
 		customer.setPassword(password);
 		customer.setUsername(uName);
 		customer.setZipCode(zip);
->>>>>>> 556280e... changes to controller
 		/*
 		 * Need to do age as well. 
 		 */

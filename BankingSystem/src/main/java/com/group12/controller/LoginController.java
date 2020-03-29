@@ -18,15 +18,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
-<<<<<<< HEAD
 
 import com.group12.dao.CustomerDAO;
 import com.group12.dao.LoginDAO;
-import com.group12.models.Customer;
 import com.group12.services.EmailService;
-import com.group12.utils.Constants;
-=======
->>>>>>> 556280e... changes to controller
 
 @Controller
 public class LoginController {
@@ -37,13 +32,6 @@ public class LoginController {
 	@Autowired
 	private EmailService emailService;
 	
-	
-<<<<<<< HEAD
-	
-	@RequestMapping(value="/", method=RequestMethod.GET)
-	public String showLogin(){
-		return "login";
-=======
 
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public ModelAndView showLogin(Model model){
@@ -55,7 +43,6 @@ public class LoginController {
 		
 		mod.setViewName("login");
 		return mod;
->>>>>>> 556280e... changes to controller
 	}
 	
 	
@@ -99,12 +86,8 @@ public class LoginController {
 //	}
 	
 	@RequestMapping(value = "/login", method=RequestMethod.POST)
-<<<<<<< HEAD
-	public ModelAndView getCustomerDetails(ModelAndView model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-=======
 	public RedirectView getCustomerDetails(RedirectView model, HttpServletRequest request, @RequestParam("name") String name,
 			@RequestParam("password") String password, RedirectAttributes redir) {
->>>>>>> 556280e... changes to controller
 		/*
 		 * Need to check credentials of the user and set the session variable of the role they have
 		 * ie: customer, merchant, administrator 
@@ -117,83 +100,6 @@ public class LoginController {
 		 * and use redirectView.attributes and stuff
 		 * 
 		 */
-<<<<<<< HEAD
-		
-		String user_name = request.getParameter("user_name");
-		String password = request.getParameter("password");
-		if(Constants.EMPLOYEE.equals(request.getParameter("type"))) {
-			
-		}else {
-			try {
-			if(loginDAO.checkIfTheCustomerIsValid(user_name,password)) {
-				model = new ModelAndView("redirect:/customer/profile");
-			}else {
-				
-			}
-			}catch(RuntimeException ex) {
-				throw ex;
-			}
-		}
-		
-		//We only want to set these if the user is a valid one!
-		request.getSession().setAttribute("user_name", "Brandon");
-		request.getSession().setAttribute("role", "admin");
-
-		return model;
-	}
-	
-
-
-	//this is for testing purposes.
-	@RequestMapping(value="/otp", method = RequestMethod.POST)
-	public String showAuthScreen(ModelMap model, HttpServletRequest request) {
-
-		if (customerDAO.checkIfMobileNumExists(request.getParameter("mobile"))) {
-			return "";
-		}
-		if (customerDAO.checkIfEmailExists(request.getParameter("email"))) {
-			return "";
-		}
-		if (customerDAO.checkIfUserNameExists(request.getParameter("username"))) {
-			return "";
-		}
-		Customer customer = createCustomer(request);
-		customerDAO.insertCutomerData(customer);
-		emailService.sendMail(request.getParameter("email"),
-				"Please Click/ copy paste The link To Activate Banking Account",
-				Constants.HOST_NAME_ACTIVATE + request.getParameter("username"));
-
-		return "emailSentNotification";
-	}
-	
-	
-	private Customer createCustomer(HttpServletRequest request) {
-		Customer customer  = new Customer();
-		customer.setAddress(request.getParameter("address"));
-		customer.setAge(Integer.parseInt(request.getParameter("age")));
-		customer.setCity(request.getParameter("city"));
-		customer.setEmail(request.getParameter("email"));
-		customer.setFirstName(request.getParameter("firstName"));
-		customer.setMobile(request.getParameter("mobile"));
-		customer.setLastName(request.getParameter("lastName"));
-		customer.setPassword(request.getParameter("password"));
-		customer.setUsername(request.getParameter("username"));
-		customer.setZipCode(request.getParameter("zip"));
-		customer.setType('I');
-		customer.setState(request.getParameter("state"));
-
-		return customer;
-	}
-	
-	
-	
-	@RequestMapping(value="/newAccount", method = RequestMethod.GET)
-	public String showNewAccount(ModelMap model){
-		return "newAccount";
-	}
-	//NOT GOING TO BE USED JUST FOR TESTING PURPOSES
-	@RequestMapping(value="/confirmationAccount", method = RequestMethod.GET)
-=======
 		if(name.isEmpty() || password.isEmpty()){
 			//model = new ModelAndView("redirect:/", "error_msg", "Invalid characters entered, please enter valid characters.");
 			model = new RedirectView("/", true);
@@ -237,7 +143,6 @@ public class LoginController {
 	}
 
 	@RequestMapping(value="/conAcc", method = RequestMethod.POST)
->>>>>>> 556280e... changes to controller
 	public String showConfirmationAccount(ModelMap model){
 		return "confirmationAccount";
 	}
