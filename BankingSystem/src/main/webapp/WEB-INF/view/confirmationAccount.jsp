@@ -44,16 +44,12 @@
 				<h1>Confirmation</h1>
 			</div>
 			<div>
-<<<<<<< HEAD
-				<p>Your Account has been Activated. Please login to your account using your username.</p>
+
+				<p>Your Account has been Activated. Please login to your account using your user name.</p>
 				<button class="btn btn-info btn-md" onclick="window.location.href='/'">Login</button>
-=======
-				<p>Thank you for signing up. You will receive an email once your account has been created. You may then login in once you receive the email.</p>
-				<button class="btn btn-info btn-md" onclick="window.location.href='/'">Home</button>
->>>>>>> 556280e... changes to controller
-			</div>
+
 		</div>
-		
+		</div>
 	</body>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

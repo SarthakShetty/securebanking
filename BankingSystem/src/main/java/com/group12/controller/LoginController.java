@@ -21,7 +21,9 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.group12.dao.CustomerDAO;
 import com.group12.dao.LoginDAO;
+import com.group12.models.Customer;
 import com.group12.services.EmailService;
+import com.group12.utils.Constants;
 
 @Controller
 public class LoginController {
@@ -85,53 +87,103 @@ public class LoginController {
 //		//return "internalUserProfile";
 //	}
 	
-	@RequestMapping(value = "/login", method=RequestMethod.POST)
-	public RedirectView getCustomerDetails(RedirectView model, HttpServletRequest request, @RequestParam("name") String name,
-			@RequestParam("password") String password, RedirectAttributes redir) {
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public RedirectView getCustomerDetails(RedirectView model, HttpServletRequest request,
+			@RequestParam("name") String name, @RequestParam("password") String password, RedirectAttributes redir) {
 		/*
-		 * Need to check credentials of the user and set the session variable of the role they have
-		 * ie: customer, merchant, administrator 
-		 * Other session variables: user_name, customer_id * 
-		 * * = maybe
-		 * If credentials are correct we link to the correct page using another API call
-		 * via model = new ModelAndView("redirect:/blah blah"); 
+		 * Need to check credentials of the user and set the session variable of the
+		 * role they have ie: customer, merchant, administrator Other session variables:
+		 * user_name, customer_id * * = maybe If credentials are correct we link to the
+		 * correct page using another API call via model = new
+		 * ModelAndView("redirect:/blah blah");
 		 * 
-		 * if you need to redirect with attributes we have to use a redirectView.
-		 * and use redirectView.attributes and stuff
+		 * if you need to redirect with attributes we have to use a redirectView. and
+		 * use redirectView.attributes and stuff
 		 * 
 		 */
-		if(name.isEmpty() || password.isEmpty()){
-			//model = new ModelAndView("redirect:/", "error_msg", "Invalid characters entered, please enter valid characters.");
+		if (name.isEmpty() || password.isEmpty()) {
+			// model = new ModelAndView("redirect:/", "error_msg", "Invalid characters
+			// entered, please enter valid characters.");
 			model = new RedirectView("/", true);
 			redir.addFlashAttribute("error_msg", "Please fill out all the fields.");
 			return model;
 		}
-		if(!name.matches("^[a-zA-Z0-9]+$") || !password.matches("^[a-zA-Z0-9]+$")){
-			//model = new ModelAndView("redirect:/", "error_msg", "Invalid characters entered, please enter valid characters.");
+
+		if (!name.matches("^[a-zA-Z0-9]+$") || !password.matches("^[a-zA-Z0-9]+$")) {
+			// model = new ModelAndView("redirect:/", "error_msg", "Invalid characters
+			// entered, please enter valid characters.");
 			model = new RedirectView("/", true);
 			redir.addFlashAttribute("error_msg", "Invalid characters entered, please enter valid characters.");
 			return model;
 		}
-	
-		//We only want to set these if the user is a valid one!
+
+		if (Constants.EMPLOYEE.equals(request.getParameter("type"))) {
+
+		} else {
+			try {
+				if (loginDAO.checkIfTheCustomerIsValid(name, password)) {
+					// model = new ModelAndView("redirect:/customer/profile");
+					model = new RedirectView("/customer/profile", true);
+
+				} else {
+
+				}
+			} catch (RuntimeException ex) {
+				throw ex;
+			}
+
+		}
+
+		// We only want to set these if the user is a valid one!
 		request.getSession().setAttribute("user_name", name);
 		request.getSession().setAttribute("role", "admin");
-		
-		//model = new ModelAndView("redirect:/customer/profile");
-		model = new RedirectView("/customer/profile", true);
 		return model;
-	}
-	
+	}	
 
 
-	@RequestMapping(value="/otp", method = RequestMethod.GET)
-	public ModelAndView showAuthScreen(Model model){
+	@RequestMapping(value="/otp", method = RequestMethod.POST)
+	public ModelAndView showAuthScreen(Model model,  HttpServletRequest request){
 		ModelAndView mod = new ModelAndView();
 		if(model.asMap().get("error_msg") != null )
 			mod.addObject("error_msg", model.asMap().get("error_msg"));
-		mod.setViewName("OTPAuth");
+		
+		if (customerDAO.checkIfMobileNumExists(request.getParameter("mobile"))) {
+			return mod;
+		}
+		if (customerDAO.checkIfEmailExists(request.getParameter("email"))) {
+			return mod;
+		}
+		if (customerDAO.checkIfUserNameExists(request.getParameter("username"))) {
+			return mod;
+		}
+		Customer customer = createCustomer(request);
+		customerDAO.insertCutomerData(customer);
+		emailService.sendMail(request.getParameter("email"),
+				"Please Click/ copy paste The link To Activate Banking Account",
+				Constants.HOST_NAME_ACTIVATE + request.getParameter("username"));
+
+		mod.setViewName("emailSentNotification");
 		return mod;
 	}
+	
+	private Customer createCustomer(HttpServletRequest request) {
+		Customer customer  = new Customer();
+		customer.setAddress(request.getParameter("address"));
+		customer.setAge(Integer.parseInt(request.getParameter("age")));
+		customer.setCity(request.getParameter("city"));
+		customer.setEmail(request.getParameter("email"));
+		customer.setFirstName(request.getParameter("firstName"));
+		customer.setMobile(request.getParameter("mobile"));
+		customer.setLastName(request.getParameter("lastName"));
+		customer.setPassword(request.getParameter("password"));
+		customer.setUsername(request.getParameter("username"));
+		customer.setZipCode(request.getParameter("zip"));
+		customer.setType('I');
+		customer.setState(request.getParameter("state"));
+
+		return customer;
+	}
+	
 	
 	@RequestMapping(value="/newAccount", method = RequestMethod.GET)
 	public ModelAndView showNewAccount(Model model){
@@ -142,7 +194,7 @@ public class LoginController {
 		return mod;
 	}
 
-	@RequestMapping(value="/conAcc", method = RequestMethod.POST)
+	@RequestMapping(value="/confirmationAccount",method = RequestMethod.GET)
 	public String showConfirmationAccount(ModelMap model){
 		return "confirmationAccount";
 	}

@@ -82,7 +82,7 @@
 					</div>
 					<div class="btn-group btn-group-toggle" data-toggle="buttons" id="radioGroup">
 					  <label>
-					    <input type="radio" name="options" id="customer" autocomplete="off" checked> Customer
+					    <input type="radio" name="options" id="customer"  autocomplete="off" checked> Customer
 					  </label>
 					  <label>
 					    <input type="radio" name="options" id="employee" autocomplete="off"> Employee

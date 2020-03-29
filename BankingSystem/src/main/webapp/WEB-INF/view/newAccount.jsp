@@ -67,11 +67,8 @@
 			
 			<div id="form">
 				<hr class="divider">
-<<<<<<< HEAD
-				<form action="/otp" method="POST">
-=======
-				<form action="/confirmationAccount" method="POST">
->>>>>>> 556280e... changes to controller
+		<form action="/otp" method="POST">
+
 				  <div class="form-group row">
 				    <label for="firstName" class="col-sm-5 col-form-label">First Name:</label>
 				    <div class="col-sm-7">
@@ -81,81 +78,64 @@
 				  <div class="form-group row">
 				    <label for="lastName" class="col-sm-5 col-form-label">Last Name:</label>
 				    <div class="col-sm-7">
-<<<<<<< HEAD
-				      <input type="text" name = "lastName" class="form-control" id="lastName" placeholder="lastName" >
-=======
+<
 				      <input type="text" name = "lastName" class="form-control" id="lastName" placeholder="Last Name">
->>>>>>> 556280e... changes to controller
+
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="username" class="col-sm-5 col-form-label">Username:</label>
 				    <div class="col-sm-7">
-<<<<<<< HEAD
-				      <input type="text" name = "username" class="form-control" id="username" placeholder="username">
-=======
+
 				      <input type="text" name = "username" class="form-control" id="username" placeholder="Username">
->>>>>>> 556280e... changes to controller
+
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="password" class="col-sm-5 col-form-label">Password:</label>
 				    <div class="col-sm-7">
-<<<<<<< HEAD
-				      <input type="password" name="password" class="form-control" id="password"  placeholder="password">
-=======
+
 				      <input type="password" name="password" class="form-control" id="password" placeholder="Password">
->>>>>>> 556280e... changes to controller
+
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="cPassword" class="col-sm-5 col-form-label">Confirm Password:</label>
 				    <div class="col-sm-7">
-<<<<<<< HEAD
-				      <input type="password" name="cPassword" class="form-control" id="cPassword"  placeholder="confirm password">
-=======
 				      <input type="password" name="cPassword" class="form-control" id="cPassword" placeholder="Confirm Password">
->>>>>>> 556280e... changes to controller
+
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="address" class="col-sm-5 col-form-label">Address:</label>
 				    <div class="col-sm-7">
-<<<<<<< HEAD
-				      <input type="text" name="address" class="form-control" id="address" placeholder="address" >
-=======
+<
 				      <input type="text" name="address" class="form-control" id="address" placeholder="Address">
->>>>>>> 556280e... changes to controller
+
 				    </div>
 				    </div>
 				   <div class="form-group row">
 				    <label for="email" class="col-sm-5 col-form-label">Email:</label>
 				    <div class="col-sm-7">
-<<<<<<< HEAD
-				      <input type="text" name="email" class="form-control" id="email" placeholder="email">
-=======
+
 				      <input type="text" name="email" class="form-control" id="email" placeholder="Email">
->>>>>>> 556280e... changes to controller
+
 				    </div>
 				    </div>
 				   <div class="form-group row">
 				    <label for="mobile" class="col-sm-5 col-form-label">Phone Number:</label>
 				    <div class="col-sm-7">
-<<<<<<< HEAD
-				      <input type="text" name="mobile" class="form-control" id="mobile" placeholder="mobile" >
-=======
+
 				      <input type="text" name="mobile" class="form-control" id="mobile" placeholder="Phone Number">
->>>>>>> 556280e... changes to controller
+
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="mobile" class="col-sm-5 col-form-label">Age:</label>
 				    <div class="col-sm-7">
-<<<<<<< HEAD
-				      <input type="text" name="age" class="form-control" id="age"  placeholder="age">
-=======
+
 				      <input type="text" name="age" class="form-control" id="age" placeholder="Age">
->>>>>>> 556280e... changes to controller
+
 				    </div>
 				  </div>
 				  <div id="bottom">
@@ -216,30 +196,10 @@
 				        <option>WI</option>
 				        <option>WY</option>
 			      	</select>
-<<<<<<< HEAD
+			
+			  
 			      <div>
-							<h3 style="margin: 20px 0 20px 0; color: white;">Type of User</h3>
-							<label>
-						    	<input type="radio" name="type_user" id="treq" autocomplete="off" checked> Customer
-						  	</label>
-						  	<label>
-						    	<input type="radio" name="type_user" id="preq" autocomplete="off"> Employee
-						  	</label>
-						</div>
-			      <div>
-			      	<input type="submit" value="Next" class="btn btn-primary btn-md" style="margin: 30px auto 0 auto;">
-=======
-			      	<div>
-							<h3 style="margin: 20px 0 20px 0; color: white;">Type of Account</h3>
-							<label>
-						    	<input type="radio" name="type_account" id="treq" autocomplete="off" checked value="credit"> Credit
-						  	</label>
-						  	<label>
-						    	<input type="radio" name="type_account" id="preq" autocomplete="off" value="debit"> Debit
-						  	</label>
-						</div>
-			      <div>
-			      <div>
+			     
 							<h3 style="margin: 20px 0 20px 0; color: white;">Type of User</h3>
 							<label>
 						    	<input type="radio" name="type_user" id="treq" autocomplete="off" checked value="customer"> Customer
@@ -251,7 +211,7 @@
 			      <div>
 			      	<input type="submit" value="Next" class="btn btn-primary btn-md" style="margin: 30px auto 0 auto;">
 			      	<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
->>>>>>> 556280e... changes to controller
+
 			      </div>
 				  </div>
 				</form>

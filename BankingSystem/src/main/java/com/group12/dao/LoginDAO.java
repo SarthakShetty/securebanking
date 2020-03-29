@@ -10,12 +10,12 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-
 import com.group12.models.Customer;
 
 
 @Component
 public class LoginDAO {
+
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -54,7 +54,7 @@ public class LoginDAO {
 			throw new RuntimeException("The Customer is not Activated");
 		}
 
-		if (customer.get(0).getCurrently_logged_in() == 0) {
+		if (customer.get(0).getCurrently_logged_in() == 1) {
 			throw new RuntimeException("The Customer cannot login at multiple locations");
 		}
 		int count = 0;
@@ -67,6 +67,14 @@ public class LoginDAO {
 		if (count == 0) {
 			throw new RuntimeException("Password is incorrect.");
 		}
+		
+		//String update_customerTable = "update customer set currently_logged_in = 1 where cust_user_id= " + "'" + user_name + "';";
+		//try {
+			//jdbcTemplate.update(update_customerTable);
+		//}catch(DataAccessException ex) {
+			//throw new RuntimeException(ex);
+		//}
+		
 
 		return true;
 	}

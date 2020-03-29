@@ -72,6 +72,21 @@ public class CustomerController {
 		return model;
 	}
 	
+
+	@RequestMapping(path="/activate/{user_Name}",method = {RequestMethod.GET, RequestMethod.POST})
+    public String activateCustomer(@PathVariable("user_Name") String user_Name) {
+
+		ModelAndView model = new ModelAndView();
+		try {
+		customerDAO.activateCustomer(user_Name);
+		} catch(Exception ex) {
+			throw ex;
+		}
+		return "redirect:/confirmationAccount";
+
+    }
+	
+	
 	@RequestMapping(value = "/customer/transferEmailPhone", method=RequestMethod.GET)
 	public ModelAndView getCustomerDetailsEmailPhone(ModelAndView model, HttpServletRequest request) {
 		// TODO logging messages 
@@ -177,6 +192,8 @@ public class CustomerController {
 		return model;
 	}
 	
+	
+	
 	@RequestMapping(value = "/customer/requestfunds")
 	public ModelAndView requestFunds(ModelAndView model, HttpServletRequest request) {
 		// Assumption that UI will be sending the session id of the user
@@ -226,5 +243,6 @@ public class CustomerController {
 		model.setViewName("customer/helpSupport");
 		return model;
 	}
+	
 
 }
