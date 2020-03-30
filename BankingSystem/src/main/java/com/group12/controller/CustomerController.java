@@ -193,6 +193,22 @@ public class CustomerController {
 		return model;
 	}
 	
+	@RequestMapping(value = "/admin/systemLogs", method=RequestMethod.GET)
+	public ModelAndView getSystemLogs(ModelAndView model, HttpServletRequest request) {
+
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
+		
+		/*
+		 * return system log.
+		 */
+		model.addObject("logs", "enter list here");
+	    model.setViewName("helpsupport");	 	    	    
+		return model;
+	}
+	
 	
 	
 	@RequestMapping(value = "/customer/requestfunds")

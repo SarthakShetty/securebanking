@@ -24,9 +24,9 @@
 			h1, h3,p, label{
 				color: white !important;
 			}
-			
-		
-			
+
+
+
 			table{
 				color: white !important;
 			}
@@ -43,10 +43,10 @@
 			#authSide{
 				width: 100%;
 				text-align: center;
-				
+				margin: 20px 0 0 0;
 			}
-				
 			
+		
 			.my-custom-scrollbar {
 				position: relative;
 				height: 300px;
@@ -55,6 +55,8 @@
 			.table-wrapper-scroll-y {
 				display: block;
 			}
+			
+		
 			
 		</style>
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
@@ -65,33 +67,33 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 	</head>
 	<body>
-		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-		<label class="navbar-brand" style="margin: 0 !important;">Group 12 Bank</label>
-		  <ul class="navbar-nav">
-			<li class=" nav-item"  ><a class="nav-link" href="/internalUser/profile">Profile</a></li>
-			  <li class ="  nav-item" ><a class="nav-link" href="/internalUser/transactions">View/Authorize Transactions</a></li>
-			  <li class ="  nav-item"  ><a class="nav-link" href="/internalUser/accountManagement">Account Management</a></li>
-			  <li class ="active nav-item" ><a class="nav-link" href="/internalUser/Requests">Requests</a></li>
-			  <c:if test="${role.equals == 'admin'}">
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	<label class="navbar-brand" style="margin: 0 !important;">Group 12 Bank</label>
+			  <ul class="navbar-nav">
+				<li class=" nav-item"  ><a class="nav-link" href="/internalUser/profile">Profile</a></li>
+				  <li class =" active nav-item" ><a class="nav-link" href="/internalUser/transactions">View/Authorize Transactions</a></li>
+				  <li class =" nav-item"  ><a class="nav-link" href="/internalUser/accountManagement">Account Management</a></li>
+				  <li class ="nav-item" ><a class="nav-link" href="/internalUser/Requests">Requests</a></li>
+				  <c:if test="${role.equals == 'admin'}">
 				  	<li class ="nav-item" ><a class="nav-link" href="/admin/systemLogs">System Log</a></li>
 				  </c:if>
-		  </ul>
-		  <ul class="navbar-nav ml-auto">
+				  
+				  
+			  </ul>
+			  <ul class="navbar-nav ml-auto">
 			  <li  class ="nav-item" ><a class="nav-link" href="/customer/logout">Logout</a></li>
 		  </ul>
-		</nav>
+			</nav>
 		<div id="container">
-			<h1>Requests</h1>
+			<h1>System Log</h1>
 			<hr class="divider"/>
-			
-			<div id="log">
+			<div id="transactions">
 				
 				<div id="listDiv" class="table-wrapper-scroll-y my-custom-scrollbar">
 					<table class="table table-bordered mb-0">
 						<thead>
 						  <tr>
-						    <th scope="col">Requests</th>
-						    <th scope="col"></th>
+						    <th scope="col">Logs</th>
 						  </tr>
 						</thead>
 						<tbody>
@@ -100,23 +102,15 @@
 						  		<td>
 						  			${tList}
 						  		</td>
-						  		<td><input type="radio" name="options"></td>
 						  	</tr>
 						  </c:forEach>
 						</tbody>
 					</table>
-					<div style="text-align: center !important; margin: 20px 0 0 0;">
-						<button class="btn btn-info btn-md" id="auth" disabled>Authorize</button>
-						<button class="btn btn-info btn-md" id="decline" disabled>Decline</button>
-					</div>
-					
 				</div>
 			</div>
 			 
 		</div>
 	<script>
-		$("input:radio").change(function () {$("#auth").prop("disabled", false);});
-		$("input:radio").change(function () {$("#decline").prop("disabled", false);});
 	</script>
 	</body>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
