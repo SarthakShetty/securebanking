@@ -34,7 +34,7 @@
 			<div>
 				<p>Please check your email for a link to continue registration.</p>
 			</div>
-			<a href="/otp">here</a>
+			<a href="/bankingsystem/otp">here</a>
 		</div>
 		
 	</body>

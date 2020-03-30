@@ -68,6 +68,8 @@ CREATE TABLE `customer` (
   `type` char(1) DEFAULT NULL,
   `creation_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `modified_date` timestamp NULL DEFAULT NULL,
+  `is_active` int default 0,
+  `currently_logged_in` int default 0,
   `last_successful_transaction_time` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`cust_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

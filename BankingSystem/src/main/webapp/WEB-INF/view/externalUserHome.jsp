@@ -1,5 +1,6 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 	<head>
 		<title>Login</title>
@@ -50,7 +51,7 @@
 				margin: 20px 0 0 0;
 			}
 			
-			#transfer, #transferB, #credit, #payment, #profile, #accMan{
+			#transfer, #transferB, #credit, #payment, #profile, #accMan, #helpsup{
 				display: none;
 			}
 			
@@ -135,26 +136,48 @@
 				position: relative;
 			}
 			
+			#acctransfer, #emailphonetransfer{
+				display: inline;
+				width: 40%;
+				text-align: center;
+			}
+			
+			#transfer input{
+				margin: auto;
+			}
+			#acctransfer{
+				margin: 0 50px 0 0;
+			}
+			
 		</style>
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 		<link href="https://fonts.googleapis.com/css?family=Squada+One&display=swap" rel="stylesheet">
-		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+		
 	</head>
 	<body>
+		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+		  <ul class="navbar-nav">
+		    <li class="active nav-item" id="acc" onclick="change(this)"><a class="nav-link" href="#">Account</a></li>
+			  <li id="rp" class ="nav-item" onclick="change(this)"><a class="nav-link" href="#">Transfer/Make Payment</a></li>
+			  <li id="tba" class ="nav-item"  onclick="change(this)"><a class="nav-link" href="#">Transfer Between Accounts</a></li>
+			  <li id="cd" class ="nav-item" onclick="change(this)"><a class="nav-link" href="#">Credit/Debit</a></li>
+			  <li id="mp" class ="nav-item" onclick="change(this)"><a class="nav-link" href="#">Make Payment</a></li>
+			  <li id="pr" class ="nav-item" onclick="change(this)"><a class="nav-link" id="" href="/customer/profile">Profile</a></li>
+			  <li id="am" class ="nav-item" onclick="change(this)"><a class="nav-link" href="#">Account Management</a></li>
+			  <li id="hs" class ="nav-item" onclick="change(this)"><a class="nav-link" href="#">Help and Support</a></li>
+		  </ul>
+		</nav>
+		<%
+			out.print(session.getAttribute("user_id"));
+		%>
 		<div id="container">
-			<h1>Hello ${name}</h1>
-			<ul class="nav nav-tabs">
-			  <li class="active" id="acc" onclick="change(this)"><a href="#">Account</a></li>
-			  <li id="rp" onclick="change(this)"><a href="#">Transfer/Make Payment</a></li>
-			  <li id="tba" onclick="change(this)"><a href="#">Transfer Between Accounts</a></li>
-			  <li id="cd" onclick="change(this)"><a href="#">Credit/Debit</a></li>
-			  <li id="mp" onclick="change(this)"><a href="#">Make Payment</a></li>
-			  <li id="pr" onclick="change(this)"><a href="#">Profile</a></li>
-			  <li id="am" onclick="change(this)"><a href="#">Account Management</a></li>
-			</ul>
+			<h1>Hello ${user_id}</h1>
+			<h2>${FirstName}</h2>
+			
 			<div id="account">
 				<h2 style="color: white;">Balance</h3>
 				<div id="leftDiv">
@@ -170,41 +193,84 @@
 				
 			</div>
 			<div id="transfer">
-				<form action="">
-					<div>
-						<h2>From Account</h2>
-						<hr class="divider"/>
-						<select>
-							<c:forEach items="${accountList}" var="aList">
-								<option>${aList}</option>
-							</c:forEach>
-						</select>
-					</div>
-					<div>
-						<h2>To</h2>
-						<hr class="divider"/>
-						<label>
-					    	<input type="radio" name="custoptions" id="treq" autocomplete="off"> Customer
-					  	</label>
-					  	<label>
-					    	<input type="radio" name="custoptions" id="preq" autocomplete="off"> Merchant
-					  	</label>
-					  	<input type="text" placeholder="Account Number" name="accNumber" style="display: block;"/>
-					</div>
-					<div>
-						<h2>Type of Request</h2>
-						<hr class="divider"/>
-						<label>
-					    	<input type="radio" name="request" id="treq" autocomplete="off"> Transfer
-					  	</label>
-					  	<label>
-					    	<input type="radio" name="request" id="preq" autocomplete="off"> Request Payment
-					  	</label>
-					</div>
-					<div style="text-align: center;">
-						<input  type="submit" value="Request" class="btn btn-md btn-info" style="margin: 25px 0 0 0;">
-					</div>
-				</form>
+				<div id="accTransfer">
+					<h2>Transfer Via Account Number</h2>
+					<hr class="divider"/>
+					<form action="">
+						<div>
+							<h3>From Account</h3>
+							<select>
+								<c:forEach items="${accountList}" var="aList">
+									<option>${aList}</option>
+								</c:forEach>
+							</select>
+						</div>
+						<div>
+							<h3>To</h3>
+							<label>
+						    	<input type="radio" name="custoptions" id="treq" autocomplete="off"> Customer
+						  	</label>
+						  	<label>
+						    	<input type="radio" name="custoptions" id="preq" autocomplete="off"> Merchant
+						  	</label>
+						  	<input type="text" placeholder="Account Number" name="accNumber" style="display: block;"/>
+						</div>
+						<div>
+							<h3>Type of Request</h3>
+							<label>
+						    	<input type="radio" name="request" id="treq" autocomplete="off"> Transfer
+						  	</label>
+						  	<label>
+						    	<input type="radio" name="request" id="preq" autocomplete="off"> Request Payment
+						  	</label>
+						</div>
+						<div >
+							<h2>Amount</h2>
+							<input type="text" placeholder="Amount" name="accAmount" style="display: block;" />
+						</div>
+						<div style="text-align: center;">
+							<input  type="button" value="Request" class="btn btn-md btn-info" id="accButton" onclick="checkModal(this)" style="margin: 25px 0 0 0;">
+							<input  type="submit" id="accButtonH"  style="display: none;">
+						</div>
+					</form>
+				</div>
+				<div id="emailphonetransfer">
+					<h2>Transfer Via Email/Phone</h2>
+					<hr class="divider"/>
+					<form action="">
+						<div>
+							<h3>From Account</h3>
+							<select>
+								<c:forEach items="${accountList}" var="aList">
+									<option>${aList}</option>
+								</c:forEach>
+							</select>
+						</div>
+						<div>
+							<h3>To</h3>
+							
+						  	<input type="text" placeholder="Phone Number" name="phoneNumver" style="display: block; margin: 0 auto 30px auto;"/>
+						  	<input type="text" placeholder="Email Address" name="emailAddress" style="display: block;"/>
+						</div>
+						<div>
+							<h3>Type of Request</h3>
+							<label>
+						    	<input type="radio" name="request" id="treq" autocomplete="off"> Transfer
+						  	</label>
+						  	<label>
+						    	<input type="radio" name="request" id="preq" autocomplete="off"> Request Payment
+						  	</label>
+						</div>
+						<div >
+							<h2>Amount</h2>
+							<input type="text" placeholder="Amount" name="peAmount" style="display: block;" />
+						</div>
+						<div style="text-align: center;">
+							<input  type="button" value="Request" class="btn btn-md btn-info" id="peButton" onclick="checkModal(this)" style="margin: 25px 0 0 0;">
+							<input  type="submit" id="peButtonH"  style="display: none;">
+						</div>
+					</form>
+				</div>
 			</div>
 			<div id="transferB" class="row" style="position: relative;">
 				<div class="col">
@@ -225,11 +291,12 @@
 				</div>
 				<div class="col">
 					<h2>Amount</h2>
-					<input type="text" placeholder="Amount" name="transferAmount" style="display: block;" />
+					<input type="text" placeholder="Amount" name="transferAmount" id="tbAmount" style="display: block;" />
 				</div>
 				<div class="col" style="position: absolute; right: 10%; top: 40%;">
-					<form action="">
-						<input type="submit" class="btn btn-md btn-info" value="Transfer" style="margin: 20px 0 0 0;">
+					<form action="/">
+						<input type="button" class="btn btn-md btn-info" value="Transfer" id="tButton" onclick="checkModal(this)" style="margin: 20px 0 0 0;">
+						<input type="submit" style="display: none;" id="tButtonH">
 					</form>
 				</div>
 			</div>
@@ -244,12 +311,11 @@
 				</div>
 				<div >
 					<h2>Amount</h2>
-					<input type="text" placeholder="Amount" name="transferAmount" style="display: block;" />
+					<input type="text" placeholder="Amount" name="transferAmount" id="cdAmount" style="display: block;" />
 				</div>
 				<div class="col" style="position: absolute; right: 35%; top: 25%;">
 					<form action="">
-						<input type="submit" class="btn btn-md btn-info" value="Debit" style="margin: 20px 0 0 0;">
-						<input type="submit" class="btn btn-md btn-info" value="Credit" style="margin: 20px 0 0 0;"/>
+						<input type="button" id="cdbutton" class="btn btn-md btn-info" data-toggle="modal" data-target="#myModal" value="Credit/Debit" style="margin: 20px 0 0 0;">
 					</form>
 				</div>
 			</div>
@@ -300,7 +366,7 @@
 				</div>
 				<div id="editInfo">
 					<div class="form-group row">
-				    <label for="phone" class="col-sm-5 col-form-label">Phone:</label>
+				    <label for="phone" class="col-sm-5 col-form-label">Phone Number:</label>
 				    <div class="col-sm-7">
 				      <input type="text"  class="form-control" id="phone">
 				    </div>
@@ -311,6 +377,12 @@
 				      <input type="text" class="form-control" id="address" >
 				    </div>
 				  </div>
+				  <div class="form-group row">
+				    <label for="email" class="col-sm-5 col-form-label">Email:</label>
+				    <div class="col-sm-7">
+				      <input type="text" name="email" class="form-control" id="email" >
+				    </div>
+				   </div>
 				  <div id="bottom">
 				  	<label>City:</label>
 				  	<input type="text" class='form-control' id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
@@ -377,23 +449,236 @@
 				</div>
 			</div>
 			<div id="accMan" style="text-align: center;">
-				<div style="margin: 20px 0 0 0; display: inline-block;">
-					<label>
-				    	<input type="radio" name="custoptions" id="delacc" autocomplete="off"> Delete an Account
-				  	</label>
-				  	<label>
-				    	<input type="radio" name="custoptions" id="newacc" autocomplete="off"> Create a New Account
-				  	</label>
+				<div style="margin: 20px 0 0 0; display: block;">
+					<h2>Banking Statements</h2>
+					<hr class="divider"/>
+				  	<button class="btn btn-info btn-md">Download Banking Statements</button>
+				</div>
+				<div style="margin: 40px 0 0 0; display: block;">
+					<h2>Delete an Account</h2>
+					<hr class="divider"/>
 				  	<select style="display: block; margin: 20px auto;">
 				  		<c:forEach items="${accountList}" var="aList">
 				  			<option>${aList}</option>
 				  		</c:forEach>
 				  	</select>
+				  	<button class="btn btn-md btn-info">Submit Request</button>
 				</div>
-				<div style="display: block;">
-					<button class="btn btn-md btn-info">Submit Request</button>
+				<div style="margin: 40px 0 0 0; display: block;">
+					<h2>Create New Account</h2>
+					<hr class="divider">
+				</div>
+				
+				<div id="form">
+					
+					<form action="/confirmationAccoun" method="POST">
+					  <div class="form-group row">
+					    <label for="firstName" class="col-sm-5 col-form-label">First Name:</label>
+					    <div class="col-sm-7">
+					      <input type="text" name ="firstName"  class="form-control" id="firstName"  placeholder="FirstName" >
+					    </div>
+					  </div>
+					  <div class="form-group row">
+					    <label for="lastName" class="col-sm-5 col-form-label">Last Name:</label>
+					    <div class="col-sm-7">
+					      <input type="text" name = "lastName" class="form-control" id="lastName" >
+					    </div>
+					  </div>
+					  <div class="form-group row">
+					    <label for="username" class="col-sm-5 col-form-label">Username:</label>
+					    <div class="col-sm-7">
+					      <input type="text" name = "username" class="form-control" id="username">
+					    </div>
+					  </div>
+					  <div class="form-group row">
+					    <label for="password" class="col-sm-5 col-form-label">Password:</label>
+					    <div class="col-sm-7">
+					      <input type="password" name="password" class="form-control" id="password" >
+					    </div>
+					  </div>
+					  <div class="form-group row">
+					    <label for="cPassword" class="col-sm-5 col-form-label">Confirm Password:</label>
+					    <div class="col-sm-7">
+					      <input type="password" name="cPassword" class="form-control" id="cPassword">
+					    </div>
+					  </div>
+					  <div class="form-group row">
+					    <label for="address" class="col-sm-5 col-form-label">Address:</label>
+					    <div class="col-sm-7">
+					      <input type="text" name="address" class="form-control" id="address" >
+					    </div>
+					    </div>
+					   <div class="form-group row">
+					    <label for="email" class="col-sm-5 col-form-label">Email:</label>
+					    <div class="col-sm-7">
+					      <input type="text" name="email" class="form-control" id="email" >
+					    </div>
+					   </div>
+					   <div class="form-group row">
+					    <label for="mobile" class="col-sm-5 col-form-label">Phone Number:</label>
+					    <div class="col-sm-7">
+					      <input type="text" name="mobile" class="form-control" id="mobile" >
+					    </div>
+					  </div>
+					  <div id="bottom">
+					  	<label>City:</label>
+					  	<input type="text" name="city" class='form-control' id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+					  	<label>Zip:</label>
+					  	<input type="text" name="zip" class='form-control' id="zip" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+					  	<label>State:</label>
+					  	<select class="form-control" name="state" id="state" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
+					        <option>AL</option>
+					        <option>AK</option>
+					        <option>AZ</option>
+					        <option>AR</option>
+					        <option>CA</option>
+					        <option>CO</option>
+					        <option>CT</option>
+					        <option>DE</option>
+					        <option>FL</option>
+					        <option>GA</option>
+					        <option>HI</option>
+					        <option>ID</option>
+					        <option>IL</option>
+					        <option>IN</option>
+					        <option>IA</option>
+					        <option>KS</option>
+					        <option>KY</option>
+					        <option>LA</option>
+					        <option>ME</option>
+					        <option>MD</option>
+					        <option>MA</option>
+					        <option>MI</option>
+					        <option>MN</option>
+					        <option>MS</option>
+					        <option>MO</option>
+					        <option>MT</option>
+					        <option>NE</option>
+					        <option>NV</option>
+					        <option>NH</option>
+					        <option>NJ</option>
+					        <option>NM</option>
+					        <option>NY</option>
+					        <option>NC</option>
+					        <option>ND</option>
+					        <option>OH</option>
+					        <option>OK</option>
+					        <option>OR</option>
+					        <option>PA</option>
+					        <option>RI</option>
+					        <option>SC</option>
+					        <option>SD</option>
+					        <option>TN</option>
+					        <option>TX</option>
+					        <option>UT</option>
+					        <option>VT</option>
+					        <option>VA</option>
+					        <option>WA</option>
+					        <option>WV</option>
+					        <option>WI</option>
+					        <option>WY</option>
+				      	</select>
+				      
+				      <div>
+				      	<input type="submit" value="Submit Request" class="btn btn-info btn-md" style="margin: 30px auto 0 auto;">
+				      </div>
+					  </div>
+					</form>
 				</div>
 			</div>
+			<div id="helpsup" style="text-align: center;">
+				<h2>Schedule an appointment</h2>
+				<form action="">
+				  <h3>Select a date </h3>
+				  <input type="date" id="dateS" name="dates" style="display: block; margin: 10px auto">
+				  <input type="submit" class="btn btn-info btn-md">
+				</form>
+				
+			</div>
+			
+			<div class="modal fade" id="myModal" role="dialog" style="display: none;">
+			    <div class="modal-dialog" >
+			    
+			      <!-- Modal content-->
+			      <div class="modal-content">
+			        <div class="modal-header">
+			          <button type="button" class="close" data-dismiss="modal">&times;</button>
+			          <h4 class="modal-title" style="color: red;" id="modalHead"></h4>
+			        </div>
+			        <div class="modal-body">
+			          <p style="color: black !important;" id="modalmsg"></p>
+			        </div>
+			        <div class="modal-footer">
+			          <button type="button" class="btn btn-default" data-dismiss="modal">Credit</button>
+			          <button type="button" class="btn btn-default" data-dismiss="modal" >Debit</button>
+			        </div>
+			      </div>
+			      
+			    </div>
+			 </div>
+			 
+			 <div class="modal fade" id="myModal2" role="dialog" style="display: none;">
+			    <div class="modal-dialog" >
+			    
+			      <!-- Modal content-->
+			      <div class="modal-content">
+			        <div class="modal-header">
+			          <button type="button" class="close" data-dismiss="modal">&times;</button>
+			          <h4 class="modal-title" style="color: red;" id="modalHead">Attention</h4>
+			        </div>
+			        <div class="modal-body">
+			          <p style="color: black !important;" id="modalmsg">The specified amount caused this request to be considered a critical transaction.</p>
+			        </div>
+			        <div class="modal-footer">
+			          
+			        </div>
+			      </div>
+			      
+			    </div>
+			 </div>
+			 <input type="button" style="display: none;" data-toggle="modal" data-target="#myModal2" id="hiddenBut">
+			 
+			<div class="modal fade" id="myModal3" role="dialog" style="display: none;">
+			    <div class="modal-dialog" >
+			    
+			      <!-- Modal content-->
+			      <div class="modal-content">
+			        <div class="modal-header">
+			          <button type="button" class="close" data-dismiss="modal">&times;</button>
+			          <h4 class="modal-title" style="color: red;" id="modalHead">Attention</h4>
+			        </div>
+			        <div class="modal-body">
+			          <p style="color: black !important;" id="modalmsg">The specified amount caused this request to be considered a critical transaction.</p>
+			        </div>
+			        <div class="modal-footer">
+			          
+			        </div>
+			      </div>
+			      
+			    </div>
+			 </div>
+			 <input type="button" style="display: none;" data-toggle="modal" data-target="#myModal3" id="hiddenBut2">
+			 
+			 <div class="modal fade" id="myModal4" role="dialog" style="display: none;">
+			    <div class="modal-dialog" >
+			    
+			      <!-- Modal content-->
+			      <div class="modal-content">
+			        <div class="modal-header">
+			          <button type="button" class="close" data-dismiss="modal">&times;</button>
+			          <h4 class="modal-title" style="color: red;" id="modalHead">Attention</h4>
+			        </div>
+			        <div class="modal-body">
+			          <p style="color: black !important;" id="modalmsg">The specified amount caused this request to be considered a critical transaction.</p>
+			        </div>
+			        <div class="modal-footer">
+			          
+			        </div>
+			      </div>
+			      
+			    </div>
+			 </div>
+			 <input type="button" style="display: none;" data-toggle="modal" data-target="#myModal4" id="hiddenBut3">
 		</div>
 	<script>
 		var active = "acc";
@@ -427,19 +712,81 @@
 				case 'am':
 					mDiv = "accMan";
 					break;
+				case 'hs':
+					mDiv = "helpsup";
+					break;
 			}
 			
-			console.log(mDiv);
+			
 			document.getElementById(mDiv).style.display = 'block';
-			console.log(active);
+			
+			
 		}
 		
-		function showNewAcc(){
-			document.getElementById('newAccDiv').style.display = 'block';
+		
+		$("#cdbutton").on("click", function(){
+			if(document.getElementById("cdAmount").value > 1000){
+				document.getElementById("modalmsg").innerText = "This will be considered a critical transaction and will need to be approved. Credit or Debit?";
+				document.getElementById("modalHead").innerText = "Attention";
+				document.getElementById("modalHead").style.color = "red";
+			}
+			else
+			{
+				document.getElementById("modalmsg").innerText = "Credit or Debit?";
+				document.getElementById("modalHead").innerText = "Which Account?";
+				document.getElementById("modalHead").style.color = "black";
+			}
+		});
+	
+		function checkModal(el){
+			if(el.id == "tButton"){
+				if(document.getElementById("tbAmount").value > 1000){
+					document.getElementById("hiddenBut").click();
+					
+				}
+				else
+					document.getElementById("tButtonH").click();
+			}
+			else if(el.id == "accButton"){
+				if(document.getElementById("accAmount").value > 1000){
+					document.getElementById("hiddenBut2").click();
+				}
+				else
+					document.getElementById("accButtonH").click();
+			}
+			else if(el.id == "peButton"){
+				if(document.getElementById("peAmount").value > 1000){
+					document.getElementById("hiddenBut3").click();
+				}
+				else
+					document.getElementById("peButtonH").click();
+			}
 		}
+		
+		$('#myModal2').on('hidden.bs.modal', function () {
+			document.getElementById("tButtonH").click();
+		});
+		$('#myModal3').on('hidden.bs.modal', function () {
+			document.getElementById("peButtonH").click();
+		});
+		$('#myModal4').on('hidden.bs.modal', function () {
+			document.getElementById("accButtonH").click();
+		});
+		
+		$("#profileLink").click(function(){
+		    $.ajax({
+		        url : '/login',
+		        method : 'POST',
+		        async : false,
+		        complete : function(data) {
+		            console.log(data.responseText);
+		        }
+		    });
+
+		});
 	</script>
 	</body>
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </html>

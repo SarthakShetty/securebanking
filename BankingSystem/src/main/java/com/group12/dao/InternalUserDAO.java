@@ -80,6 +80,8 @@ public class InternalUserDAO {
 		jdbcTemplate.update(insert_employee);
 
 	}
+	
+	
 
 	public List<Request> viewCustomerTransactions(int customer_id, int tier) {
 		List<Request> requests = new ArrayList<>();
@@ -109,7 +111,16 @@ public class InternalUserDAO {
 
 	public void deleteCustomerAccount(Account account,int tier) {
 		if(tier == 2) {
-			accountDAO.deleteAccount(account.getAcc_id(),account.getCust_id(),account.getIs_active());
+			accountDAO.deleteAccount(account.getAcc_id(),account.getCust_id(),0);
+		}
+	}
+	
+	public void deleteInternalUser(int empid, int tier)
+	{
+		if(tier == 3)
+		{
+			String delete_employee = "delete from employee where emp_id = '"+ empid +" ';";
+			jdbcTemplate.update(delete_employee);
 		}
 	}
 

@@ -17,8 +17,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
-
-import com.group12.controller.LoginController;
 import com.group12.models.Customer;
 import com.group12.models.Request;
 import com.group12.utils.Constants;
@@ -124,6 +122,9 @@ public class CustomerDAO {
 					cust.setUsername((String) rs.getObject("cust_user_id"));
 					cust.setState((String) rs.getObject("state"));
 					cust.setType((char) rs.getObject("type"));
+					cust.setCurrently_logged_in((int)rs.getObject("currently_logged_in"));
+					cust.setCurrently_logged_in((int)rs.getObject("is_active"));
+					cust.setPassword((String)rs.getObject("password"));
 					return cust;
 				}
 			});
@@ -208,6 +209,18 @@ public class CustomerDAO {
 							customer.getType() });
 			System.out.println("In register class" + insert);
 		} catch (DataAccessException ex) {
+			throw new RuntimeException(ex);
+		}
+	}
+
+	public void activateCustomer(String user_Name) {
+		
+		logger.info(user_Name);
+		String update_customer  = "update customer set is_active = 1 where cust_user_id = " + "'" +user_Name+"';";
+		//log.info(update_customer);
+		try {
+			jdbcTemplate.update(update_customer);
+		} catch(DataAccessException ex) {
 			throw new RuntimeException(ex);
 		}
 	}

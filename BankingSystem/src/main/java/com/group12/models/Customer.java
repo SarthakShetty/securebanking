@@ -22,6 +22,8 @@ public class Customer {
 	private String password;
 	private String username;
 	private String zipCode;
+	private int is_active;
+	private int currently_logged_in;
 	
 
 
@@ -143,6 +145,22 @@ public class Customer {
 
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
+	}
+
+	public int getIs_active() {
+		return is_active;
+	}
+
+	public void setIs_active(int is_active) {
+		this.is_active = is_active;
+	}
+
+	public int getCurrently_logged_in() {
+		return currently_logged_in;
+	}
+
+	public void setCurrently_logged_in(int currently_logged_in) {
+		this.currently_logged_in = currently_logged_in;
 	}
 	
 }

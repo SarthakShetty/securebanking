@@ -1,13 +1,19 @@
 package com.group12.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.group12.dao.AccountDAO;
@@ -16,6 +22,7 @@ import com.group12.dao.CustomerRequestDAO;
 import com.group12.models.Account;
 import com.group12.models.Customer;
 import com.group12.models.Request;
+
 
 @Controller
 public class CustomerController {
@@ -28,24 +35,163 @@ public class CustomerController {
 	
 	Logger log = LoggerFactory.getLogger(AccountController.class);
 	
-	@RequestMapping(value = "/customer/profile")
+	
+	@RequestMapping(value = "/customer/profile", method=RequestMethod.GET)
 	public ModelAndView getCustomerDetails(ModelAndView model, HttpServletRequest request) {
 		// TODO logging messages 
-		String userName = request.getParameter("user_id");
-		Customer customer = customerDAO.getCustomerProfileDetails(userName);
-		// TODO need to do the integration with the UI parameters
-		model.addObject("First name", customer.getFirstName());
-		model.addObject("Last name", customer.getLastName());
-		model.addObject("phone", customer.getMobile());
-		model.addObject("address", customer.getAddress());
-		model.addObject("city", customer.getCity());
-		model.addObject("state", customer.getState());
-		model.addObject("zip", customer.getZipCode());
-		model.addObject("age", customer.getCity());
-		model.addObject("email", customer.getEmail());
-		model.addObject("user name", customer.getUsername());
+		
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
+		//String userName = request.getParameter("user_id");
+//		//Customer customer = customerDAO.getCustomerProfileDetails(userName);
+//		// TODO need to do the integration with the UI parameters
+//		model.addObject("First name", customer.getFirstName());
+//		model.addObject("Last name", customer.getLastName());
+//		model.addObject("phone", customer.getMobile());
+//		model.addObject("address", customer.getAddress());
+//		model.addObject("city", customer.getCity());
+//		model.addObject("state", customer.getState());
+//		model.addObject("zip", customer.getZipCode());
+//		model.addObject("age", customer.getCity());
+//		model.addObject("email", customer.getEmail());
+//		model.addObject("user name", customer.getUsername());
+		model.addObject("Firstname", "Brandon");
+		model.addObject("Lastname", "Pacheco");
+		model.addObject("phone", "951-212-4912");
+		model.addObject("address", "your street");
+		model.addObject("city", "phoenix");
+		model.addObject("state", "az");
+		model.addObject("zip", "85281");
+		model.addObject("age", "22");
+		model.addObject("email", "akads");
+		model.addObject("username", "hackerman");
+		model.setViewName("profile");
+		//model.addObject("FirstName", userName);
 		return model;
 	}
+	
+
+	@RequestMapping(path="/activate/{user_Name}",method = {RequestMethod.GET, RequestMethod.POST})
+    public String activateCustomer(@PathVariable("user_Name") String user_Name) {
+
+		ModelAndView model = new ModelAndView();
+		try {
+		customerDAO.activateCustomer(user_Name);
+		} catch(Exception ex) {
+			throw ex;
+		}
+		return "redirect:/confirmationAccount";
+
+    }
+	
+	
+	@RequestMapping(value = "/customer/transferEmailPhone", method=RequestMethod.GET)
+	public ModelAndView getCustomerDetailsEmailPhone(ModelAndView model, HttpServletRequest request) {
+		// TODO logging messages 
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
+//		String userName = request.getParameter("user_name");
+//		// Get the details of the customer using the userName
+//	    Customer customer = customerDAO.getCustomerProfileDetails(userName);
+//	    // Get the accounts from customer id 
+//	    List<Account> accounts = accountDAO.getAccountDetails(customer.getCust_id());
+//	    // set the session id with the customer id
+//	    model.addObject("getAccount", accounts);
+		List<String> s = new ArrayList<String>();
+		s.add("hele");
+		model.addObject("accounts", s);
+	    model.setViewName("transferMakePayment");	 	    	    
+		return model;
+	}
+	
+	@RequestMapping(value = "/customer/transferBA", method=RequestMethod.GET)
+	public ModelAndView getCustomerDetailsBA(ModelAndView model, HttpServletRequest request) {
+		// TODO logging messages 
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
+//		String userName = request.getParameter("user_name");
+//		// Get the details of the customer using the userName
+//	    Customer customer = customerDAO.getCustomerProfileDetails(userName);
+//	    // Get the accounts from customer id 
+//	    List<Account> accounts = accountDAO.getAccountDetails(customer.getCust_id());
+//	    // set the session id with the customer id
+//	    model.addObject("getAccount", accounts);
+		List<String> s = new ArrayList<String>();
+		s.add("hele");
+		model.addObject("accounts", s);
+	    model.setViewName("transferBetweenAccounts");	 	    	    
+		return model;
+	}
+	
+	@RequestMapping(value = "/customer/CreditDebit", method=RequestMethod.GET)
+	public ModelAndView getCustomerDetailsCreditDebit(ModelAndView model, HttpServletRequest request) {
+		// TODO logging messages 
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
+//		String userName = request.getParameter("user_name");
+//		// Get the details of the customer using the userName
+//	    Customer customer = customerDAO.getCustomerProfileDetails(userName);
+//	    // Get the accounts from customer id 
+//	    List<Account> accounts = accountDAO.getAccountDetails(customer.getCust_id());
+//	    // set the session id with the customer id
+//	    model.addObject("getAccount", accounts);
+		
+		List<String> s = new ArrayList<String>();
+		s.add("hele");
+		model.addObject("accounts", s);
+	    model.setViewName("creditDebit");	 	    	    
+		return model;
+	}
+	
+	@RequestMapping(value = "/customer/payment", method=RequestMethod.GET)
+	public ModelAndView getCustomerDetailsPayment(ModelAndView model, HttpServletRequest request) {
+		
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
+		/*
+		 * Need to return list of requests for a specific customer
+		 */
+		
+	    model.setViewName("makePayment");	 	    	    
+		return model;
+	}
+	
+	@RequestMapping(value = "/customer/accountManagement", method=RequestMethod.GET)
+	public ModelAndView getCustomerDetailsAccMan(ModelAndView model, HttpServletRequest request) {
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
+		
+		/*
+		 * Need to return list of accounts of the user
+		 */
+		
+	    model.setViewName("accountManagement");	 	    	    
+		return model;
+	}
+	
+	@RequestMapping(value = "/customer/helpSupport", method=RequestMethod.GET)
+	public ModelAndView getCustomerDetailsHelpSupp(ModelAndView model, HttpServletRequest request) {
+
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
+	    model.setViewName("helpsupport");	 	    	    
+		return model;
+	}
+	
 	
 	
 	@RequestMapping(value = "/customer/requestfunds")
@@ -83,5 +229,20 @@ public class CustomerController {
 		model.addObject("message", "Sucess");
 		return model;
 	}
+	
+	@RequestMapping(value = "/customer/schedule")
+	public ModelAndView schheduleAppointment(ModelAndView model, HttpServletRequest request) {
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
+		/*
+		 * Need to allow the customer to schedule an appointment then return a message saying appointment
+		 * entered.
+		 */
+		model.setViewName("customer/helpSupport");
+		return model;
+	}
+	
 
 }

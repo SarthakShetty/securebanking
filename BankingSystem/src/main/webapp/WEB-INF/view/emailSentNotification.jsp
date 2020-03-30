@@ -9,43 +9,23 @@
 			}
 			
 			#container{
+				width: 40%;
 				margin: 20px auto;
 				text-align: center;
 			}
 			
-			#email{
-				margin: 10px auto 50px auto;
-			}
 			
-			#OTPKey{
-				margin: 10px auto 20px auto;
-			}
-			
-			h1, label{
+			h1, label, p{
 				color: white !important;
 			}
 			
-			
-			.divider{
-				border-top: 1px solid #8c8b8b;
-				
-			}
-			
-			#form{
-				text-align: center;
-				width: 50%;
-				margin: auto;
-			}
-			
-			input[type="text"], input[type='password']{
-				width: 60%;
-			}
 		</style>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
-		<link href="https://fonts.googleapis.com/css?family=Squada+One&display=swap" rel="stylesheet">
-		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 	</head>
 	<body>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -60,23 +40,12 @@
 		   </div>
     	</nav>
 		<div id="container">
-			<div style="width: 50%; margin: auto;">
-				<h1>Create New Account - OTP Authentication</h1>
+			<div>
+				<h1>Email Sent</h1>
 			</div>
-			
-			<div id="form">
-				<hr class="divider">
-				<form action="/verifyOTP" method="POST">
-					<div class="md-form">
-						<input name="email" type="text" value="${customer_email}" id="email" class="form-control" readonly="readonly">
-						<input name="OTP" type="password" placeholder="OTP Key"  id="OTPKey" class="form-control"/>
-					</div>
-					<hr class="divider">
-					<div>
-						<input type="submit" class="btn btn-primary btn-md" value="Next" style="margin: 20px auto 0 auto;"/>
-						<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
-					</div>
-				</form>
+			<div>
+				<p>An Email has been sent to the given email Id. Please Click on the link to Activate the Account.</p>
+				<button class="btn btn-info btn-md" onclick="window.location.href='/'">Login</button>
 			</div>
 		</div>
 		

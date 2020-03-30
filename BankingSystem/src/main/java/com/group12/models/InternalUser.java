@@ -10,7 +10,7 @@ public class InternalUser {
      private String address;
      private String mobile;
      private String email;
-     private char type;
+     private int type;
      
      
      public int getEmp_id() {
@@ -85,11 +85,11 @@ public class InternalUser {
     	 this.email = email;
      }
     
-     public char getType() {
+     public int getType() {
     	 return type;
      }
      
-     public void setType(char type) {
+     public void setType(int type) {
     	 this.type = type;
      }
      
