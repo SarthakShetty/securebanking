@@ -18,14 +18,21 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.group12.dao.CustomerDAO;
+import com.group12.dao.LoginDAO;
 import com.group12.models.Customer;
+import com.group12.services.EmailService;
+import com.group12.utils.Constants;
 
 
 @Controller
 public class CustomerRegistrationController {
 	
 	@Autowired
+	private LoginDAO loginDAO;
+	@Autowired
 	private CustomerDAO customerDAO;
+	@Autowired
+	private EmailService emailService;
 	
 	Logger logger = LoggerFactory.getLogger(AccountController.class);
 	
@@ -78,20 +85,29 @@ public class CustomerRegistrationController {
 			/*
 			 * Going to need to change these to how we used the model above.
 			 */
-//			if(customerDAO.checkIfMobileNumExists(request.getParameter("mobile"))) {
-//				model.addObject("message", "Sorry phone number already used please enter another one.");
-//				return model;
-//			}
-//			if(customerDAO.checkIfEmailExists(request.getParameter("email"))) {
-//				model.addObject("message", "Sorry email already used please enter another one.");
-//				return model;
-//			}
-//			if(customerDAO.checkIfUserNameExists(request.getParameter("username"))) {
-//				model.addObject("message", "Sorry username already used please enter another one.");
-//				return model;
-//			}
-			//Customer customer  = createCustomer(fName, lName, uName, password, cPassword, address, email, phoneNumber, age, city, zip, state, type_user);
-//			customerDAO.insertCutomerData(customer); // should actually call customerDAO.register(customer)\
+			
+			if (customerDAO.checkIfMobileNumExists(request.getParameter("mobile"))) {
+				model = new RedirectView("/newAccount");
+				attr.addFlashAttribute("error_msg", "Phone number already is registered.");
+				return model;
+			}
+			if (customerDAO.checkIfEmailExists(request.getParameter("email"))) {
+				model = new RedirectView("/newAccount");
+				attr.addFlashAttribute("error_msg", "Email already registered.");
+				return model;
+			}
+			if (customerDAO.checkIfUserNameExists(request.getParameter("username"))) {
+				model = new RedirectView("/newAccount");
+				attr.addFlashAttribute("error_msg", "Username already is registered.");
+				return model;
+			}
+			
+			Customer customer  = createCustomer(fName, lName, uName, password, cPassword, address, email, phoneNumber, age, city, zip, state, type_user);
+			customerDAO.insertCutomerData(customer); // should actually call customerDAO.register(customer)\
+			emailService.sendMail(email,
+					"Please Click/ copy paste The link To Activate Banking Account",
+					Constants.HOST_NAME_ACTIVATE + request.getParameter("username"));
+			
 			
 			//Doing this because the ability for employees to create an account from there dashboard.
 			model = new RedirectView("/otp");

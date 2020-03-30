@@ -3,7 +3,7 @@
 
 <html>
 	<head>
-		<title>Login</title>
+		<title>Group 12 Bank</title>
 		<style>
 			#container{
 				width: 70%;
@@ -164,10 +164,11 @@
 			  <li id="am" class ="nav-item" ><a class="nav-link" href="/customer/accountManagement">Account Management</a></li>
 			  <li id="hs" class ="nav-item" ><a class="nav-link" href="/customer/helpSupport">Help and Support</a></li>
 		  </ul>
+		  <ul class="navbar-nav ml-auto">
+			  <li  class ="nav-item" ><a class="nav-link" href="/customer/logout">Logout</a></li>
+		  </ul>
 		</nav>
-		<%-- <%
-			out.print(session.getAttribute("user_id"));
-		%> --%>
+		
 		<div id="container">
 			<h1>Payment Requests</h1>
 			<hr class="divider" />
@@ -203,17 +204,10 @@
 				</div>
 				<div style="text-align: center; margin: 20px 0 0 0;">
 					<label>
-<<<<<<< HEAD
-					    	<input type="radio" name="auth"  value="credit" autocomplete="off"> Accept
-					  	</label>
-					  	<label>
-					    	<input type="radio" name="auth"  value="debit" autocomplete="off"> Decline
-=======
 					    	<input type="radio" name="auth"  value="accept" autocomplete="off"> Accept
 					  	</label>
 					  	<label>
 					    	<input type="radio" name="auth"  value="decline" autocomplete="off"> Decline
->>>>>>> 556280e... changes to controller
 					  	</label>
 				</div>
 				<div style="text-align: center; margin: 20px 0 0 0;">

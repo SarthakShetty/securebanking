@@ -135,10 +135,11 @@
 			  <li id="am" class ="nav-item" ><a class="nav-link" href="/customer/accountManagement">Account Management</a></li>
 			  <li id="hs" class ="nav-item" ><a class="nav-link" href="/customer/helpSupport">Help and Support</a></li>
 		  </ul>
+		  <ul class="navbar-nav ml-auto">
+			  <li  class ="nav-item" ><a class="nav-link" href="/customer/logout">Logout</a></li>
+		  </ul>
 		</nav>
-		<%-- <%
-			out.print(session.getAttribute("user_id"));
-		%> --%>
+		
 		<div id="container">
 			<h1>Profile</h1>
 			<hr class="divider"/>
@@ -147,34 +148,20 @@
 				<div id="editInfo">
 					<div class="form-group row">
 						<label class="col-sm-5 col-form-label">Name:</label>
-<<<<<<< HEAD
-						<label class="col=sm-7" style="padding: 0 15px;"><% out.print(request.getSession().getAttribute("admin")); %></label>
-=======
+
 						<label class="col=sm-7" style="padding: 0 15px;"> <% out.print(request.getSession().getAttribute("user_name")); %> </label>
->>>>>>> 556280e... changes to controller
+
 					</div>
 					<div class="form-group row">
 				    <label for="phone" class="col-sm-5 col-form-label">Phone Number:</label>
 				    <div class="col-sm-7">
-<<<<<<< HEAD
-				      <input type="text"  class="form-control" id="phone" value="${phone}">
-=======
 				      <input type="text"  class="form-control" name="mobile" id="phone" value="${phone}">
->>>>>>> 556280e... changes to controller
+
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="address" class="col-sm-5 col-form-label">Address:</label>
 				    <div class="col-sm-7">
-<<<<<<< HEAD
-				      <input type="text" class="form-control" id="address" value="${address}">
-				    </div>
-				  </div>
-				  <div class="form-group row">
-				    <label for="email" class="col-sm-5 col-form-label">Email:</label>
-				    <div class="col-sm-7">
-				      <input type="text" name="email" class="form-control" id="email" value="${email }">
-=======
 				      <input type="text" class="form-control" id="address" name="address" value="${address}">
 				    </div>
 				  </div>
@@ -183,54 +170,43 @@
 				    <div class="col-sm-7">
 				      <input type="password"  class="form-control" name="password" id="phone">
 				    </div>
+				    </div>
 				    <div class="form-group row">
 				    <label for="phone" class="col-sm-5 col-form-label">Confirm Password:</label>
 				    <div class="col-sm-7">
 				      <input type="password"  class="form-control" name="cPassword" id="phone">
 				    </div>
+				    </div>
 				  <div class="form-group row">
 				    <label for="email" class="col-sm-5 col-form-label">Email:</label>
 				    <div class="col-sm-7">
 				      <input type="text" name="email" class="form-control" name="email" id="email" value="${email }">
->>>>>>> 556280e... changes to controller
+
 				    </div>
 				   </div>
 				   <div class="form-group row">
 				    <label for="address" class="col-sm-5 col-form-label">Age:</label>
 				    <div class="col-sm-7">
-<<<<<<< HEAD
-				      <input type="text" class="form-control" id="age" value="${age}">
-=======
+
 				      <input type="text" class="form-control" id="age" name="age" value="${age}">
->>>>>>> 556280e... changes to controller
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="address" class="col-sm-5 col-form-label">Username:</label>
 				    <div class="col-sm-7">
-<<<<<<< HEAD
-				      <input type="text" class="form-control" id="username" value="${username }">
-=======
 				      <input type="text" class="form-control" name="username" id="username" value="${username }">
->>>>>>> 556280e... changes to controller
+
 				    </div>
 				  </div>
 				</div>
-				  <div id="bottom">
+			<div id="bottom">
 				  	<label>City:</label>
-<<<<<<< HEAD
-				  	<input type="text" class='form-control' id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;" value="${city}">
-				  	<label>Zip:</label>
-				  	<input type="text" class='form-control' id="zip" style="display: inline-block; width: 100px; margin: 0 30px 0 0;" value="${zip}">
-				  	<label>State:</label>
-				  	<select class="form-control" id="state" style="display: inline-block; width: 100px; margin: 0 30px 0 0;" value="${state}">
-=======
 				  	<input type="text" class='form-control' name="city" id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;" value="${city}">
 				  	<label>Zip:</label>
 				  	<input type="text" class='form-control' name="zip" id="zip" style="display: inline-block; width: 100px; margin: 0 30px 0 0;" value="${zip}">
 				  	<label>State:</label>
 				  	<select class="form-control" id="state" name="state" style="display: inline-block; width: 100px; margin: 0 30px 0 0;" value="${state}">
->>>>>>> 556280e... changes to controller
+
 				        <option>AL</option>
 				        <option>AK</option>
 				        <option>AZ</option>
@@ -282,11 +258,10 @@
 				        <option>WI</option>
 				        <option>WY</option>
 			      	</select>
-			      
-				  </div>
 				</div>
 			<div id="submitInfo">
 					<input type="submit" class="btn btn-md btn-info" value="Submit Changes">
+			</div>
 			</div>
 			</form>
 		</div>

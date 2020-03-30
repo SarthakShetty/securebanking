@@ -3,7 +3,7 @@
 
 <html>
 	<head>
-		<title>Login</title>
+		<title>Group 12 Bank</title>
 		<style>
 			#container{
 				width: 70%;
@@ -67,10 +67,11 @@
 			  <li id="am" class ="nav-item" ><a class="nav-link" href="/customer/accountManagement">Account Management</a></li>
 			  <li id="hs" class ="nav-item" ><a class="nav-link" href="/customer/helpSupport">Help and Support</a></li>
 		  </ul>
+		  <ul class="navbar-nav ml-auto">
+			  <li  class ="nav-item" ><a class="nav-link" href="/customer/logout">Logout</a></li>
+		  </ul>
 		</nav>
-		<%-- <%
-			out.print(session.getAttribute("user_id"));
-		%> --%>
+		
 		<div id="container">
 			
 			<div id="transfer">
@@ -80,11 +81,7 @@
 					<form action="/customer/transferFundsOtherAccount">
 						<div>
 							<h3>From Account</h3>
-<<<<<<< HEAD
-							<select>
-=======
 							<select name="from_acc">
->>>>>>> 556280e... changes to controller
 								<c:forEach items="${accounts}" var="aList">
 									<option>${aList}</option>
 								</c:forEach>
@@ -93,51 +90,42 @@
 						<div>
 							<h3>To Account</h3>
 						  	<input type="text" placeholder="Account Number" name="accNumber" style="display: block;"/>
-<<<<<<< HEAD
-=======
+
 						  	<div id="errorTo" style="display: none;">
 							<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid account number.</font></p>
 						</div>
->>>>>>> 556280e... changes to controller
+
 						</div>
 						<div>
 							<h3>Type of Request</h3>
 							<label>
-<<<<<<< HEAD
-						    	<input type="radio" name="request" id="treq" autocomplete="off"> Transfer
-						  	</label>
-						  	<label>
-						    	<input type="radio" name="request" id="preq" autocomplete="off"> Request Payment
-=======
 						    	<input type="radio" name="request" id="treq" autocomplete="off" value="transfer"> Transfer
 						  	</label>
 						  	<label>
 						    	<input type="radio" name="request" id="preq" autocomplete="off" value="request"> Request Payment
->>>>>>> 556280e... changes to controller
+
 						  	</label>
 						</div>
 						<div >
 							<h2>Amount</h2>
 							<input type="text" placeholder="Amount" name="accAmount" id="accAmount" style="display: block;" />
-<<<<<<< HEAD
-=======
 							<div id="error" style="display: none;">
 							<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid amount.</font></p>
 						</div>
->>>>>>> 556280e... changes to controller
+
 						</div>
 						<div style="text-align: center;">
 							<input  type="button" value="Request" class="btn btn-md btn-info" id="accButton" onclick="checkModal(this)" style="margin: 25px 0 0 0;">
 							<input  type="submit" id="accButtonH"  style="display: none;">
-<<<<<<< HEAD
-						</div>
-=======
 							<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
 							<p style="margin: 20px 0 0 0;"><font color="green">${msg}</font></p>
+
 						</div>
-						
->>>>>>> 556280e... changes to controller
-					</form>
+
+						</form>
+					</div>
+
+					
 				</div>
 				<div id="emailphonetransfer">
 					<h2>Transfer Via Email/Phone</h2>
@@ -145,11 +133,7 @@
 					<form action="/customer/transferFundsEmailPhone">
 						<div>
 							<h3>From Account</h3>
-<<<<<<< HEAD
-							<select>
-=======
 							<select name="from_accP">
->>>>>>> 556280e... changes to controller
 								<c:forEach items="${accounts}" var="aList">
 									<option>${aList}</option>
 								</c:forEach>
@@ -158,13 +142,12 @@
 						<div>
 							<h3>Phone/Email</h3>
 							<label>
-<<<<<<< HEAD
 						    	<input type="radio" name="medium" id="phone" autocomplete="off"> Phone
 						  	</label>
 						  	<label>
 						    	<input type="radio" name="medium" id="email" autocomplete="off"> Email
 						  	</label>
-=======
+							<label>
 						    	<input type="checkbox" name="byPhone" id="phone" autocomplete="off" value="phone"> Phone
 						  	</label>
 						  	<label>
@@ -173,59 +156,41 @@
 						  	<div id="error3" style="display: none;">
 							<p style="margin: 20px 0 0 0;"><font color="red">Please select at least one of the options.</font></p>
 							</div>
->>>>>>> 556280e... changes to controller
 						</div>
 						<div>
 							<h3>To</h3>
 							
-<<<<<<< HEAD
-						  	<input type="text" placeholder="Phone Number" name="phoneNumver" style="display: block; margin: 0 auto 30px auto;"/>
-						  	<input type="text" placeholder="Email Address" name="emailAddress" style="display: block;"/>
-=======
 						  	<input type="text" placeholder="Phone Number" name="phoneNumber" id="pn" style="display: block; margin: 0 auto 30px auto;"/>
 						  	<input type="text" placeholder="Email Address" name="emailAddress" id="ea" style="display: block;"/>
 						  	<div id="error2" style="display: none;">
 							<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid phone number or email.</font></p>
 							</div>
->>>>>>> 556280e... changes to controller
 						</div>
 						<div>
 							<h3>Type of Request</h3>
 							<label>
-<<<<<<< HEAD
-						    	<input type="radio" name="request" id="treq" autocomplete="off"> Transfer
-						  	</label>
-						  	<label>
-						    	<input type="radio" name="request" id="preq" autocomplete="off"> Request Payment
-=======
 						    	<input type="radio" name="request1" id="treq" autocomplete="off" value="transfer"> Transfer
 						  	</label>
 						  	<label>
 						    	<input type="radio" name="request1" id="preq" autocomplete="off" value="request"> Request Payment
->>>>>>> 556280e... changes to controller
 						  	</label>
 						</div>
 						<div >
 							<h2>Amount</h2>
 							<input type="text" placeholder="Amount" name="peAmount" id="peAmount" style="display: block;" />
-<<<<<<< HEAD
-=======
 							<div id="error1" style="display: none;">
 							<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid amount.</font></p>
 						</div>
->>>>>>> 556280e... changes to controller
+
 						</div>
 						<div style="text-align: center;">
 							<input  type="button" value="Request" class="btn btn-md btn-info" id="peButton" onclick="checkModal(this)" style="margin: 25px 0 0 0;">
 							<input  type="submit" id="peButtonH"  style="display: none;">
-<<<<<<< HEAD
-=======
+
 							<p style="margin: 20px 0 0 0;"><font color="red">${error_msg1}</font></p>
 							<p style="margin: 20px 0 0 0;"><font color="green">${msg1}</font></p>
->>>>>>> 556280e... changes to controller
 						</div>
 					</form>
-				</div>
 			</div>
 			<div class="modal fade" id="myModal3" role="dialog" style="display: none;">
 			    <div class="modal-dialog" >
@@ -275,7 +240,6 @@
 		
 	
 		function checkModal(el){
-<<<<<<< HEAD
 			if(el.id == "accButton"){
 				if(document.getElementById("accAmount").value > 1000){
 					console.log("wef");
@@ -286,7 +250,7 @@
 			}
 			else if(el.id == "peButton"){
 				if(document.getElementById("peAmount").value > 1000){
-=======
+
 				if(el.id == "accButton"){
 					if(document.getElementById("accAmount").value < 0 || document.getElementById("accAmount").value.length == 0){
 						document.getElementById("error").style.display = 'block';
@@ -325,25 +289,24 @@
 					
 				}
 				else if(document.getElementById("peAmount").value > 1000){
->>>>>>> 556280e... changes to controller
 					document.getElementById("hiddenBut3").click();
 				}
 				else
 					document.getElementById("peButtonH").click();
-<<<<<<< HEAD
-=======
-				
-				
->>>>>>> 556280e... changes to controller
+
+			}
+		}
 			}
 		}
 		
 		$('#myModal3').on('hidden.bs.modal', function () {
 			document.getElementById("tButtonH").click();
 		});
+		
 		$('#myModal4').on('hidden.bs.modal', function () {
 			document.getElementById("peButtonH").click();
 		});
+		
 		
 		
 	</script>

@@ -67,7 +67,7 @@
 			
 			<div id="form">
 				<hr class="divider">
-		<form action="/otp" method="POST">
+		<form action="/confirmationAccount" method="POST">
 
 				  <div class="form-group row">
 				    <label for="firstName" class="col-sm-5 col-form-label">First Name:</label>
@@ -78,7 +78,6 @@
 				  <div class="form-group row">
 				    <label for="lastName" class="col-sm-5 col-form-label">Last Name:</label>
 				    <div class="col-sm-7">
-<
 				      <input type="text" name = "lastName" class="form-control" id="lastName" placeholder="Last Name">
 
 				    </div>
@@ -109,7 +108,6 @@
 				  <div class="form-group row">
 				    <label for="address" class="col-sm-5 col-form-label">Address:</label>
 				    <div class="col-sm-7">
-<
 				      <input type="text" name="address" class="form-control" id="address" placeholder="Address">
 
 				    </div>

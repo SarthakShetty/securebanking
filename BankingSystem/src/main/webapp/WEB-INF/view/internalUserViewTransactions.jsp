@@ -2,7 +2,7 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <html>
 	<head>
-		<title>Login</title>
+		<title>Group 12 Bank</title>
 		<style>
 			#container{
 				width: 60%;
@@ -76,6 +76,9 @@
 				  <li class ="nav-item" ><a class="nav-link" href="/internalUser/Requests">Requests</a></li>
 				  
 			  </ul>
+			  <ul class="navbar-nav ml-auto">
+			  <li  class ="nav-item" ><a class="nav-link" href="/customer/logout">Logout</a></li>
+		  </ul>
 			</nav>
 		<div id="container">
 			<h1>Transactions</h1>

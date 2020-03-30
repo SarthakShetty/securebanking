@@ -3,7 +3,7 @@
 
 <html>
 	<head>
-		<title>Login</title>
+		<title>Group 12 Bank</title>
 		<style>
 			#container{
 				width: 70%;
@@ -166,10 +166,12 @@
 			  <li id="am" class ="nav-item" ><a class="nav-link" href="/customer/accountManagement">Account Management</a></li>
 			  <li id="hs" class ="nav-item" ><a class="nav-link" href="/customer/helpSupport">Help and Support</a></li>
 		  </ul>
+		  <ul class="navbar-nav ml-auto">
+		    
+			  <li  class ="nav-item" ><a class="nav-link" href="/customer/logout">Logout</a></li>
+		  </ul>
 		</nav>
-		<%-- <%
-			out.print(session.getAttribute("user_id"));
-		%> --%>
+		
 		<div id="container">
 			<h1>Credit/Debit</h1>
 			<hr class="divider" />
@@ -186,12 +188,9 @@
 					<div class="col">
 						<h2>Amount</h2>
 						<input type="text" placeholder="Amount" name="transferAmount" id="tbAmount" style="display: block;" value="0" />
-<<<<<<< HEAD
-=======
 						<div id="error" style="display: none;">
 							<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid amount.</font></p>
 						</div>
->>>>>>> 556280e... changes to controller
 					</div>
 					<div class="col" style="margin: 30px 0 0 0;">
 						<label>
@@ -206,11 +205,8 @@
 						<input type="button" class="btn btn-md btn-info" value="Request" id="tButton" onclick="checkModal(this)" style="margin: 20px 0 0 0;">
 						<input type="submit" style="display: none;" id="tButtonH">
 				</div>
-<<<<<<< HEAD
-=======
 				<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
 				<p style="margin: 20px 0 0 0;"><font color="green">${msg}</font></p>
->>>>>>> 556280e... changes to controller
 			</form>
 			
 			<div class="modal fade" id="myModal1" role="dialog" style="display: none;">
@@ -241,15 +237,11 @@
 	
 		function checkModal(el){
 			if(el.id == "tButton"){
-<<<<<<< HEAD
-				if(document.getElementById("tbAmount").value > 1000){
-=======
 				if(document.getElementById("tbAmount").value < 0 || document.getElementById("tbAmount").value.length == 0){
 					document.getElementById("error").style.display = 'block';
 					
 				}
 				else if(document.getElementById("tbAmount").value > 1000){
->>>>>>> 556280e... changes to controller
 					document.getElementById("hiddenBut").click();
 					
 				}

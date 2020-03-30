@@ -89,7 +89,8 @@ public class LoginController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public RedirectView getCustomerDetails(RedirectView model, HttpServletRequest request,
-			@RequestParam("name") String name, @RequestParam("password") String password, RedirectAttributes redir) {
+			@RequestParam("name") String name, @RequestParam("password") String password, 
+			@RequestParam("type_user") String type_user, RedirectAttributes redir) {
 		/*
 		 * Need to check credentials of the user and set the session variable of the
 		 * role they have ie: customer, merchant, administrator Other session variables:
@@ -117,72 +118,45 @@ public class LoginController {
 			return model;
 		}
 
-		if (Constants.EMPLOYEE.equals(request.getParameter("type"))) {
-
-		} else {
-			try {
-				if (loginDAO.checkIfTheCustomerIsValid(name, password)) {
-					// model = new ModelAndView("redirect:/customer/profile");
-					model = new RedirectView("/customer/profile", true);
-
-				} else {
-
-				}
-			} catch (RuntimeException ex) {
-				throw ex;
-			}
-
-		}
+//		if (Constants.EMPLOYEE.equals(type_user)) {
+//
+//		} else {
+//			try {
+//				if (loginDAO.checkIfTheCustomerIsValid(name, password)) {
+//					// model = new ModelAndView("redirect:/customer/profile");
+//					model = new RedirectView("/customer/profile", true);
+//
+//				} else {
+//
+//				}
+//			} catch (RuntimeException ex) {
+//				throw ex;
+//			}
+//
+//		}
 
 		// We only want to set these if the user is a valid one!
-		request.getSession().setAttribute("user_name", name);
+		request.getSession().setAttribute("user_id", name);
+		request.getSession().setAttribute("cust_id", "123");
+		//if the user is an employee
 		request.getSession().setAttribute("role", "admin");
+		model = new RedirectView("/customer/profile", true);
 		return model;
 	}	
 
-
-	@RequestMapping(value="/otp", method = RequestMethod.POST)
+	/*
+	 * Only used for going to OTP page.
+	 */
+	@RequestMapping(value="/otp", method = RequestMethod.GET)
 	public ModelAndView showAuthScreen(Model model,  HttpServletRequest request){
 		ModelAndView mod = new ModelAndView();
 		if(model.asMap().get("error_msg") != null )
 			mod.addObject("error_msg", model.asMap().get("error_msg"));
-		
-		if (customerDAO.checkIfMobileNumExists(request.getParameter("mobile"))) {
-			return mod;
-		}
-		if (customerDAO.checkIfEmailExists(request.getParameter("email"))) {
-			return mod;
-		}
-		if (customerDAO.checkIfUserNameExists(request.getParameter("username"))) {
-			return mod;
-		}
-		Customer customer = createCustomer(request);
-		customerDAO.insertCutomerData(customer);
-		emailService.sendMail(request.getParameter("email"),
-				"Please Click/ copy paste The link To Activate Banking Account",
-				Constants.HOST_NAME_ACTIVATE + request.getParameter("username"));
 
 		mod.setViewName("emailSentNotification");
 		return mod;
 	}
-	
-	private Customer createCustomer(HttpServletRequest request) {
-		Customer customer  = new Customer();
-		customer.setAddress(request.getParameter("address"));
-		customer.setAge(Integer.parseInt(request.getParameter("age")));
-		customer.setCity(request.getParameter("city"));
-		customer.setEmail(request.getParameter("email"));
-		customer.setFirstName(request.getParameter("firstName"));
-		customer.setMobile(request.getParameter("mobile"));
-		customer.setLastName(request.getParameter("lastName"));
-		customer.setPassword(request.getParameter("password"));
-		customer.setUsername(request.getParameter("username"));
-		customer.setZipCode(request.getParameter("zip"));
-		customer.setType('I');
-		customer.setState(request.getParameter("state"));
 
-		return customer;
-	}
 	
 	
 	@RequestMapping(value="/newAccount", method = RequestMethod.GET)

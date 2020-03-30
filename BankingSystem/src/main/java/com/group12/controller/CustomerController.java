@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.group12.dao.AccountDAO;
 import com.group12.dao.CustomerDAO;
@@ -231,16 +232,29 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value = "/customer/schedule")
-	public ModelAndView schheduleAppointment(ModelAndView model, HttpServletRequest request) {
+	public RedirectView scheduleAppointment(RedirectView model, HttpServletRequest request) {
 		if(request.getSession().getAttribute("role") == null){
-			model = new ModelAndView("redirect:/");
+			model = new RedirectView("redirect:/");
 			return model;
 		}
 		/*
 		 * Need to allow the customer to schedule an appointment then return a message saying appointment
 		 * entered.
 		 */
-		model.setViewName("customer/helpSupport");
+		
+		return model;
+	}
+	
+	@RequestMapping(value = "/customer/logout")
+	public RedirectView logout(RedirectView model, HttpServletRequest request) {
+		if(request.getSession().getAttribute("role") == null){
+			model = new RedirectView("/");
+			return model;
+		}
+		/*
+		 * logout
+		 */
+		request.getSession().invalidate();
 		return model;
 	}
 	

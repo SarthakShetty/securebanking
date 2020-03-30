@@ -3,7 +3,7 @@
 
 <html>
 	<head>
-		<title>Login</title>
+		<title>Group 12 Bank</title>
 		<style>
 			#container{
 				width: 70%;
@@ -167,15 +167,17 @@
 			  <li id="am" class ="nav-item" ><a class="nav-link" href="/customer/accountManagement">Account Management</a></li>
 			  <li id="hs" class ="nav-item" ><a class="nav-link" href="/customer/helpSupport">Help and Support</a></li>
 		  </ul>
+		  <ul class="navbar-nav ml-auto">
+		  
+			  <li  class ="nav-item" ><a class="nav-link" href="/customer/logout">Logout</a></li>
+		  </ul>
 		</nav>
-		<%-- <%
-			out.print(session.getAttribute("user_id"));
-		%> --%>
+		
 		<div id="container">
 			<h1>Account</h1>
 			<hr class="divider" />
 			<div id="account">
-				<h2 style="color: white;">Balance</h3>
+				<h2 style="color: white;">Balance</h2>
 				<div id="leftDiv">
 					<c:forEach items="${accountList}" var="aList">
 						<label>Account ${aList}: </label>
@@ -188,116 +190,7 @@
 				</div> 
 				
 			</div>
-		</div>
-	<script>
-<<<<<<< HEAD
-		var active = "acc";
-		var mDiv = "account";
-		function change(el){
-			el.className = 'active';
-			document.getElementById(active).className = '';
-			document.getElementById(mDiv).style.display = 'none';
-
-			active = el.id;
-			
-			switch(active){
-				case 'pr':
-					mDiv = "profile";
-					break;
-				case 'acc':
-					mDiv = "account";
-					break;
-				case 'rp':
-					mDiv = "transfer";
-					break;
-				case 'tba':
-					mDiv = "transferB";
-					break;
-				case 'cd':
-					mDiv = "credit";
-					break;
-				case 'mp':
-					mDiv = "payment";
-					break;
-				case 'am':
-					mDiv = "accMan";
-					break;
-				case 'hs':
-					mDiv = "helpsup";
-					break;
-			}
-			
-			
-			document.getElementById(mDiv).style.display = 'block';
-			
-			
-		}
-		
-		
-		$("#cdbutton").on("click", function(){
-			if(document.getElementById("cdAmount").value > 1000){
-				document.getElementById("modalmsg").innerText = "This will be considered a critical transaction and will need to be approved. Credit or Debit?";
-				document.getElementById("modalHead").innerText = "Attention";
-				document.getElementById("modalHead").style.color = "red";
-			}
-			else
-			{
-				document.getElementById("modalmsg").innerText = "Credit or Debit?";
-				document.getElementById("modalHead").innerText = "Which Account?";
-				document.getElementById("modalHead").style.color = "black";
-			}
-		});
-	
-		function checkModal(el){
-			if(el.id == "tButton"){
-				if(document.getElementById("tbAmount").value > 1000){
-					document.getElementById("hiddenBut").click();
-					
-				}
-				else
-					document.getElementById("tButtonH").click();
-			}
-			else if(el.id == "accButton"){
-				if(document.getElementById("accAmount").value > 1000){
-					document.getElementById("hiddenBut2").click();
-				}
-				else
-					document.getElementById("accButtonH").click();
-			}
-			else if(el.id == "peButton"){
-				if(document.getElementById("peAmount").value > 1000){
-					document.getElementById("hiddenBut3").click();
-				}
-				else
-					document.getElementById("peButtonH").click();
-			}
-		}
-		
-		$('#myModal2').on('hidden.bs.modal', function () {
-			document.getElementById("tButtonH").click();
-		});
-		$('#myModal3').on('hidden.bs.modal', function () {
-			document.getElementById("peButtonH").click();
-		});
-		$('#myModal4').on('hidden.bs.modal', function () {
-			document.getElementById("accButtonH").click();
-		});
-		
-		$("#profileLink").click(function(){
-		    $.ajax({
-		        url : '/login',
-		        method : 'POST',
-		        async : false,
-		        complete : function(data) {
-		            console.log(data.responseText);
-		        }
-		    });
-
-		});
-=======
-	
->>>>>>> 556280e... changes to controller
-	</script>
+		</div>	
 	</body>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

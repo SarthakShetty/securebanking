@@ -3,7 +3,7 @@
 
 <html>
 	<head>
-		<title>Login</title>
+		<title>Group 12 Bank</title>
 		<style>
 			#container{
 				width: 70%;
@@ -167,7 +167,14 @@
 			  <li id="pr" class ="nav-item" ><a class="nav-link" id="" href="/customer/profile">Profile</a></li>
 			  <li id="am" class ="active nav-item" ><a class="nav-link" href="/customer/accountManagement">Account Management</a></li>
 			  <li id="hs" class ="nav-item" ><a class="nav-link" href="/customer/helpSupport">Help and Support</a></li>
+			  
 		  </ul>
+		  
+		<ul class="navbar-nav ml-auto">
+		    
+			  <li  class ="nav-item" ><a class="nav-link" href="/customer/logout">Logout</a></li>
+		  </ul>
+		  	
 		</nav>
 	<%-- 	<%
 			out.print(session.getAttribute("user_id"));
@@ -315,11 +322,6 @@
 					        <option>WI</option>
 					        <option>WY</option>
 				      	</select>
-<<<<<<< HEAD
-				      
-				      <div>
-				      	<input type="submit" value="Submit Request" class="btn btn-info btn-md" style="margin: 30px auto 0 auto;">
-=======
 				      <div>
 							<h3 style="margin: 20px 0 20px 0; color: white;">Type of Account</h3>
 							<label>
@@ -333,7 +335,6 @@
 				      <div>
 				      	<input type="submit" value="Submit Request" class="btn btn-info btn-md" style="margin: 30px auto 0 auto;">
 				      	<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
->>>>>>> 556280e... changes to controller
 				      </div>
 					  </div>
 					</form>
