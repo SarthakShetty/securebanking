@@ -103,7 +103,7 @@ public class CustomerDAO {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Customer getCustomerProfileDetails(String userName) {
 
-		List<Customer> customer = (List<Customer>) new Customer();
+		List<Customer> customer = new ArrayList<Customer>();
 		String request_customer_information = "Select * from customer where cust_user_id = '" + userName + "';";
 
 		try {
@@ -121,10 +121,10 @@ public class CustomerDAO {
 					cust.setZipCode((String) rs.getObject("zipcode"));
 					cust.setUsername((String) rs.getObject("cust_user_id"));
 					cust.setState((String) rs.getObject("state"));
-					cust.setType((char) rs.getObject("type"));
+					cust.setType(rs.getObject("type").toString().charAt(0));
 					cust.setCurrently_logged_in((int)rs.getObject("currently_logged_in"));
 					cust.setCurrently_logged_in((int)rs.getObject("is_active"));
-					cust.setPassword((String)rs.getObject("password"));
+					cust.setPassword((String)rs.getObject("cust_pwd"));
 					return cust;
 				}
 			});

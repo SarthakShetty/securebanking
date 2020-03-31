@@ -59,8 +59,8 @@ public class LoginDAO {
 		}
 		int count = 0;
 		try {
-			count = jdbcTemplate.queryForObject("select count(*) from customer where user_name = '" + user_name
-					+ "' and " + " password = " + "SHA1('" + password + "')" + ";", Integer.class);
+			count = jdbcTemplate.queryForObject("select count(*) from customer where cust_user_id = '" + user_name
+					+ "' and " + " cust_pwd = " + "SHA1('" + password + "')" + ";", Integer.class);
 		} catch (DataAccessException ex) {
 			throw new RuntimeException(ex);
 		}
