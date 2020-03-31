@@ -71,7 +71,7 @@ public class AccountController {
 	@RequestMapping(value= "/customer/Account", method = RequestMethod.GET)	
 	public ModelAndView getAccount(ModelAndView model, HttpServletRequest request) throws IOException{
 		
-		String userName = (String)request.getSession().getAttribute("user_name");
+		String userName = (String)request.getSession().getAttribute("user_id");
 		// Get the details of the customer using the userName
 	    Customer customer = customerDAO.getCustomerProfileDetails(userName);
 	    // Get the accounts from customer id 

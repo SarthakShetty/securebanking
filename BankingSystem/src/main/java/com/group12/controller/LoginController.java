@@ -137,10 +137,9 @@ public class LoginController {
 
 		// We only want to set these if the user is a valid one!
 		request.getSession().setAttribute("user_id", name);
-		request.getSession().setAttribute("cust_id", "123");
 		//if the user is an employee
 		request.getSession().setAttribute("role", "admin");
-		model = new RedirectView("/customer/profile", true);
+		model = new RedirectView("/internalUser/profile", true);
 		return model;
 	}	
 

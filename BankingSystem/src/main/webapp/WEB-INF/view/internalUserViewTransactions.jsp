@@ -74,7 +74,7 @@
 				  <li class =" active nav-item" ><a class="nav-link" href="/internalUser/transactions">View/Authorize Transactions</a></li>
 				  <li class =" nav-item"  ><a class="nav-link" href="/internalUser/accountManagement">Account Management</a></li>
 				  <li class ="nav-item" ><a class="nav-link" href="/internalUser/Requests">Requests</a></li>
-				  <c:if test="${role.equals == 'admin'}">
+				  <c:if test="${role == 'admin'}">
 				  	<li class ="nav-item" ><a class="nav-link" href="/admin/systemLogs">System Log</a></li>
 				  </c:if>
 			  </ul>
