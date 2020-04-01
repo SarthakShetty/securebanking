@@ -191,7 +191,7 @@
 				  	</form>
 				</div>
 				<div style="margin: 40px 0 0 0; display: block;">
-					<form action="/customer/accountMangement/0">
+					<form action="/customer/accountManagement/0">
 						<h2>Delete an Account</h2>
 						<hr class="divider"/>
 					  	<select name="account" style="display: block; margin: 20px auto;">
@@ -209,126 +209,23 @@
 				
 				<div id="form">
 					
-					<form action="/customer/accountMangement/1" method="POST">
+					<form action="/customer/accountManagement/1" method="POST">
 					  <div class="form-group row">
-					    <label for="firstName" class="col-sm-5 col-form-label">First Name:</label>
+					    <label for="intialdeposit" class="col-sm-5 col-form-label">Initial deposit:</label>
 					    <div class="col-sm-7">
-					      <input type="text" name ="firstName"  class="form-control" id="firstName"  placeholder="FirstName" >
+					      <input type="text" name ="intialdeposit"  class="form-control" id="deposit"  placeholder="DepositAmount" >
 					    </div>
 					  </div>
-					  <div class="form-group row">
-					    <label for="lastName" class="col-sm-5 col-form-label">Last Name:</label>
-					    <div class="col-sm-7">
-					      <input type="text" name = "lastName" class="form-control" id="lastName" placeholder="Last Name">
-					    </div>
-					  </div>
-					  <div class="form-group row">
-					    <label for="username" class="col-sm-5 col-form-label">Username:</label>
-					    <div class="col-sm-7">
-					      <input type="text" name = "username" class="form-control" id="username" placeholder="Username">
-					    </div>
-					  </div>
-					  <div class="form-group row">
-					    <label for="password" class="col-sm-5 col-form-label">Password:</label>
-					    <div class="col-sm-7">
-					      <input type="password" name="password" class="form-control" id="password" placeholder="Password">
-					    </div>
-					  </div>
-					  <div class="form-group row">
-					    <label for="cPassword" class="col-sm-5 col-form-label">Confirm Password:</label>
-					    <div class="col-sm-7">
-					      <input type="password" name="cPassword" class="form-control" id="cPassword" placeholder="Confirm Password">
-					    </div>
-					  </div>
-					  <div class="form-group row">
-					    <label for="address" class="col-sm-5 col-form-label">Address:</label>
-					    <div class="col-sm-7">
-					      <input type="text" name="address" class="form-control" id="address" placeholder="Address">
-					    </div>
-					    </div>
-					   <div class="form-group row">
-					    <label for="email" class="col-sm-5 col-form-label">Email:</label>
-					    <div class="col-sm-7">
-					      <input type="text" name="email" class="form-control" id="email" placeholder="Email">
-					    </div>
-					   </div>
-					   <div class="form-group row">
-					    <label for="mobile" class="col-sm-5 col-form-label">Phone Number:</label>
-					    <div class="col-sm-7">
-					      <input type="text" name="mobile" class="form-control" id="mobile" placeholder="Phone Number">
-					    </div>
-					  </div>
-					  <div class="form-group row">
-					    <label for="email" class="col-sm-5 col-form-label">Age:</label>
-					    <div class="col-sm-7">
-					      <input type="text" name="age" class="form-control" id="age" placeholder="Age">
-					    </div>
-					   </div>
-					  <div id="bottom">
-					  	<label>City:</label>
-					  	<input type="text" name="city" placeholder="City" class='form-control' id="city" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
-					  	<label>Zip:</label>
-					  	<input type="text" name="zip" placeholder="ZIP" class='form-control' id="zip" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
-					  	<label>State:</label>
-					  	<select class="form-control" name="state" id="state" style="display: inline-block; width: 100px; margin: 0 30px 0 0;">
-					        <option>AL</option>
-					        <option>AK</option>
-					        <option>AZ</option>
-					        <option>AR</option>
-					        <option>CA</option>
-					        <option>CO</option>
-					        <option>CT</option>
-					        <option>DE</option>
-					        <option>FL</option>
-					        <option>GA</option>
-					        <option>HI</option>
-					        <option>ID</option>
-					        <option>IL</option>
-					        <option>IN</option>
-					        <option>IA</option>
-					        <option>KS</option>
-					        <option>KY</option>
-					        <option>LA</option>
-					        <option>ME</option>
-					        <option>MD</option>
-					        <option>MA</option>
-					        <option>MI</option>
-					        <option>MN</option>
-					        <option>MS</option>
-					        <option>MO</option>
-					        <option>MT</option>
-					        <option>NE</option>
-					        <option>NV</option>
-					        <option>NH</option>
-					        <option>NJ</option>
-					        <option>NM</option>
-					        <option>NY</option>
-					        <option>NC</option>
-					        <option>ND</option>
-					        <option>OH</option>
-					        <option>OK</option>
-					        <option>OR</option>
-					        <option>PA</option>
-					        <option>RI</option>
-					        <option>SC</option>
-					        <option>SD</option>
-					        <option>TN</option>
-					        <option>TX</option>
-					        <option>UT</option>
-					        <option>VT</option>
-					        <option>VA</option>
-					        <option>WA</option>
-					        <option>WV</option>
-					        <option>WI</option>
-					        <option>WY</option>
-				      	</select>
 				      <div>
 							<h3 style="margin: 20px 0 20px 0; color: white;">Type of Account</h3>
 							<label>
 						    	<input type="radio" name="type_account" id="treq" autocomplete="off" checked value="credit"> Credit
 						  	</label>
 						  	<label>
-						    	<input type="radio" name="type_account" id="preq" autocomplete="off" value="debit"> Debit
+						    	<input type="radio" name="type_account" id="preq" autocomplete="off" value="saving"> Saving
+						  	</label>
+						  	<label>
+						    	<input type="radio" name="type_account" id="preq" autocomplete="off" value="current"> Current
 						  	</label>
 						</div>
 			      <div>

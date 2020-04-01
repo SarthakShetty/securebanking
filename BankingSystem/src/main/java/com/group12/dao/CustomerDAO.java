@@ -122,6 +122,7 @@ public class CustomerDAO {
 					cust.setUsername((String) rs.getObject("cust_user_id"));
 					cust.setState((String) rs.getObject("state"));
 					cust.setType(rs.getObject("type").toString().charAt(0));
+					cust.setCust_id((int)rs.getObject("cust_id"));
 					cust.setCurrently_logged_in((int)rs.getObject("currently_logged_in"));
 					cust.setCurrently_logged_in((int)rs.getObject("is_active"));
 					cust.setPassword((String)rs.getObject("cust_pwd"));

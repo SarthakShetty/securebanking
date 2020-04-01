@@ -41,18 +41,19 @@ public class AccountController {
 	
 	Logger log = LoggerFactory.getLogger(AccountController.class);
 
-	@RequestMapping(value = "/openAccount", method = RequestMethod.POST)
-	public ModelAndView createNewAccount(ModelAndView model, HttpServletRequest request) {
-		
-		log.info(request.getParameter("acc_type") + "request" + request.toString());
-		Account account = new Account();
-		account.setAcc_type(request.getParameter("acc_type").charAt(0));
-		account.setCurr_bal(Double.parseDouble(request.getParameter("balance")));
-		account.setCust_id(Integer.parseInt(request.getParameter("cust_id")));
-		accountDAO.createAccount(account);
-
-		return model;
-	}
+//	@RequestMapping(value = "/openAccount", method = RequestMethod.POST)
+//	public ModelAndView createNewAccount(ModelAndView model, HttpServletRequest request) {
+//		
+//		String userName = (String)request.getSession().getAttribute("user_id");
+//		int cust_id = (Integer)request.getSession().getAttribute("cust_id");
+//		Account account = new Account();
+//		account.setAcc_type(request.getParameter("type_account"));
+//		account.setCurr_bal(Double.parseDouble(request.getParameter("intialdeposit")));
+//		account.setCust_id(cust_id);
+//		accountDAO.createAccount(account);
+//		    	    
+//		return model;
+//	}
 	
 	@RequestMapping(value = "/activateaccount", method = RequestMethod.POST)
 	public ModelAndView activateCustomer(ModelAndView model, HttpServletRequest request) {
@@ -293,56 +294,50 @@ public class AccountController {
 	
 	
 	@RequestMapping(value ="/customer/accountManagement/{flag}", method = RequestMethod.POST)
-	public RedirectView accountManagement(RedirectView model, HttpServletRequest request, @PathVariable("flag") String flag,
-			@RequestParam("firstName") String fName, @RequestParam("lastName") String lName, @RequestParam("username") String uName,
-			@RequestParam("password") String password, @RequestParam("cPassword") String cPassword, @RequestParam("address") String address,
-			@RequestParam("email") String email, @RequestParam("mobile") String phoneNumber, @RequestParam("age") String age,
-			@RequestParam("city") String city, @RequestParam("zip") String zip, @RequestParam("state") String state, 
-			@RequestParam("type_account") String type_account, RedirectAttributes attr) {
+	public RedirectView accountManagement(RedirectView model, HttpServletRequest request, @PathVariable("flag") String flag, RedirectAttributes attr) {
 		// This helps to track the customer for which we need either create account or delete account
 		String userName = (String) request.getSession().getAttribute("user_name");
-		
-		boolean empty = checkEmptyFields(fName, lName, uName, password, cPassword, address, email, phoneNumber, age, city, zip);
-		boolean noMatch = checkMatchFields(fName, lName, uName, password, cPassword, address, email, phoneNumber, age, city, zip);
+//		
+//		boolean empty = checkEmptyFields(fName, lName, uName, password, cPassword, address, email, phoneNumber, age, city, zip);
+//		boolean noMatch = checkMatchFields(fName, lName, uName, password, cPassword, address, email, phoneNumber, age, city, zip);
 		model = new RedirectView("/customer/accountManagement");
-		if(empty){
-			
-			attr.addFlashAttribute("error_msg", "Please fill out all the fields.");
-			
-			return model;
-		}
-		else if(noMatch){
-			
-			attr.addFlashAttribute("error_msg", "Invalid characters entered, please use valid characters.");
-			
-			return model;
-		}
+//		if(empty){
+//			
+//			attr.addFlashAttribute("error_msg", "Please fill out all the fields.");
+//			
+//			return model;
+//		}
+//		else if(noMatch){
+//			
+//			attr.addFlashAttribute("error_msg", "Invalid characters entered, please use valid characters.");
+//			
+//			return model;
+//		}
 		
 		// Using the user name the customer information is fetched
-		Customer customer = customerDAO.getCustomerProfileDetails(userName);
 		
-		int account_no = Integer.parseInt(request.getParameter("account_no"));
 		//TODO UI should set this flag depending upon the select or create account
 //		int create_account_flag = Integer.parseInt(request.getParameter("create_account_flag"));
 //		int delete_account_flag = Integer.parseInt(request.getParameter("delete_account_flag"));
 		String msg = "";
+		int cust_id = (Integer)request.getSession().getAttribute("cust_id");
+		log.info(cust_id + "  Hi");
 		//1 for delete, 0 for create
 		int check_flag = Integer.parseInt(flag);
-		if(check_flag == 0) {
+		if(check_flag == 1) {
 			Account account = new Account();
-			account.setCurr_bal(0.0);
-			account.setCust_id(customer.getCust_id());
-			// TODO Currently setting the account type as the credit
-			// TODO need to change the hardcoding to the constants
-			account.setAcc_type('C');
+			account.setAcc_type(request.getParameter("type_account"));
+			account.setCurr_bal(Double.parseDouble(request.getParameter("intialdeposit")));
+			account.setCust_id(cust_id);
 			accountDAO.createAccount(account);
 			// TODO check the status from the DAO and set the model parameter
 			msg = "Account created.";
 		}
 		// TODO expectation that the button is radio hence either creating account or deleting can happen
 		// hence elif and not if
-		else if (check_flag  == 1) {
-			accountDAO.deleteAccount(account_no, customer.getCust_id(), 0);
+		else if (check_flag  == 0) {
+			int account_no = Integer.parseInt(request.getParameter("account_no"));
+			accountDAO.deleteAccount(account_no, cust_id, 0);
 			// TODO check the status from the DAO and then update the status to the model
 			msg = "Account deleted.";
 			
@@ -363,33 +358,7 @@ public class AccountController {
 		return model;
 	}
 	
-	@RequestMapping(value ="/customer/changeProfile", method = RequestMethod.POST)
-	public RedirectView changeProfile(RedirectView model,HttpServletRequest request, 
-			@RequestParam("password") String password, @RequestParam("cPassword") String cPassword, @RequestParam("address") String address,
-			@RequestParam("email") String email, @RequestParam("mobile") String phoneNumber, @RequestParam("age") String age,
-			@RequestParam("city") String city, @RequestParam("zip") String zip, @RequestParam("state") String state, RedirectAttributes attr) {
-		/*
-		 * Need to allow customer to put in a request to change their profile information.
-		 */
-		boolean empty = checkEmptyFields("a", "a", "a", password, cPassword, address, email, phoneNumber, age, city, zip);
-		boolean noMatch = checkMatchFields("a", "a", "a", password, cPassword, address, email, phoneNumber, age, city, zip);
-		
-		// Need to call a DAO method to update the profile information
-		model = new RedirectView("/customer/profile");
-		if(empty){
-			
-			attr.addFlashAttribute("error_msg", "Please fill out all the fields.");
-			
-			return model;
-		}
-		else if(noMatch){
-			
-			attr.addFlashAttribute("error_msg", "Invalid characters entered, please use valid characters.");
-			return model;
-		}
-		
-		return model;
-	}
+	
 	
 	@RequestMapping(value ="/customer/donwloadBankingStatements", method = RequestMethod.POST)
 	public ModelAndView downloadStatements(ModelAndView model, HttpServletRequest request, @ModelAttribute("auth") String accOrdec) {

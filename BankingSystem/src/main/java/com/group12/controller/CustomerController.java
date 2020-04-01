@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.group12.dao.AccountDAO;
@@ -263,5 +265,54 @@ public class CustomerController {
 		return model;
 	}
 	
-
+    /* update the request params and add DAO call to update it */
+	@RequestMapping(value ="/changeProfile", method = RequestMethod.POST)
+	public RedirectView changeProfile(RedirectView model,HttpServletRequest request, 
+			@RequestParam("password") String password, @RequestParam("cPassword") String cPassword, @RequestParam("address") String address,
+			@RequestParam("email") String email, @RequestParam("mobile") String phoneNumber, @RequestParam("age") String age,
+			@RequestParam("city") String city, @RequestParam("zip") String zip, @RequestParam("state") String state, RedirectAttributes attr) {
+		/*
+		 * Need to allow customer to put in a request to change their profile information.
+		 */
+		
+		boolean empty = checkEmptyFields("a", "a", "a", password, cPassword, address, email, phoneNumber, age, city, zip);
+		boolean noMatch = checkMatchFields("a", "a", "a", password, cPassword, address, email, phoneNumber, age, city, zip);
+		
+		// Need to call a DAO method to update the profile information
+		model = new RedirectView("/customer/profile");
+		if(empty){
+			
+			attr.addFlashAttribute("error_msg", "Please fill out all the fields.");
+			
+			return model;
+		}
+		else if(noMatch){
+			
+			attr.addFlashAttribute("error_msg", "Invalid characters entered, please use valid characters.");
+			return model;
+		}
+		
+		return model;
+	}
+	
+	private boolean checkEmptyFields(String fName, String lName, String uName, String password, String cPassword,
+			String address, String email, String phoneNumber, String age, String city, String zip){
+		if(fName.isEmpty() || lName.isEmpty() || uName.isEmpty() || password.isEmpty() || cPassword.isEmpty() || address.isEmpty()
+				|| email.isEmpty() || phoneNumber.isEmpty() || age.isEmpty() || city.isEmpty() || zip.isEmpty()){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	private boolean checkMatchFields(String fName, String lName, String uName, String password, String cPassword,
+			String address, String email, String phoneNumber, String age, String city, String zip){
+		if(!fName.matches("^[a-zA-Z]+$") || !lName.matches("^[a-zA-Z]+$") || !uName.matches("^[a-zA-Z0-9]+$") || !password.matches("^[a-zA-Z0-9]+$") 
+				|| !cPassword.matches("^[a-zA-Z0-9]+$") || !address.matches("^[a-zA-Z0-9# ]+$") || !email.matches("^[a-zA-Z0-9@.]+$") || !phoneNumber.matches("^[-0-9]+$")
+				|| !age.matches("^[0-9]+$") || !city.matches("^[a-zA-Z]+$") || !zip.matches("^[0-9]+$")){
+			return true;
+		}
+		
+		return false;
+	}
 }

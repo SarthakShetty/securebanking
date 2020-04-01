@@ -4,7 +4,7 @@ public class Account {
 
 	private int cust_id;
 	private int acc_id;
-	private char acc_type;
+	private String acc_type;
 	private int is_active;
 	private double curr_bal;
 	
@@ -20,11 +20,11 @@ public class Account {
 	public void setAcc_id(int acc_id) {
 		this.acc_id = acc_id;
 	}
-	public char getAcc_type() {
+	public String getAcc_type() {
 		return acc_type;
 	}
-	public void setAcc_type(char acc_type) {
-		this.acc_type = acc_type;
+	public void setAcc_type(String string) {
+		this.acc_type = string;
 	}
 	public double getCurr_bal() {
 		return curr_bal;
