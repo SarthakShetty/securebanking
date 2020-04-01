@@ -5,7 +5,7 @@
 	<groupId>com.group12</groupId>
 	<artifactId>group12-banking-system</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1</version>
 	<name>Banking System group12</name>
 	<url>http://maven.apache.org</url>
 
