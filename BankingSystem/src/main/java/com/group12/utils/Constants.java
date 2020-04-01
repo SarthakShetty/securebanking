@@ -2,7 +2,7 @@ package com.group12.utils;
 
 public class Constants {
 
-	public static final String EMPLOYEE = "Employee";
+	public static final String EMPLOYEE = "employee";
 
 	public static String TRANSACTION_TYPE_CREATE_ACCOUNT = "Create";
 

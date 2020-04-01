@@ -80,7 +80,7 @@
 						<input name="password" type="password" placeholder="Password"  id="pass" class="form-control"/>
 						<label for="pass" style="margin: 0 auto 30px auto">Forgot Password? Click here - <a href="/forgotPassword">Recover Password</a></label>
 					</div>
-					<div class="btn-group btn-group-toggle" data-toggle="buttons" id="radioGroup">
+					<div>
 					  <label>
 					    <input type="radio" name="type_user" id="customer"  autocomplete="off" checked value="customer"> Customer
 					  </label>

@@ -39,18 +39,20 @@ public class InternalUserController {
 			return model;
 		}
 		// TODO logging messages 
-//		String userName = request.getParameter("user_id");
-//		InternalUser employee = employeeDAO.getEmployeeProfileDetails(userName);
+		String userName = (String) request.getSession().getAttribute("user_id");
+		InternalUser employee = employeeDAO.getEmployeeProfileDetails(userName);
+		if(employee != null) {
 //		// TODO need to do the integration with the UI parameters
-//		model.addObject("First name", employee.getFirst_name());
-//		model.addObject("Last name", employee.getLast_name());
-//		model.addObject("phone", employee.getMobile());
-//		model.addObject("address", employee.getAddress());
-//		model.addObject("id", employee.getEmp_id());
-//		model.addObject("email", employee.getEmail());
-//		model.addObject("user name", employee.getEmp_user_id());
-		model.addObject("firstName", "bob");
-		model.addObject("lastName", "billy");
+		model.addObject("Firstname", employee.getFirst_name());
+		model.addObject("Lastname", employee.getLast_name());
+		model.addObject("phone", employee.getMobile());
+		model.addObject("address", employee.getAddress());
+		model.addObject("id", employee.getEmp_id());
+		model.addObject("email", employee.getEmail());
+		model.addObject("username", employee.getEmp_user_id());
+		model.addObject("Age", employee.getAge());
+		request.getSession().setAttribute("emp_type", employee.getType());
+		}
 		model.setViewName("internalUserProfile");
 		return model;
    }
@@ -94,6 +96,11 @@ public class InternalUserController {
 		/*
 		 * Need to return the list of all requests.
 		 */
+		
+		List<Request> requestsOfCustomer = employeeDAO.retreiveAllCustoumerPendingReqs((int)request.getSession().getAttribute("emp_type"));
+		if(requestsOfCustomer != null) {
+		model.addObject("list",requestsOfCustomer);
+		}
 		model.setViewName("internalUserRequests");
 		return model;
    }

@@ -135,7 +135,7 @@ public class CustomerRequestDAO {
 	public List<Request> retrieveAllPendingRequests(int customer_id, int is_critical) {
 		List<Request> requests = new ArrayList<>();
 		String paymentRequests = "Select * from Customer_Request where cust_id = " + customer_id + "and status =" + "'"
-				+ Constants.TRANSACTION_PENDING + "';";
+				+ Constants.TRANSACTION_PENDING + "' and is_critical=" +is_critical+ ";";
 		
 		try {
 			requests = jdbcTemplate.query(paymentRequests, new RowMapper() {
@@ -163,6 +163,40 @@ public class CustomerRequestDAO {
 			
 		return requests;
 		
+	}
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public List<Request> retrieveAllPendingRequests(int is_critical) {
+		List<Request> requests = new ArrayList<>();
+		String paymentRequests = "Select * from Customer_Request where status =" + "'"
+				+ Constants.TRANSACTION_PENDING + "' and is_critical=" +is_critical+ ";";
+
+		
+		try {
+			requests = jdbcTemplate.query(paymentRequests, new RowMapper() {
+
+				public Request mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+					Request req = new Request();
+					req.setCust_id((int)rs.getObject("cust_id"));
+					if(rs.getObject("acc_num_2") != null) {
+					req.setSecond_acc_num((int) rs.getObject("acc_num_2"));
+					}
+					if(rs.getObject("acc_num_1") != null) {
+						req.setFirst_acc_num((int) rs.getObject("acc_num_1"));
+					}if(rs.getObject("amount")!=null) {
+						req.setAmount((Double) rs.getObject("amount"));
+					}
+					req.setIs_critical((int) rs.getObject("is_critical"));
+					req.setReq_id((int) rs.getObject("req_id"));
+					req.setType((String)rs.getObject("type"));
+					return req;
+				}
+			});
+		} catch (DataAccessException ex) {
+			throw new RuntimeException(ex);
+		}
+		
+		return requests;
 	}
 
 }

@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.group12.dao.CustomerDAO;
+import com.group12.dao.InternalUserDAO;
 import com.group12.dao.LoginDAO;
 import com.group12.models.Customer;
 import com.group12.services.EmailService;
@@ -35,6 +36,9 @@ public class LoginController {
 	private CustomerDAO customerDAO;
 	@Autowired
 	private EmailService emailService;
+	
+	@Autowired
+	private InternalUserDAO employeeDAO;
 	
 	Logger log = LoggerFactory.getLogger(AccountController.class);
 
@@ -91,9 +95,7 @@ public class LoginController {
 //	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public RedirectView getCustomerDetails(RedirectView model, HttpServletRequest request,
-			@RequestParam("name") String name, @RequestParam("password") String password, 
-			@RequestParam("type_user") String type_user, RedirectAttributes redir) {
+	public RedirectView getCustomerDetails(RedirectView model, HttpServletRequest request, RedirectAttributes redir) {
 		/*
 		 * Need to check credentials of the user and set the session variable of the
 		 * role they have ie: customer, merchant, administrator Other session variables:
@@ -105,6 +107,9 @@ public class LoginController {
 		 * use redirectView.attributes and stuff
 		 * 
 		 */
+		String name = request.getParameter("name");
+		String password = request.getParameter("password");
+
 		if (name.isEmpty() || password.isEmpty()) {
 			// model = new ModelAndView("redirect:/", "error_msg", "Invalid characters
 			// entered, please enter valid characters.");
@@ -121,33 +126,40 @@ public class LoginController {
 			return model;
 		}
 
-//		if (Constants.EMPLOYEE.equals(type_user)) {
-//
-//		} else {
-//			try {
-//				if (loginDAO.checkIfTheCustomerIsValid(name, password)) {
-//					// model = new ModelAndView("redirect:/customer/profile");
-//					model = new RedirectView("/customer/profile", true);
-//
-//				} else {
-//
-//				}
-//			} catch (RuntimeException ex) {
-//				throw ex;
-//			}
-//
-//		}
+		model = new RedirectView("/", true);
+		if (Constants.EMPLOYEE.equals(request.getParameter("type_user"))) {
+			Integer empId = null;
+			try {
+				empId = loginDAO.checkIfTheEmployeeIsValid(name, password);
+			} catch (RuntimeException ex) {
+				redir.addFlashAttribute("error_msg", ex.getMessage());
+			}
+			if (empId != null) {
+				request.getSession().setAttribute("emp_id", empId);
+				model = new RedirectView("/internalUser/profile", true);
+			}
+
+		} else {
+			Integer cust_id = null;
+			try {
+				cust_id = loginDAO.checkIfTheCustomerIsValid(name, password);
+			} catch (RuntimeException ex) {
+				redir.addFlashAttribute("error_msg", ex.getMessage());
+			}
+			if (cust_id != null) {
+				request.getSession().setAttribute("cust_id", cust_id);
+				model = new RedirectView("/customer/profile", true);
+			}
+		}
 
 		// We only want to set these if the user is a valid one!
 		request.getSession().setAttribute("user_id", name);
-		Customer customer = customerDAO.getCustomerProfileDetails(name);
-		log.info(customer.getCust_id() + " " + "  Hi");
-		request.getSession().setAttribute("cust_id", customer.getCust_id());
-		//if the user is an employee
+
+		// if the user is an employee
 		request.getSession().setAttribute("role", "admin");
-		model = new RedirectView("/internalUser/profile", true);
+
 		return model;
-	}	
+	}
 
 	/*
 	 * Only used for going to OTP page.

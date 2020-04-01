@@ -92,6 +92,18 @@ public class InternalUserDAO {
 		}
 		return requests;
 	}
+	
+	public List<Request> retreiveAllCustoumerPendingReqs(int tier){
+		List<Request> requests = new ArrayList<>();
+		if (tier == 1) {
+			requests = customerReqDAO.retrieveAllPendingRequests(0);
+		} else {
+			requests = customerReqDAO.retrieveAllPendingRequests(1);
+		}
+		return requests;
+		
+	}
+	
 
 	public void authorizeCustomerTransactions(Request request, String user_name) {
 		if (Constants.TRANSACTION_TYPE_CREATE_ACCOUNT.equals(request.getType())) {
@@ -127,8 +139,8 @@ public class InternalUserDAO {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public InternalUser getEmployeeProfileDetails(String userName) {
 
-		List<InternalUser> employee = (List<InternalUser>) new InternalUser();
-		String request_employee_info = "Select * from employee where emp_user_id = " + userName + ";";
+		List<InternalUser> employee = new ArrayList();
+		String request_employee_info = "Select * from employee where emp_user_id = '" + userName + "';";
 
 		try {
 			employee = jdbcTemplate.query(request_employee_info, new RowMapper() {
@@ -143,7 +155,7 @@ public class InternalUserDAO {
 					emp.setMobile((String) rs.getObject("mobile"));
 					emp.setEmp_user_id((String) rs.getObject("emp_user_id"));
 					emp.setEmp_password((String) rs.getObject("emp_password"));
-					emp.setType((char) rs.getObject("type"));
+					emp.setType((int) rs.getObject("type"));
 					emp.setEmp_id((int) rs.getObject("emp_id"));
 					return emp;
 				}
@@ -151,7 +163,7 @@ public class InternalUserDAO {
 		} catch (DataAccessException ex) {
 			throw new RuntimeException(ex);
 		}
-		return employee.get(0);
+		return employee.size()!=0?employee.get(0):null;
 	}
 
 }

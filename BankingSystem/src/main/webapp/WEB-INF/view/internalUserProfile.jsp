@@ -131,31 +131,27 @@
 				<div id="leftDiv">
 					<div>
 						<label>Name:</label>
-						<label>EmployeeID:</label>
+						<label>LastName:</label>
 						<label>Username: </label>
 						<label>Phone Number: </label>
 					</div>
 					<div>
-						<label>${name}</label>
-						<label>${employeeID}</label>
-						<label>username</label>
-						<label>Phone Number</label>
+						<label>${Firstname}</label>
+						<label>${Lastname}</label>
+						<label>${username}</label>
+						<label>${phone}</label>
 					</div>
 				</div>
 				<div id="rightDiv">
 					<div>
 						<label>Email: </label>
 						<label>Address:</label>	
-						<label>City:</label>
-						<label>Zip:</label>
-						<label>State:</label>
+						
 					</div>
 					<div>
-						<label>Email</label>
-						<label>Address</label>
-						<label>City</label>
-						<label>Zip</label>
-						<label>State</label>
+						<label>${email}</label>
+						<label>${address}</label>
+						
 					    <!-- <input type="text" class="form-control" id="address" >
 					    <input type="text" class='form-control' id="city">
 					  	<input type="text" class='form-control' id="zip" >

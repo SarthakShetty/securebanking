@@ -89,16 +89,31 @@
 				<div id="listDiv" class="table-wrapper-scroll-y my-custom-scrollbar">
 					<table class="table table-bordered mb-0">
 						<thead>
-						  <tr>
-						    <th scope="col">Requests</th>
-						    <th scope="col"></th>
-						  </tr>
-						</thead>
+						
 						<tbody>
+						<tr>
+						 <td> <b>Customer Id</b></td>
+						  <td><b>From Account Number</b></td>
+						  <td><b>To Account Number</b></td>
+						  <td><b>Request Type</b></td>
+						  <td><b>Amount</b></td>
+						  </tr>
 						  <c:forEach items="${list}" var="tList">
 						  	<tr>
+						  	   <td>
+						  			${tList.cust_id}
+						  		</td>
 						  		<td>
-						  			${tList}
+						  			${tList.first_acc_num}
+						  		</td>
+						  		<td>
+						  		  ${tList.second_acc_num}
+						  	    </td>
+						  		<td>
+						  			${tList.type}
+						  		</td>
+						  		<td>
+						  			${tList.amount}
 						  		</td>
 						  		<td><input type="radio" name="options"></td>
 						  	</tr>

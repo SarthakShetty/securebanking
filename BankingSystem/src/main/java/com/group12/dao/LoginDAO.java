@@ -25,8 +25,8 @@ public class LoginDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public boolean checkIfTheCustomerIsValid(String user_name, String password) {
-
+	public Integer checkIfTheCustomerIsValid(String user_name, String password) {
+	
 		String request_customer_information = "Select is_active,currently_logged_in from customer where cust_user_id = '"
 				+ user_name + "';";
 		List<Customer> customer = new ArrayList<>();
@@ -43,11 +43,11 @@ public class LoginDAO {
 				}
 			});
 		} catch (DataAccessException ex) {
-			throw new RuntimeException(ex);
+			throw new RuntimeException("Error Retriving the customer Details with user name" + user_name);
 		}
 
 		if (customer.size() == 0) {
-			throw new RuntimeException("There is no customer with the user Name");
+			throw new RuntimeException("There is no customer with the user Name " + user_name);
 		}
 
 		if (customer.get(0).getIs_active() == 0) {
@@ -57,26 +57,35 @@ public class LoginDAO {
 		if (customer.get(0).getCurrently_logged_in() == 1) {
 			throw new RuntimeException("The Customer cannot login at multiple locations");
 		}
-		int count = 0;
+		int cust_id = -1;
 		try {
-			count = jdbcTemplate.queryForObject("select count(*) from customer where cust_user_id = '" + user_name
+			cust_id = jdbcTemplate.queryForObject("select cust_id from customer where cust_user_id = '" + user_name
 					+ "' and " + " cust_pwd = " + "SHA1('" + password + "')" + ";", Integer.class);
+		} catch (DataAccessException ex) {
+			throw new RuntimeException("Password is incorrect.");
+		}
+	
+		String update_customerTable = "update customer set currently_logged_in = 1 where cust_user_id= " + "'"
+				+ user_name + "';";
+		try {
+			jdbcTemplate.update(update_customerTable);
 		} catch (DataAccessException ex) {
 			throw new RuntimeException(ex);
 		}
-		if (count == 0) {
+
+		return cust_id == -1 ? null : cust_id;
+	}
+
+	public Integer checkIfTheEmployeeIsValid(String user_name, String password) {
+		
+		int employeeId = -1;
+		try {
+			employeeId = jdbcTemplate.queryForObject("select emp_id from employee where emp_user_id = '" + user_name
+					+ "' and " + " emp_password = " + "SHA1('" + password + "')" + ";", Integer.class);
+		} catch (DataAccessException ex) {
 			throw new RuntimeException("Password is incorrect.");
 		}
-		
-		//String update_customerTable = "update customer set currently_logged_in = 1 where cust_user_id= " + "'" + user_name + "';";
-		//try {
-			//jdbcTemplate.update(update_customerTable);
-		//}catch(DataAccessException ex) {
-			//throw new RuntimeException(ex);
-		//}
-		
-
-		return true;
+		return employeeId == -1 ? null : employeeId;
 	}
 
 }

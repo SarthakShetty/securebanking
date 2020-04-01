@@ -143,7 +143,7 @@
 		<div id="container">
 			<h1>Profile</h1>
 			<hr class="divider"/>
-			<form action="customer/changeProfile">
+			<form action="/changeProfile">
 			<div id="profile">
 				<div id="editInfo">
 					<div class="form-group row">
