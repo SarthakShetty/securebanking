@@ -182,12 +182,12 @@
 				<h2 style="color: white;">Balance</h3>
 				<div id="leftDiv">
 					<c:forEach items="${accountList}" var="aList">
-						<label>Account ${aList}: </label>
+						<label>Account ${aList.acc_id}: </label>
 					</c:forEach>
 				</div>
 				<div id="rightDiv">
-					<c:forEach items="${accountBList}" var="bList">
-						<label>$ ${bList}</label>
+					<c:forEach items="${accountList}" var="bList">
+						<label>$ ${bList.curr_bal}</label>
 					</c:forEach>
 				</div> 
 				
@@ -358,7 +358,9 @@
 						<div style="display: block;"><h3>Accounts</h3></div>
 						<div style="display: inline-block;">
 							<c:forEach items="${accountList}" var="aList">
-								<label style="display: block;">${aList}</label>
+								<label style="display: block;">${aList.acc_id}</label>
+								<label style="display: block;">${aList.acc_type}</label>
+								<label style="display: block;">${aList.curr_bal}</label>
 							</c:forEach>
 						</div>
 						

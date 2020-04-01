@@ -60,6 +60,7 @@ public class CustomerController {
 		model.addObject("age", customer.getAge());
 		model.addObject("email", customer.getEmail());
 		model.addObject("username", customer.getUsername());
+		model.addObject("accountList",accountDAO.getAccountDetails(customer.getCust_id()));
 		model.setViewName("profile");
 		return model;
 	}

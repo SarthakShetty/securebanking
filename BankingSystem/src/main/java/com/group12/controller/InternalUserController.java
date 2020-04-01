@@ -191,18 +191,21 @@ public class InternalUserController {
 		return model;
    }
 	
-	@RequestMapping(value = "/internalUser/authorizeEmployeeRequests", method = RequestMethod.POST)
+	@RequestMapping(value = "/internalUser/authorizeEmployeeRequests/{req_id}", method = RequestMethod.POST)
 	public ModelAndView authorizeInternalUserRequests(ModelAndView model, HttpServletRequest request) {
 		if(request.getSession().getAttribute("role") == null){
 			model = new ModelAndView("redirect:/");
 			return model;
 		}
+		
+		model = new ModelAndView("redirect:/internalUser/Requests");
+		return model;
 		/*
 		 * Need to be able to authorize employee request and erase it from the requests
 		 * then return the list of requests and a message saying request authorized
 		 */
-		model.setViewName("internalUserAccountManagement");
-		return model;
+		//model.setViewName("internalUserAccountManagement");
+		//return model;
    }
 	
 	@RequestMapping(value = "/internalUser/declineEmployeeRequests", method = RequestMethod.POST)

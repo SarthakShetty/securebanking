@@ -173,23 +173,52 @@
 		  </ul>
 		</nav>
 		
-		<div id="container">
+				<div id="container" class="table-wrapper-scroll-y my-custom-scrollbar">
+					<h1>Account Details</h1>
+					<table class="table table-bordered mb-0">
+						<thead>
+						
+						<tbody>
+						<tr>
+						 <td> <b>Account Number</b></td>
+						  <td><b>Balance Amount</b></td>
+						  <td><b>Account Type</b></td>
+				
+						  </tr>
+						  <c:forEach items="${accountList}" var="tList">
+						  	<tr>
+						  	   <td>
+						  			${tList.acc_id}
+						  		</td>
+						  		<td>
+						  			${tList.curr_bal}
+						  		</td>
+						  		<td>
+						  			${tList.acc_type}
+						  		</td>
+						  	
+						  	</tr>
+						  </c:forEach>
+						</tbody>
+					</table>
+		
+		<!--  div id="container">
 			<h1>Account</h1>
 			<hr class="divider" />
 			<div id="account">
 				<h2 style="color: white;">Balance</h2>
 				<div id="leftDiv">
 					<c:forEach items="${accountList}" var="aList">
-						<label>Account ${aList}: </label>
+						<label>Account ${aList.acc_id}: </label>
 					</c:forEach>
 				</div>
 				<div id="rightDiv">
-					<c:forEach items="${accountBList}" var="bList">
-						<label>$ ${bList}</label>
+					<c:forEach items="${accountList}" var="bList">
+						<label>$ ${bList.curr_bal}</label>
 					</c:forEach>
 				</div> 
 				
-			</div>
+			</div-->
 		</div>	
 	</body>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

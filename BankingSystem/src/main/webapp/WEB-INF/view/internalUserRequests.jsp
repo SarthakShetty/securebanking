@@ -121,7 +121,7 @@
 						</tbody>
 					</table>
 					<div style="text-align: center !important; margin: 20px 0 0 0;">
-						<button class="btn btn-info btn-md" id="auth" disabled>Authorize</button>
+						<button class="btn btn-info btn-md" id="auth" onclick="/internalUser/authorizeEmployeeRequests/"+${tList.req_id} disabled>Authorize</button>
 						<button class="btn btn-info btn-md" id="decline" disabled>Decline</button>
 					</div>
 					

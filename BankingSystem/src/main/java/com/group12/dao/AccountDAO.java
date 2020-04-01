@@ -63,6 +63,7 @@ public class AccountDAO {
 					Account account = new Account();
 					account.setAcc_id((int) rs.getObject("acc_id"));
 					account.setCurr_bal(rs.getDouble("curr_bal"));
+					account.setAcc_type((String)rs.getObject("acc_type"));
 					return account;
 				}
 			});
