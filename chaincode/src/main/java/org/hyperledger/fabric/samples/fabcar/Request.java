@@ -1,9 +1,8 @@
 
-import java.sql.Timestamp;
-package org.hyperledger.fabric.samples.securebank;
+package org.hyperledger.fabric.samples.fabcar;
 
 import java.util.Objects;
-
+import java.sql.Timestamp;
 import org.hyperledger.fabric.contract.annotation.DataType;
 import org.hyperledger.fabric.contract.annotation.Property;
 
