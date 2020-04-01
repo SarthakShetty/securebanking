@@ -53,7 +53,7 @@ public class AccountDAO {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<Account> getAccountDetails(int customer_id) {
 		String get_accounts_for_a_customer = "select * from account where cust_id = " + customer_id
-				+ "and is_active = 1";
+				+ " and is_active = 1";
 		List<Account> accounts = new ArrayList<Account>();
 
 		try {

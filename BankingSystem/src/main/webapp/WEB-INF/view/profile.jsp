@@ -148,9 +148,9 @@
 				<div id="editInfo">
 					<div class="form-group row">
 						<label class="col-sm-5 col-form-label">Name:</label>
-
-						<label class="col=sm-7" style="padding: 0 15px;"> <% out.print(request.getSession().getAttribute("user_name")); %> </label>
-
+						<div class="col-sm-7">
+				      		<input type="text"  class="form-control" name="Name" id="phone" value="${Firstname} ${Lastname}">
+				    	</div>
 					</div>
 					<div class="form-group row">
 				    <label for="phone" class="col-sm-5 col-form-label">Phone Number:</label>
