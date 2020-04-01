@@ -172,7 +172,8 @@ CREATE TABLE `employee` (
 --
 -- Dumping data for table `employee`
 --
-
+ALTER TABLE customer AUTO_INCREMENT=10000;
+ALTER TABLE account AUTO_INCREMENT=10000;
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;

@@ -83,7 +83,7 @@
 							<h3>From Account</h3>
 							<select name="from_acc">
 								<c:forEach items="${accounts}" var="aList">
-									<option>${aList}</option>
+									<option>${aList.acc_id}(Balance : ${aList.curr_bal})</option>
 								</c:forEach>
 							</select>
 						</div>
@@ -135,7 +135,7 @@
 							<h3>From Account</h3>
 							<select name="from_accP">
 								<c:forEach items="${accounts}" var="aList">
-									<option>${aList}</option>
+									<option>${aList.acc_id}(Balance : ${aList.curr_bal})</option>
 								</c:forEach>
 							</select>
 						</div>
@@ -171,9 +171,7 @@
 							<label>
 						    	<input type="radio" name="request1" id="treq" autocomplete="off" value="transfer"> Transfer
 						  	</label>
-						  	<label>
-						    	<input type="radio" name="request1" id="preq" autocomplete="off" value="request"> Request Payment
-						  	</label>
+						  	
 						</div>
 						<div >
 							<h2>Amount</h2>

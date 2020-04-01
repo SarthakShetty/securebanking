@@ -1,6 +1,7 @@
 package com.group12.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,19 +42,6 @@ public class AccountController {
 	
 	Logger log = LoggerFactory.getLogger(AccountController.class);
 
-//	@RequestMapping(value = "/openAccount", method = RequestMethod.POST)
-//	public ModelAndView createNewAccount(ModelAndView model, HttpServletRequest request) {
-//		
-//		String userName = (String)request.getSession().getAttribute("user_id");
-//		int cust_id = (Integer)request.getSession().getAttribute("cust_id");
-//		Account account = new Account();
-//		account.setAcc_type(request.getParameter("type_account"));
-//		account.setCurr_bal(Double.parseDouble(request.getParameter("intialdeposit")));
-//		account.setCust_id(cust_id);
-//		accountDAO.createAccount(account);
-//		    	    
-//		return model;
-//	}
 	
 	@RequestMapping(value = "/activateaccount", method = RequestMethod.POST)
 	public ModelAndView activateCustomer(ModelAndView model, HttpServletRequest request) {
@@ -367,6 +355,121 @@ public class AccountController {
 		return model;
 	}
 	
+	
+	@RequestMapping(value = "/customer/transferEmailPhone", method=RequestMethod.GET)
+	public ModelAndView getCustomerDetailsEmailPhone(ModelAndView model, HttpServletRequest request) {
+		// TODO logging messages 
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
+		List<Account> accounts = accountDAO.getAccountDetails((int) request.getSession().getAttribute("cust_id"));
+		model.addObject("accounts", accounts);
+	    model.setViewName("transferMakePayment");	 	    	    
+		return model;
+	}
+	
+	@RequestMapping(value = "/customer/transferBA", method = RequestMethod.GET)
+	public ModelAndView getCustomerDetailsBA(ModelAndView model, HttpServletRequest request) {
+		// TODO logging messages
+		if (request.getSession().getAttribute("role") == null) {
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
+		List<Account> accounts = accountDAO.getAccountDetails((int) request.getSession().getAttribute("cust_id"));
+		model.addObject("accountList", accounts);
+		model.setViewName("transferBetweenAccounts");
+		return model;
+	}
+	
+	@RequestMapping(value = "/customer/CreditDebit", method=RequestMethod.GET)
+	public ModelAndView getCustomerDetailsCreditDebit(ModelAndView model, HttpServletRequest request) {
+		// TODO logging messages 
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
+//		String userName = request.getParameter("user_name");
+//		// Get the details of the customer using the userName
+//	    Customer customer = customerDAO.getCustomerProfileDetails(userName);
+//	    // Get the accounts from customer id 
+//	    List<Account> accounts = accountDAO.getAccountDetails(customer.getCust_id());
+//	    // set the session id with the customer id
+//	    model.addObject("getAccount", accounts);
+		
+		List<String> s = new ArrayList<String>();
+		s.add("hele");
+		model.addObject("accounts", s);
+	    model.setViewName("creditDebit");	 	    	    
+		return model;
+	}
+	
+	@RequestMapping(value = "/customer/payment", method=RequestMethod.GET)
+	public ModelAndView getCustomerDetailsPayment(ModelAndView model, HttpServletRequest request) {
+		
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
+		/*
+		 * Need to return list of requests for a specific customer
+		 */
+		
+	    model.setViewName("makePayment");	 	    	    
+		return model;
+	}
+	
+	@RequestMapping(value = "/customer/accountManagement", method=RequestMethod.GET)
+	public ModelAndView getCustomerDetailsAccMan(ModelAndView model, HttpServletRequest request) {
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
+		
+		/*
+		 * Need to return list of accounts of the user
+		 */
+		
+	    model.setViewName("accountManagement");	 	    	    
+		return model;
+	}
+	
+	
+	@RequestMapping(value = "/customer/requestfunds")
+	public ModelAndView requestFunds(ModelAndView model, HttpServletRequest request) {
+		// Assumption that UI will be sending the session id of the user
+		int from_account_no = Integer.parseInt(request.getParameter("from_account"));
+		double amount = Double.parseDouble(request.getParameter("amount"));
+		String type = request.getParameter("type");
+		int cust_id = Integer.parseInt(request.getParameter("cust_id"));
+		int isCritical;
+		if (amount > 1000) {
+			isCritical = 1;
+		} else {
+			isCritical = 0;
+		}
+		Request customerRequest = new Request();
+		customerRequest.setAmount(amount);
+		customerRequest.setSecond_acc_num(from_account_no);
+		customerRequest.setType(type);
+		customerRequest.setIs_critical(isCritical);
+		customerRequest.setCust_id(cust_id);
+		accountDAO.transferFunds_create_request(customerRequest);
+		model.addObject("message", "Sucess");
+		return model;
+	}
+	
+	@RequestMapping(value = "/approvecustomerpaymentrequest")
+	public ModelAndView approveCustomerPayment(ModelAndView model, HttpServletRequest request) {
+		int to_account_no = Integer.parseInt(request.getParameter("to_account"));
+		int req_id = Integer.parseInt(request.getParameter("req_id"));
+		Request customerRequest = new Request();
+		customerRequest.setFirst_acc_num(to_account_no);
+		customerRequest.setReq_id(req_id);
+		customerDAO.authorizeRequestCust(customerRequest, null);
+		model.addObject("message", "Sucess");
+		return model;
+	}
 	
 
 	private Request createRequest(double amount, int fromAccountNumber, int toAccountNumber, String typeOftransfer) {
