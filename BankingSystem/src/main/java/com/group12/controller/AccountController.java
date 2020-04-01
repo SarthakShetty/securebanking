@@ -373,6 +373,8 @@ public class AccountController {
 		 */
 		boolean empty = checkEmptyFields("a", "a", "a", password, cPassword, address, email, phoneNumber, age, city, zip);
 		boolean noMatch = checkMatchFields("a", "a", "a", password, cPassword, address, email, phoneNumber, age, city, zip);
+		
+		// Need to call a DAO method to update the profile information
 		model = new RedirectView("/customer/profile");
 		if(empty){
 			

@@ -46,19 +46,8 @@ public class CustomerController {
 			return model;
 		}
 		
-		String userName = (String)request.getSession().getAttribute("user_name");
+		String userName = (String)request.getSession().getAttribute("user_id");
 		Customer customer = customerDAO.getCustomerProfileDetails(userName);
-//		// TODO need to do the integration with the UI parameters
-//		model.addObject("First name", customer.getFirstName());
-//		model.addObject("Last name", customer.getLastName());
-//		model.addObject("phone", customer.getMobile());
-//		model.addObject("address", customer.getAddress());
-//		model.addObject("city", customer.getCity());
-//		model.addObject("state", customer.getState());
-//		model.addObject("zip", customer.getZipCode());
-//		model.addObject("age", customer.getCity());
-//		model.addObject("email", customer.getEmail());
-//		model.addObject("user name", customer.getUsername());
 		model.addObject("Firstname", customer.getFirstName());
 		model.addObject("Lastname", customer.getLastName());
 		model.addObject("phone", customer.getMobile());
@@ -70,19 +59,6 @@ public class CustomerController {
 		model.addObject("email", customer.getEmail());
 		model.addObject("username", customer.getUsername());
 		model.setViewName("profile");
-		
-//		model.addObject("Firstname", "Brandon");
-//		model.addObject("Lastname", "Pacheco");
-//		model.addObject("phone", "951-212-4912");
-//		model.addObject("address", "your street");
-//		model.addObject("city", "phoenix");
-//		model.addObject("state", "az");
-//		model.addObject("zip", "85281");
-//		model.addObject("age", "22");
-//		model.addObject("email", "akads");
-//		model.addObject("username", "hackerman");
-//		model.setViewName("profile");
-		//model.addObject("FirstName", userName);
 		return model;
 	}
 	
