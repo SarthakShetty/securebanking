@@ -372,6 +372,7 @@ public class AccountController {
 			if(reqs.length > 1 && reqs[0] != null && reqs[1]!=null) {
 				if("accept".equals(reqs[0])) {
 					Request customerRequest = new Request();
+					customerRequest.setType(Constants.TANSACTION_TYPE_REQUEST);
 					customerRequest.setFirst_acc_num(to_account_no);
 					customerRequest.setReq_id(Integer.parseInt(reqs[1]));
 					customerDAO.authorizeRequestCust(customerRequest, (String)request.getSession().getAttribute("user_id"));
