@@ -384,13 +384,15 @@ public class AccountController {
 	}
 	
 	@RequestMapping(value ="/customer/authorizeRequest", method = RequestMethod.POST)
-	public RedirectView acceptRequest(RedirectView model, HttpServletRequest request, @ModelAttribute("auth") String accOrdec) {
+	public RedirectView acceptRequest(RedirectView model, HttpServletRequest request, RedirectAttributes attr) {
 		/*
 		 * Need to be able to allow customer to accept/decline a transfer request from another customer
 		 * and take it out of the request list and take money from account. Then return the list of requests
 		 * and a message based on accept/decline.
 		 */
+		String acc = request.getParameter("auth");
 		model = new RedirectView("/customer/payment");
+		attr.addFlashAttribute("auth", acc);
 		return model;
 	}
 	
@@ -467,6 +469,7 @@ public class AccountController {
 		 */
 		List<String> l = new ArrayList<String>();
 		l.add("fwof");
+		l.add("sfd");
 		model.addObject("list", l);
 	    model.setViewName("makePayment");	 	    	    
 		return model;

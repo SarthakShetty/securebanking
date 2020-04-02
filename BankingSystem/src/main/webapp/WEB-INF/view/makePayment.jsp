@@ -172,7 +172,7 @@
 		<div id="container">
 			<h1>Payment Requests</h1>
 			<hr class="divider" />
-			<form action="/customer/authorizeRequest">
+			<form action="/customer/authorizeRequest", method="post">
 				<div id="payment">
 					
 					<div id="listDiv" class="table-wrapper-scroll-y my-custom-scrollbar">
@@ -190,6 +190,7 @@
 						  	<tr>
 						  	   <td>
 						  			${tList.cust_id}
+						  			
 						  		</td>
 						  		<td>
 						  			${tList.first_acc_num}
@@ -218,7 +219,9 @@
 			</form>
 		</div>
 	<script>
-	
+		$('input').on('change', function(){
+			console.log(this.value);
+		});
 	</script>
 	</body>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
