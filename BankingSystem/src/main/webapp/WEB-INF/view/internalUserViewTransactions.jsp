@@ -77,9 +77,7 @@
 				  </c:if>
 				  <c:if test="${role == 'admin;}">
 				  	<li class =" nav-item"  ><a class="nav-link" href="/internalUser/accountManagement/admin">Account Management</a></li>
-				  </c:if>
-				  <li class ="nav-item" ><a class="nav-link" href="/internalUser/Requests">Requests</a></li>
-				  <c:if test="${role == 'admin'}">
+				  	<li class ="nav-item" ><a class="nav-link" href="/internalUser/Requests">Requests</a></li>
 				  	<li class ="nav-item" ><a class="nav-link" href="/admin/systemLogs">System Log</a></li>
 				  </c:if>
 			  </ul>

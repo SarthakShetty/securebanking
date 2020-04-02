@@ -107,6 +107,8 @@ public class LoginController {
 		 * use redirectView.attributes and stuff
 		 * 
 		 */
+		
+		log.debug("I am in login");
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
 
@@ -125,13 +127,19 @@ public class LoginController {
 			redir.addFlashAttribute("error_msg", "Invalid characters entered, please enter valid characters.");
 			return model;
 		}
+		model = new RedirectView("/", true);
+	
 
+		//model = new RedirectView("/customer/profile", true);
+		log.info(request.getParameter("type_user"));
 		if (Constants.EMPLOYEE.equals(request.getParameter("type_user"))) {
 			Integer empId = null;
 			try {
 				empId = loginDAO.checkIfTheEmployeeIsValid(name, password);
 			} catch (RuntimeException ex) {
 				redir.addFlashAttribute("error_msg", ex.getMessage());
+				model = new RedirectView("/", true);
+				return model;
 			}
 			if (empId != null) {
 				request.getSession().setAttribute("emp_id", empId);
@@ -144,6 +152,8 @@ public class LoginController {
 				cust_id = loginDAO.checkIfTheCustomerIsValid(name, password);
 			} catch (RuntimeException ex) {
 				redir.addFlashAttribute("error_msg", ex.getMessage());
+				model = new RedirectView("/", true);
+				return model;
 			}
 			if (cust_id != null) {
 				request.getSession().setAttribute("cust_id", cust_id);
@@ -155,7 +165,7 @@ public class LoginController {
 		request.getSession().setAttribute("user_id", name);
 
 		// if the user is an employee
-		request.getSession().setAttribute("role", "admin");
+		request.getSession().setAttribute("role", "tier1");
 
 		return model;
 	}

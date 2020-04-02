@@ -73,10 +73,8 @@
 			  	<li class =" nav-item"  ><a class="nav-link" href="/internalUser/accountManagement">Account Management</a></li>
 			  </c:if>
 			  <c:if test="${role == 'admin;}">
-			  	<li class =" nav-item"  ><a class="nav-link" href="/internalUser/accountManagement/admin">Account Management</a></li>
-			  </c:if>
-			  <li class ="nav-item" ><a class="nav-link" href="/internalUser/Requests">Requests</a></li>
-			  <c:if test="${role == 'admin'}">
+				  	<li class =" nav-item"  ><a class="nav-link" href="/internalUser/accountManagement/admin">Account Management</a></li>
+				  	<li class ="nav-item" ><a class="nav-link" href="/internalUser/Requests">Requests</a></li>
 				  	<li class ="nav-item" ><a class="nav-link" href="/admin/systemLogs">System Log</a></li>
 				  </c:if>
 		  </ul>
@@ -97,16 +95,32 @@
 					</select>
 				</div>
 				<div id="hm" style="display: inline; text-align: right;">
-					<form action="/internalUser/deleteAccount">
-						<input type="submit" value="Delete" class="btn btn-info "/>
-
-					</form>
-					<form >
-						<input type="button" onclick="modifyAcc()" value="Modify" class="btn btn-info" /> 
-					</form>
-					<form >
-						<input type="button" onclick="showNewAcc()" value="Add Account" class="btn btn-info"/>
-					</form>
+					<c:choose>
+						<c:when test="${tier2 }">
+							<form action="/internalUser/deleteAccount">
+							<input type="submit" value="Close" class="btn btn-info "/>
+	
+							</form>
+							<form >
+								<input type="button" onclick="modifyAcc()" value="Modify" class="btn btn-info" /> 
+							</form>
+							<form >
+								<input type="button" onclick="showNewAcc()" value="Add Account" class="btn btn-info"/>
+							</form>
+						</c:when>
+						<c:otherwise>
+							<form action="/internalUser/deleteAccount">
+								<input type="submit" value="Close" class="btn btn-info " disabled/>
+		
+							</form>
+							<form >
+								<input type="button" onclick="modifyAcc()" value="Modify" class="btn btn-info" disabled/> 
+							</form>
+							<form >
+								<input type="button" onclick="showNewAcc()" value="Add Account" class="btn btn-info" disabled/>
+							</form>
+						</c:otherwise>
+					</c:choose>
 				</div>
 				<div id="newAccDiv">
 					<h3>Add Account</h3>
@@ -147,12 +161,6 @@
 						    <label for="mobile" class="col-sm-5 col-form-label">Phone Number:</label>
 						    <div class="col-sm-7">
 						      <input type="text" name="phoneAdd" class="form-control" id="mobile1" placeholder="Phone Number" >
-						    </div>
-						  </div>
-						  <div class="form-group row">
-						    <label for="mobile" class="col-sm-5 col-form-label">Age:</label>
-						    <div class="col-sm-7">
-						      <input type="text" name="ageAdd" class="form-control" id="age1" placeholder="Age" >
 						    </div>
 						  </div>
 						  <div id="bottom">

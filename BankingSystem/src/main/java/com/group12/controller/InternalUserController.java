@@ -81,11 +81,26 @@ public class InternalUserController {
 			return model;
 		}
 		/*
-		 * Need to return the list of employee accounts and their information
+		 * Need to return the list of customer accounts and their information
 		 */
 		model.setViewName("internalUserAccountManagement");
 		return model;
    }
+	
+	@RequestMapping(value = "/internalUser/accountManagement/admin", method = RequestMethod.GET)
+	public ModelAndView getInternalUserDetailsAccountsAdmin(ModelAndView model, HttpServletRequest request) {
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
+		/*
+		 * Need to return the list of employee accounts and their information
+		 */
+		
+		model.setViewName("internalUserAccountManagementAdmin");
+		return model;
+   }
+	
 	
 	@RequestMapping(value = "/internalUser/Requests", method = RequestMethod.GET)
 	public ModelAndView getInternalUserDetailsRequests(ModelAndView model, HttpServletRequest request) {
@@ -200,7 +215,7 @@ public class InternalUserController {
 			return model;
 		}
 		
-		model = new RedirectView("redirect:/internalUser/Requests");
+		model = new RedirectView("/internalUser/Requests");
 		return model;
 		/*
 		 * Need to be able to authorize employee request and erase it from the requests

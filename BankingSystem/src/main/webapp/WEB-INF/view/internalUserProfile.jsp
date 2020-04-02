@@ -118,12 +118,10 @@
 			  	<li class =" nav-item"  ><a class="nav-link" href="/internalUser/accountManagement">Account Management</a></li>
 			  </c:if>
 			  <c:if test="${role == 'admin;}">
-			  	<li class =" nav-item"  ><a class="nav-link" href="/internalUser/accountManagement/admin">Account Management</a></li>
-			  </c:if>
-			  <li class ="nav-item" ><a class="nav-link" href="/internalUser/Requests">Requests</a></li>
-			  <c:if test="${role == 'admin'}">
+				  	<li class =" nav-item"  ><a class="nav-link" href="/internalUser/accountManagement/admin">Account Management</a></li>
+				  	<li class ="nav-item" ><a class="nav-link" href="/internalUser/Requests">Requests</a></li>
 				  	<li class ="nav-item" ><a class="nav-link" href="/admin/systemLogs">System Log</a></li>
-				  </c:if>
+				</c:if>
 		  </ul>
 		  <ul class="navbar-nav ml-auto">
 			  <li  class ="nav-item" ><a class="nav-link" href="/customer/logout">Logout</a></li>
