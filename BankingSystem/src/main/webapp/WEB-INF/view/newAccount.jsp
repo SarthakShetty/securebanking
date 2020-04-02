@@ -95,8 +95,11 @@
 				    <div class="col-sm-7">
 
 				      <input type="password" name="password" class="form-control" id="password" placeholder="Password">
-
+				      <div id="pwError" style="display: none; text-align: left;">
+				    	<p><font color="red">Password must be at least 8 characters long.</font></p>
 				    </div>
+				    </div>
+				    
 				  </div>
 				  <div class="form-group row">
 				    <label for="cPassword" class="col-sm-5 col-form-label">Confirm Password:</label>
@@ -133,8 +136,11 @@
 				    <div class="col-sm-7">
 
 				      <input type="text" name="age" class="form-control" id="age" placeholder="Age">
-
+						<div id="ageError" style="display: none; text-align: left;">
+				    	<p><font color="red">Age does not meet minimum requirement.</font></p>
 				    </div>
+				    </div>
+				    
 				  </div>
 				  <div id="bottom">
 				  	<label>City:</label>
@@ -207,7 +213,8 @@
 						  	</label>
 						</div>
 			      <div>
-			      	<input type="submit" value="Next" class="btn btn-primary btn-md" style="margin: 30px auto 0 auto;">
+			      	<input type="button" value="Next" id="butt" class="btn btn-primary btn-md" style="margin: 30px auto 0 auto;">
+			      	<input type="submit" id="sub" style="display: none;"/>
 			      	<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
 
 			      </div>
@@ -215,7 +222,24 @@
 				</form>
 			</div>
 		</div>
-		
+	<script>
+		$('#butt').on('click', function(){
+			var ageField = document.getElementById("age");
+			var pw = document.getElementById("password");
+			
+			
+			if(pw.value.length < 8){
+				document.getElementById("pwError").style.display = 'block';
+			}
+			else if(ageField.value < 18){
+				document.getElementById("ageError").style.display = 'block';
+			}
+			else{
+				
+				document.getElementById("sub").click();
+			}
+		});
+	</script>
 	</body>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

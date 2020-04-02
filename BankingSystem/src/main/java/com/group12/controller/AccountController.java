@@ -463,6 +463,7 @@ public class AccountController {
 		int cust_id = (int) request.getSession().getAttribute("cust_id");
 		List<Request> listOfCustomerRequests = customerDAO.retrieveAllPaymentRequestForCust(cust_id);
 		model.addObject("list",listOfCustomerRequests);
+
 	    model.setViewName("makePayment");	 	    	    
 		return model;
 	}

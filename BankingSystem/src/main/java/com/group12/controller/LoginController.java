@@ -77,7 +77,7 @@ public class LoginController {
 			redir.addFlashAttribute("error_msg", "Invalid characters entered, please enter valid characters.");
 			return model;
 		}
-		model = new RedirectView("/", true);
+		model = new RedirectView("/customer/transferEmailPhone", true);
 	
 
 		//model = new RedirectView("/customer/profile", true);
@@ -114,7 +114,7 @@ public class LoginController {
 		// We only want to set these if the user is a valid one!
 		request.getSession().setAttribute("user_id", name);
 
-		// if the user is an employee
+		// if the user is an employee we need to get role from DB. 
 		request.getSession().setAttribute("role", "tier1");
 
 		return model;

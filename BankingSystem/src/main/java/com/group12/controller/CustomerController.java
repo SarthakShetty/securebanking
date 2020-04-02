@@ -191,22 +191,26 @@ public class CustomerController {
 		String city = request.getParameter("city");
 		String zip = request.getParameter("zip");
 		String state = request.getParameter("state");
+		boolean noMatch;
+		//checking if they updated a value for the password, if not, should just use old password. 
+		if(password.isEmpty()){
+			noMatch = checkMatchFields("a", "a", userName, "a", address, email, phoneNumber, age, city, zip, userName, state);
+			
+			/*
+			 * Do this with old password though
+			 * customerDAO.updateCustomerData(userName, password, address, email, phoneNumber, age, city, zip, state, cust_id);
+			 */
+		}
+		else
+		{
+			noMatch = checkMatchFields("a", "a", userName, password, address, email, phoneNumber, age, city, zip, userName, state);
+			customerDAO.updateCustomerData(userName, password, address, email, phoneNumber, age, city, zip, state, cust_id);
+		}
 		
-		
-		boolean empty = checkEmptyFields("a", "a", userName, password, address, email, phoneNumber, age, city, zip, state);
-		boolean noMatch = checkMatchFields("a", "a", userName, password, address, email, phoneNumber, age, city, zip, userName, state);
-		
-		customerDAO.updateCustomerData(userName, password, address, email, phoneNumber, age, city, zip, state, cust_id);
 		// Need to call a DAO method to update the profile information
 		
 		model = new RedirectView("/customer/profile");
-		if(empty){
-			
-			attr.addFlashAttribute("error_msg", "Please fill out all the fields.");
-			
-			return model;
-		}
-		else if(noMatch){
+		if(noMatch){
 			
 			attr.addFlashAttribute("error_msg", "Invalid characters entered, please use valid characters.");
 			return model;
