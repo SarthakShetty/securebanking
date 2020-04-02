@@ -32,7 +32,7 @@ public class LoginDAO {
 		List<Customer> customer = new ArrayList<>();
 
 		try {
-			customer = jdbcTemplate.query(request_customer_information, new RowMapper<Customer>() {
+			customer = jdbcTemplate.query(request_customer_information, new RowMapper() {
 
 				public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
 					Customer cust = new Customer();
