@@ -68,7 +68,7 @@
 						</div>
 						<div class="col">
 							<label for="ta">What is the reason for your appointment?
-								<textarea style="display: block; width: 100%;" id="ta" maxlength="100" wrap="hard" form="sch" required>
+								<textarea style="display: block; width: 100%;" name="txtArea" id="ta" maxlength="100" wrap="hard" form="sch" required>
 								</textarea>
 							</label>
 						</div>

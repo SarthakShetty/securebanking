@@ -112,7 +112,7 @@
 					<h3>Add Account</h3>
 					<div id="form">
 						<hr class="divider">
-						<form action="/confirmationAccount" method="POST">
+						<form action="/internalUser/createEmployee" method="POST">
 						  <div class="form-group row">
 						    <label for="firstName" class="col-sm-5 col-form-label">First Name:</label>
 						    <div class="col-sm-7">
