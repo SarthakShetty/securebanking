@@ -329,57 +329,33 @@ public class AccountController {
 
 	}
 
-	@RequestMapping(value ="/customer/accountManagement/{flag}", method = RequestMethod.POST)
-	public RedirectView accountManagement(RedirectView model, HttpServletRequest request, @PathVariable("flag") String flag, RedirectAttributes attr) {
-		// This helps to track the customer for which we need either create account or delete account
-		String userName = (String) request.getSession().getAttribute("user_name");
-//		
-//		boolean empty = checkEmptyFields(fName, lName, uName, password, cPassword, address, email, phoneNumber, age, city, zip);
-//		boolean noMatch = checkMatchFields(fName, lName, uName, password, cPassword, address, email, phoneNumber, age, city, zip);
+	@RequestMapping(value = "/customer/accountManagement/{flag}", method = RequestMethod.POST)
+	public RedirectView accountManagement(RedirectView model, HttpServletRequest request,
+			@PathVariable("flag") String flag, RedirectAttributes attr) {
+
 		model = new RedirectView("/customer/accountManagement");
-//		if(empty){
-//			
-//			attr.addFlashAttribute("error_msg", "Please fill out all the fields.");
-//			
-//			return model;
-//		}
-//		else if(noMatch){
-//			
-//			attr.addFlashAttribute("error_msg", "Invalid characters entered, please use valid characters.");
-//			
-//			return model;
-//		}
-		
-		// Using the user name the customer information is fetched
-		
-		//TODO UI should set this flag depending upon the select or create account
-//		int create_account_flag = Integer.parseInt(request.getParameter("create_account_flag"));
-//		int delete_account_flag = Integer.parseInt(request.getParameter("delete_account_flag"));
+
 		String msg = "";
-		int cust_id = (Integer)request.getSession().getAttribute("cust_id");
-		log.info(cust_id + "  Hi");
-		//1 for delete, 0 for create
+		int cust_id = (Integer) request.getSession().getAttribute("cust_id");
+
 		int check_flag = Integer.parseInt(flag);
-		if(check_flag == 1) {
+		if (check_flag == 1) {
 			Account account = new Account();
 			account.setAcc_type(request.getParameter("type_account"));
 			account.setCurr_bal(Double.parseDouble(request.getParameter("intialdeposit")));
 			account.setCust_id(cust_id);
 			accountDAO.createAccount(account);
-			// TODO check the status from the DAO and set the model parameter
 			msg = "Account created.";
 		}
-		// TODO expectation that the button is radio hence either creating account or deleting can happen
-		// hence elif and not if
-		else if (check_flag  == 0) {
-			int account_no = Integer.parseInt(request.getParameter("account_no"));
+
+		else if (check_flag == 0) {
+			int account_no = Integer.parseInt(request.getParameter("account"));
 			accountDAO.deleteAccount(account_no, cust_id, 0);
-			// TODO check the status from the DAO and then update the status to the model
 			msg = "Account deleted.";
-			
+
 		}
-		
-		attr.addFlashAttribute("msg",msg);
+
+		attr.addFlashAttribute("msg", msg);
 		return model;
 	}
 	
@@ -462,12 +438,11 @@ public class AccountController {
 			model = new ModelAndView("redirect:/");
 			return model;
 		}
-		/*
-		 * Need to return list of requests for a specific customer
-		 */
-		List<String> l = new ArrayList<String>();
-		l.add("fwof");
-		model.addObject("list", l);
+		
+		
+		int cust_id = (int) request.getSession().getAttribute("cust_id");
+		List<Request> listOfCustomerRequests = customerDAO.retrieveAllPaymentRequestForCust(cust_id);
+		model.addObject("list",listOfCustomerRequests);
 	    model.setViewName("makePayment");	 	    	    
 		return model;
 	}
@@ -479,10 +454,8 @@ public class AccountController {
 			return model;
 		}
 		
-		/*
-		 * Need to return list of accounts of the user
-		 */
-		
+		List<Account> accounts = accountDAO.getAccountDetails((int) request.getSession().getAttribute("cust_id"));
+		model.addObject("accountList", accounts);
 	    model.setViewName("accountManagement");	 	    	    
 		return model;
 	}

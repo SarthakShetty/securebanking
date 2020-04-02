@@ -129,9 +129,9 @@ public class CustomerController {
 	
 	@RequestMapping(value = "/customer/logout")
 	public RedirectView logout(RedirectView model, HttpServletRequest request) {
-		/*
-		 * logout
-		 */
+
+		int cust_id = (int) request.getSession().getAttribute("cust_id");
+		customerDAO.customerLogout(cust_id);
 		request.getSession().invalidate();
 		model = new RedirectView("/");
 		return model;

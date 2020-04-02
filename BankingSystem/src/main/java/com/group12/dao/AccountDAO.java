@@ -246,8 +246,8 @@ public class AccountDAO {
 	// deletes is inactivating the account
 	public void deleteAccount(int account_no, int customer_id, int is_active) {
 
-		String construct_query = "update account set is_active = " + is_active + "where cust_id = " + customer_id
-				+ "and acc_id = " + account_no + ";";
+		String construct_query = "update account set is_active = " + is_active + " where cust_id = " + customer_id
+				+ " and acc_id = " + account_no + ";";
 
 		try {
 			jdbcTemplate.update(construct_query);

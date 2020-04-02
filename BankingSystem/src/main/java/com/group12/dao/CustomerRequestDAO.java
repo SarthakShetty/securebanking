@@ -108,8 +108,8 @@ public class CustomerRequestDAO {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List<Request> retrieveAllCustomerspaymentReqs(int custId) {
 		List<Request> requests = new ArrayList<>();
-		String paymentRequests = "Select * from Customer_Request where cust_id = " + custId + "and status =" + "'"
-				+ Constants.TRANSACTION_CUSTOMER_ACCEPTANCE + "'" + "and type =" + "'"
+		String paymentRequests = "Select * from Customer_Request where cust_id = " + custId + " and status =" + "'"
+				+ Constants.TRANSACTION_CUSTOMER_ACCEPTANCE + "'" + " and type =" + "'"
 				+ Constants.TANSACTION_TYPE_REQUEST + "';";
 
 		try {

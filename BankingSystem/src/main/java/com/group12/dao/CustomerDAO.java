@@ -227,4 +227,15 @@ public class CustomerDAO {
 		}
 	}
 
+	public void customerLogout(int cust_id) {
+		String update_customerTable = "update customer set currently_logged_in = 0 where cust_id= " + "'"
+				+ cust_id + "';";
+		try {
+			jdbcTemplate.update(update_customerTable);
+		} catch (DataAccessException ex) {
+			throw new RuntimeException(ex);
+		}
+		
+	}
+
 }

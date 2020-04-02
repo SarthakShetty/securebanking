@@ -180,23 +180,19 @@
 						
 						<tbody>
 						<tr>
-						 <td> <b>Requested From</b></td>
+						 <td> <b>Requested From Account</b></td>
 						  <td><b>Amount Requested</b></td>
-						  <td><b>Account to Pay From</b></td>
 						  <td></td>
 						  <td></td>
 						  </tr>
 						  <c:forEach items="${list}" var="tList">
 						  	<tr>
 						  	   <td>
-						  			${tList.cust_id}
+						  			${tList.second_acc_num}
 						  		</td>
 						  		<td>
-						  			${tList.first_acc_num}
+						  			${tList.amount}
 						  		</td>
-						  		<td>
-						  		  	${tList.second_acc_num}
-						  	    </td>
 						  		<td>
 						  			<label>
 							    		<input type="radio" name="auth" id="treq" autocomplete="off" value="accept" checked> Accept

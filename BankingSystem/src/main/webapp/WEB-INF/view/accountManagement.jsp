@@ -212,14 +212,14 @@
 				  	</form>
 				</div>
 				<div  id ="del" style="margin: 40px 0 0 0; display: none;">
-					<form action="/customer/accountManagement/0">
+					<form action="/customer/accountManagement/0" method="post">
 						<h2>Delete an Account</h2>
 						<hr class="divider"/>
 						<div class="row">
 							<div class="col">
 								<select name="account" style="display: block; margin: 20px auto;">
 							  		<c:forEach items="${accountList}" var="aList">
-							  			<option value="${aList }">${aList}</option>
+							  			<option value="${aList.acc_id}">${aList.acc_id}</option>
 							  		</c:forEach>
 							  	</select>
 							</div>
