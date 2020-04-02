@@ -59,8 +59,8 @@ public class AccountController {
 	// customer details
 	@RequestMapping(value= "/customer/Account", method = RequestMethod.GET)	
 	public ModelAndView getAccount(ModelAndView model, HttpServletRequest request) throws IOException{
-
-	    List<Account> accounts = accountDAO.getAccountDetails((int)request.getSession().getAttribute("cust_id"));
+		int cust_id = (Integer) request.getSession().getAttribute("cust_id");
+	    List<Account> accounts = accountDAO.getAccountDetails(cust_id);
 	   
 	    model.addObject("accountList", accounts);
 	    model.setViewName("customerAccount");	 	    	    
@@ -140,7 +140,7 @@ public class AccountController {
 		String msg = "";
 		int fromAccountNumber = Integer.parseInt(request.getParameter("from_acc"));
 		int toAccountNumber = Integer.parseInt(request.getParameter("to_acc"));
-		double amount = Double.parseDouble(request.getParameter("amount"));
+		double amount = Double.parseDouble(request.getParameter("transferAmount"));
 		// TODO data base has this field as character either change the database or the logic
 		int isCritical;
 		if(amount > 1000) {
