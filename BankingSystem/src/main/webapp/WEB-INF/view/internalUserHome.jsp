@@ -107,6 +107,7 @@
 	<body>
 		<div id="container">
 			<h1>Hello internal user - ${name}</h1>
+			
 			<ul class="nav nav-tabs">
 			  <li class="active" id="pr" onclick="change(this)"><a href="#">Profile</a></li>
 			  <li id="va" onclick="change(this)"><a href="#">View/Authorize Transactions</a></li>

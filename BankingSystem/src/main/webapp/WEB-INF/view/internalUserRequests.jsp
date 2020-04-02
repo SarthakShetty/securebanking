@@ -87,6 +87,7 @@
 			<div id="log">
 				
 				<div id="listDiv" class="table-wrapper-scroll-y my-custom-scrollbar">
+					<form action="/internalUser/authorizeEmployeeRequests/${tList.req_id}" method="post">
 					<table class="table table-bordered mb-0">
 						<thead>
 						
@@ -115,16 +116,22 @@
 						  		<td>
 						  			${tList.amount}
 						  		</td>
-						  		<td><input type="radio" name="options"></td>
+						  		<td>
+						  			<label>
+							    		<input type="radio" name="${transaction_id}" id="treq" autocomplete="off" value="accept" checked> Accept
+								  	</label>
+								  	<label>
+								    	<input type="radio" name="${transaction_id }" id="treq" autocomplete="off" value="decline"> Decline
+								  	</label>
+						  		</td>
+						  		<td>
+						  			<input style="display: block; margin: auto;" type="submit" class="btn btn-info btn-md" value="Authorize"/>
+						  		</td>
 						  	</tr>
 						  </c:forEach>
 						</tbody>
 					</table>
-					<div style="text-align: center !important; margin: 20px 0 0 0;">
-						<button class="btn btn-info btn-md" id="auth" onclick="/internalUser/authorizeEmployeeRequests/"+${tList.req_id} disabled>Authorize</button>
-						<button class="btn btn-info btn-md" id="decline" disabled>Decline</button>
-					</div>
-					
+					</form>
 				</div>
 			</div>
 			 

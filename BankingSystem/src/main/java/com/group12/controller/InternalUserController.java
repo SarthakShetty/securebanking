@@ -101,6 +101,8 @@ public class InternalUserController {
 		if(requestsOfCustomer != null) {
 		model.addObject("list",requestsOfCustomer);
 		}
+//		List<String> l = new ArrayList<String>();
+//		l.add("bloop");
 		model.setViewName("internalUserRequests");
 		return model;
    }
@@ -192,17 +194,17 @@ public class InternalUserController {
    }
 	
 	@RequestMapping(value = "/internalUser/authorizeEmployeeRequests/{req_id}", method = RequestMethod.POST)
-	public ModelAndView authorizeInternalUserRequests(ModelAndView model, HttpServletRequest request) {
+	public RedirectView authorizeInternalUserRequests(RedirectView model, HttpServletRequest request) {
 		if(request.getSession().getAttribute("role") == null){
-			model = new ModelAndView("redirect:/");
+			model = new RedirectView("/");
 			return model;
 		}
 		
-		model = new ModelAndView("redirect:/internalUser/Requests");
+		model = new RedirectView("redirect:/internalUser/Requests");
 		return model;
 		/*
 		 * Need to be able to authorize employee request and erase it from the requests
-		 * then return the list of requests and a message saying request authorized
+		 * and return a message saying request authorized
 		 */
 		//model.setViewName("internalUserAccountManagement");
 		//return model;

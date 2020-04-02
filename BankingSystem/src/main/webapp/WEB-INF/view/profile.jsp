@@ -143,7 +143,7 @@
 		<div id="container">
 			<h1>Profile</h1>
 			<hr class="divider"/>
-			<form action="/changeProfile">
+			<form action="/customer/changeProfile">
 			<div id="profile">
 				<div id="editInfo">
 					<div class="form-group row">
@@ -166,15 +166,9 @@
 				    </div>
 				  </div>
 				  <div class="form-group row">
-				    <label for="phone" class="col-sm-5 col-form-label">Password:</label>
+				    <label for="phone" class="col-sm-5 col-form-label">New Password:</label>
 				    <div class="col-sm-7">
 				      <input type="password"  class="form-control" name="password" id="phone">
-				    </div>
-				    </div>
-				    <div class="form-group row">
-				    <label for="phone" class="col-sm-5 col-form-label">Confirm Password:</label>
-				    <div class="col-sm-7">
-				      <input type="password"  class="form-control" name="cPassword" id="phone">
 				    </div>
 				    </div>
 				  <div class="form-group row">

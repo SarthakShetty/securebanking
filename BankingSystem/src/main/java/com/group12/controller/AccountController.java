@@ -68,7 +68,7 @@ public class AccountController {
 	}
 	
 	// credit and debit
-	@RequestMapping(value ="/customer/creditOrDebit", method = RequestMethod.POST)
+	@RequestMapping(value ="/customer/creditOrDebit", method = {RequestMethod.GET, RequestMethod.POST})
 	public RedirectView customerCreditOrDebit(RedirectView model, HttpServletRequest request, @RequestParam("account") String accountNum,
 			@RequestParam("transferAmount") String transferAmount, @RequestParam("type_request") String type_request, RedirectAttributes attr) {
 		// TODO the assumptions that the UI is doing the checks for the valid amount
@@ -81,7 +81,7 @@ public class AccountController {
 			attr.addFlashAttribute("error_msg", "Please enter valid characters in the amount. ");
 			return model;
 		}
-		int cust_id = Integer.parseInt(request.getParameter("cust_id"));
+		int cust_id = (Integer)request.getSession().getAttribute("cust_id");
 		int accountNumber = Integer.parseInt(accountNum);
 		double amount = Double.parseDouble(transferAmount);
 		String typeOftransfer  = type_request;
@@ -156,7 +156,7 @@ public class AccountController {
 		 * Since this is for transferring between the same accounts we can just put transfer.	
 		 */
 		String typeOftransfer  = "transfer";//request.getParameter("type_transfer");
-		Request  customerRequest = createRequest(amount, fromAccountNumber, toAccountNumber, typeOftransfer);
+		Request  customerRequest = createRequest((int)request.getSession().getAttribute("cust_id"),amount, fromAccountNumber, toAccountNumber, typeOftransfer);
 		accountDAO.transferFunds_create_request(customerRequest);
 		// TODO we need to change the status from char since it is more readable for users to have success
 		// TODO we need to add object to the model depending upon response
@@ -174,59 +174,83 @@ public class AccountController {
 	/*
 	 * Need to check for the email or phone radio button then check the field of the correlating one
 	 */
-	@RequestMapping(value ="/customer/transferFundsEmailPhone", method = RequestMethod.POST)
-	public RedirectView customerTransferFundsEmailOrPhone(RedirectView model, HttpServletRequest request, @RequestParam("peAmount") String transferAmount,
-			@RequestParam("from_accP") String from, @RequestParam("byPhone") String phoneCheck, @RequestParam("byEmail") String emailCheck, 
-			@RequestParam("phoneNumber") String phoneNum, @RequestParam("emailAddress") String emailAddress, @RequestParam("request1") String type_request,
+	@RequestMapping(value = "/customer/transferFundsEmailPhone", method = RequestMethod.POST)
+	public RedirectView customerTransferFundsEmailOrPhone(RedirectView model, HttpServletRequest request,
 			RedirectAttributes attr) {
-		
+
 		model = new RedirectView("/customer/transferEmailPhone");
-		if(!transferAmount.matches("^[0-9]+$")){
+
+		String transferAmount = request.getParameter("peAmount");
+		String from_accP = request.getParameter("from_accP");
+
+		if (!transferAmount.matches("^[0-9]+$")) {
 			attr.addFlashAttribute("error_msg", "Please enter valid characters for the amount.");
 			return model;
 		}
-		else if(!emailAddress.matches("^[a-zA-Z0-9@.]+$") || !phoneNum.matches("^[-0-9]+$")){
-			attr.addFlashAttribute("error_msg", "Please enter valid characters for the email address/phone number.");
+
+		String type = request.getParameter("type");
+		int cust_id = -1;
+		if ("phone".equals(type)) {
+			String phoneNum = request.getParameter("phoneNumber");
+			if (!phoneNum.matches("^[-0-9]+$")) {
+				attr.addFlashAttribute("error_msg", "Please enter valid characters for the phone number.");
+				return model;
+			}
+
+			try {
+				cust_id = customerDAO.getCutomerIdFromMobile(phoneNum);
+			} catch (Exception ex) {
+				attr.addFlashAttribute("error_msg", "Customer Is Not a Valid Customer.");
+				return model;
+			}
+
+		} else if ("email".equals(type)) {
+			String emailAddress = request.getParameter("emailAddress");
+			if (!emailAddress.matches("^[a-zA-Z0-9@.]+$")) {
+				attr.addFlashAttribute("error_msg", "Please enter valid characters for the email address.");
+				return model;
+			}
+			try {
+				cust_id = customerDAO.getCutomerIdFromEmail(emailAddress);
+			} catch (Exception ex) {
+				attr.addFlashAttribute("error_msg", "Customer Is Not a Valid Customer.");
+				return model;
+			}
+
+		}
+
+		if (cust_id == -1) {
+			attr.addFlashAttribute("error_msg", "Customer Is Not a Valid Customer.");
+			return model;
+
+		}
+
+		return createRequestForEmailAndMobileTransfer(model, request, attr, transferAmount, from_accP, cust_id);
+
+	}
+
+	private RedirectView createRequestForEmailAndMobileTransfer(RedirectView model, HttpServletRequest request,
+			RedirectAttributes attr, String transferAmount, String from_accP, int cust_id) {
+		List<Account> account = accountDAO.getAccountDetails(cust_id);
+		if(account.size()==0) {
+			attr.addFlashAttribute("error_msg", "No Valid Banking is Associated with the given Deatils.");
 			return model;
 		}
 		
-		if(phoneCheck != null && emailCheck != null){
-			/*
-			 * check for account based on phoneNum and emailAddress
-			 */
-		}
-		else if(phoneCheck == null && emailCheck != null){
-			/*
-			 * check for account based on emailAddress
-			 */
-		}
-		else{
-			/*
-			 * check for account based on phoneNum
-			 */
-		}
-		// TODO the assumptions that the UI is doing the checks for the valid amount
-	    // Invalid amount should not travel through the controller
-		int fromAccountNumber = Integer.parseInt(from);
-		//int toAccountNumber = Integer.parseInt(to);
-		double amount = Double.parseDouble(transferAmount);
-		// TODO data base has this field as character either change the database or the logic
+		int from_Acc_num = Integer.parseInt(from_accP);
+		int To_Acc_num = account.get(0).getAcc_id();
+		double transfer_Amount = Double.parseDouble(transferAmount);
 		int isCritical;
-		if(amount > 1000) {
+		if (transfer_Amount > 1000) {
 			isCritical = 1;
-		} else { 
-			// TODO revist the logic
-			// DO we need customer approval here I dont think so 
+		} else {
 			isCritical = 0;
 		}
-			
-		String typeOftransfer  = type_request;
-		//Request  customerRequest = createRequest(amount, fromAccountNumber, toAccountNumber, typeOftransfer);
-		//accountDAO.transferFunds_create_request(customerRequest);
-		// TODO we need to change the status from char since it is more readable for users to have success
-		// TODO we need to add object to the model depending upon response
-//			String message = accountDAO.transferFundsFromAcc(fromAccountNumber, toAccountNumber, amount, typeOftransfer);
-//			model.addObject("message",message);
+		
+		Request customerRequest = createRequest((int) request.getSession().getAttribute("cust_id"), transfer_Amount,
+				from_Acc_num, To_Acc_num, Constants.TRANSACTION_TYPE_TRANSFER);
+		customerRequest.setIs_critical(isCritical);
+		accountDAO.transferFunds_create_request(customerRequest);
 		return model;
 	}
 	
@@ -234,49 +258,71 @@ public class AccountController {
 	/*
 	 * Have to check the account number first to make sure its an account
 	 */
-	@RequestMapping(value ="/customer/transferFundsOtherAccount", method = RequestMethod.POST)
-	public RedirectView customerTransferFundsToOtherCustomer(RedirectView model, HttpServletRequest request, @RequestParam("accAmount") String transferAmount,
-			@RequestParam("from_accP") String from, @RequestParam("request") String type_request, @RequestParam("accNumber") String to,
+	@RequestMapping(value = "/customer/transferFundsOtherAccount", method = RequestMethod.POST)
+	public RedirectView customerTransferFundsToOtherCustomer(RedirectView model, HttpServletRequest request,
 			RedirectAttributes attr) {
-		
+
+		String transferAmount = request.getParameter("accAmount");
+		String to = request.getParameter("accNumber");
+		String from = request.getParameter("from_acc");
+		String request_type = request.getParameter("request");
+
 		model = new RedirectView("/customer/transferEmailPhone");
-		if(!transferAmount.matches("^[0-9]+$") || !to.matches("^[0-9]+$")){
-			attr.addFlashAttribute("error_msg", "Please enter valid numbers for the amount and account number.");
+		if (!transferAmount.matches("^[0-9]+$")) {
+			attr.addFlashAttribute("error_msg", "Please enter valid numbers for the amount");
 			return model;
 		}
-		// TODO the assumptions that the UI is doing the checks for the valid amount
-	    // Invalid amount should not travel through the controller
+
 		int fromAccountNumber = Integer.parseInt(from);
-		int toAccountNumber = Integer.parseInt(to);
+
 		double amount = Double.parseDouble(transferAmount);
-		// TODO data base has this field as character either change the database or the logic
+	
 		int isCritical;
-		if(amount > 1000) {
+		if (amount > 1000) {
 			isCritical = 1;
-		} else { 
-			// TODO revist the logic
-			// DO we need customer approval here I dont think so 
+		} else {
 			isCritical = 0;
 		}
-			
-		String typeOftransfer  = request.getParameter("type_transfer");
-		Request  customerRequest = createRequest(amount, fromAccountNumber, toAccountNumber, typeOftransfer);
-		accountDAO.transferFunds_create_request(customerRequest);
-		// TODO we need to change the status from char since it is more readable for users to have success
-		// TODO we need to add object to the model depending upon response
-//			String message = accountDAO.transferFundsFromAcc(fromAccountNumber, toAccountNumber, amount, typeOftransfer);
-//			model.addObject("message",message);
+		if (!accountDAO.checkIfAccIsActive(fromAccountNumber)) {
+			log.info("Firscond");
+			attr.addFlashAttribute("error_msg",
+					"The account from where we are requesting for transfer is not yet Activated");
+			return model;
+		}
 
-		
-		/*
-		 * Need to return a message.
-		 */
-		
+		if (Constants.TRANSACTION_TYPE_TRANSFER.equals(request_type)) {
+			int toAccountNumber = Integer.parseInt(to);
+
+			if (!accountDAO.checkIfAccIsActive(toAccountNumber)) {
+				log.info("second");
+				attr.addFlashAttribute("error_msg", "The account to which we sending amount is not yet Activated");
+				return model;
+			}
+			Request customerRequest = createRequest((int) request.getSession().getAttribute("cust_id"), amount,
+					fromAccountNumber, toAccountNumber, request_type);
+			customerRequest.setIs_critical(isCritical);
+			accountDAO.transferFunds_create_request(customerRequest);
+			return model;
+		}
+		return createRequestForPaymentReqs(fromAccountNumber, to, amount, model, isCritical);
+}
+	
+	
+	private RedirectView createRequestForPaymentReqs(int fromAccountNumber, String to, double amount,
+			RedirectView model, int isCritical) {
+
+		Request request = new Request();
+		int custId = customerDAO.getCustomerId(to);
+		request.setAmount(amount);
+		request.setCust_id(custId);
+		request.setSecond_acc_num(fromAccountNumber);
+		request.setIs_critical(isCritical);
+		request.setType(Constants.TANSACTION_TYPE_REQUEST);
+		accountDAO.transferFunds_create_request(request);
 		return model;
+
 	}
-	
-	
-	
+
 	@RequestMapping(value ="/customer/accountManagement/{flag}", method = RequestMethod.POST)
 	public RedirectView accountManagement(RedirectView model, HttpServletRequest request, @PathVariable("flag") String flag, RedirectAttributes attr) {
 		// This helps to track the customer for which we need either create account or delete account
@@ -332,26 +378,28 @@ public class AccountController {
 	}
 	
 	@RequestMapping(value ="/customer/authorizeRequest", method = RequestMethod.POST)
-	public ModelAndView acceptRequest(ModelAndView model, HttpServletRequest request, @ModelAttribute("auth") String accOrdec) {
+	public RedirectView acceptRequest(RedirectView model, HttpServletRequest request, @ModelAttribute("auth") String accOrdec) {
 		/*
 		 * Need to be able to allow customer to accept/decline a transfer request from another customer
 		 * and take it out of the request list and take money from account. Then return the list of requests
 		 * and a message based on accept/decline.
 		 */
-		model.setViewName("makePayment");
+		model = new RedirectView("/customer/payment");
 		return model;
 	}
 	
 	
 	
-	@RequestMapping(value ="/customer/donwloadBankingStatements", method = RequestMethod.POST)
-	public ModelAndView downloadStatements(ModelAndView model, HttpServletRequest request, @ModelAttribute("auth") String accOrdec) {
+	
+	
+	@RequestMapping(value ="/customer/downloadBankingStatements", method = RequestMethod.POST)
+	public RedirectView downloadStatements(RedirectView model, HttpServletRequest request, @ModelAttribute("auth") String accOrdec) {
 		/*
 		 * Need to allow customer to download their banking statements.
 		 * Can return a model back to the accountManagement page
 		 * model = new ModelAndView("/customer/accountMangement");
 		 */
-		
+		model = new RedirectView("/customer/accountManagement");
 		return model;
 	}
 	
@@ -363,9 +411,9 @@ public class AccountController {
 			model = new ModelAndView("redirect:/");
 			return model;
 		}
-//		List<Account> accounts = accountDAO.getAccountDetails((int) request.getSession().getAttribute("cust_id"));
-		List<String> accounts = new ArrayList<String>();
-		accounts.add("blah");
+		List<Account> accounts = accountDAO.getAccountDetails((int) request.getSession().getAttribute("cust_id"));
+//		List<String> accounts = new ArrayList<String>();
+//		accounts.add("blah");
 		model.addObject("accounts", accounts);
 	    model.setViewName("transferMakePayment");	 	    	    
 		return model;
@@ -378,8 +426,10 @@ public class AccountController {
 			model = new ModelAndView("redirect:/");
 			return model;
 		}
-//		List<Account> accounts = accountDAO.getAccountDetails((int) request.getSession().getAttribute("cust_id"));
-//		model.addObject("accountList", accounts);
+		List<Account> accounts = accountDAO.getAccountDetails((int) request.getSession().getAttribute("cust_id"));
+//		List<String> accounts = new ArrayList<String>();
+//		accounts.add("boo");
+		model.addObject("accountList", accounts);
 		model.setViewName("transferBetweenAccounts");
 		return model;
 	}
@@ -391,17 +441,10 @@ public class AccountController {
 			model = new ModelAndView("redirect:/");
 			return model;
 		}
-//		String userName = request.getParameter("user_name");
-//		// Get the details of the customer using the userName
-//	    Customer customer = customerDAO.getCustomerProfileDetails(userName);
-//	    // Get the accounts from customer id 
-//	    List<Account> accounts = accountDAO.getAccountDetails(customer.getCust_id());
-//	    // set the session id with the customer id
-//	    model.addObject("getAccount", accounts);
-		
-		List<String> s = new ArrayList<String>();
-		s.add("hele");
-		model.addObject("accounts", s);
+
+		List<Account> accounts = accountDAO.getAccountDetails((int) request.getSession().getAttribute("cust_id"));
+
+		model.addObject("accounts", accounts);
 	    model.setViewName("creditDebit");	 	    	    
 		return model;
 	}
@@ -416,7 +459,9 @@ public class AccountController {
 		/*
 		 * Need to return list of requests for a specific customer
 		 */
-		
+		List<String> l = new ArrayList<String>();
+		l.add("fwof");
+		model.addObject("list", l);
 	    model.setViewName("makePayment");	 	    	    
 		return model;
 	}
@@ -474,8 +519,9 @@ public class AccountController {
 	}
 	
 
-	private Request createRequest(double amount, int fromAccountNumber, int toAccountNumber, String typeOftransfer) {
+	private Request createRequest(int cust_id,double amount, int fromAccountNumber, int toAccountNumber, String typeOftransfer) {
 		Request customerRequest = new Request();
+		customerRequest.setCust_id(cust_id);
 		customerRequest.setAmount(amount);
 		customerRequest.setFirst_acc_num(fromAccountNumber);
 		customerRequest.setSecond_acc_num(toAccountNumber);

@@ -75,38 +75,30 @@
 		<div id="container">
 			<ul class="nav nav-tabs">
 			  <li class="nav-item active" id="pr" onclick="change(this)">
-			    <a class="nav-link" href="#" style="color: white;">Transfer by Account</a>
+			    <a class="nav-link" href="#" style="color: white;">Transfer by Account/Request By User</a>
 			  </li>
 			  <li class="nav-item" id="va" onclick="change(this)">
-			    <a class="nav-link" style="color: white;" href="#">Request by User</a>
+			    <a class="nav-link" style="color: white;" href="#">Transfer/Request by Email/Phone</a>
 			  </li>
 			</ul>
 			
 			<div id="transfer">
+				<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
+				<p style="margin: 20px 0 0 0;"><font color="green">${msg}</font></p>
 				<div id="accTransfer">
-					<form action="/customer/transferFundsOtherAccount">
+					<form action="/customer/transferFundsOtherAccount" method="post">
 						<div class="row">
 							<div class="col">
-								<h3>From Account</h3>
+								<h3> My Account</h3>
 								<select name="from_acc">
 									<c:forEach items="${accounts}" var="aList">
-										<%-- <option>${aList.acc_id}(Balance : ${aList.curr_bal})</option> --%>
-										<option>${aList }</option>
+										<option>${aList.acc_id}(Balance : ${aList.curr_bal})</option> 
+										
 									</c:forEach>
 								</select>
 							</div>
 							<div class="col">
-								<h3>Type of Request</h3>
-								<label>
-							    	<input type="radio" name="request" id="req" autocomplete="off" value="transfer" checked> Transfer
-							  	</label>
-							  	<label>
-							    	<input type="radio" name="request" id="req" autocomplete="off" value="request"> Request Payment
-	
-							  	</label>
-							</div>
-							<div class="col">
-								<h3>Transfer Via Account</h3>
+								<h3>Transfer to Account</h3>
 							  	<input type="text" placeholder="Account Number" name="accNumber" id="accNum" style="display: block;"/>
 	
 							  	<div id="errorTo" style="display: none;">
@@ -115,7 +107,7 @@
 	
 							</div>
 							<div class="col">
-								<h3>Request Via Username</h3>
+								<h3>Request from User</h3>
 							  	<input type="text" placeholder="Username" name="accUsername" id="accUser" style="display: block;"/>
 	
 							  	<div id="errorUser" style="display: none;">
@@ -135,8 +127,7 @@
 						<div style="text-align: center;">
 							<input  type="button" value="Request" class="btn btn-md btn-info" id="accButton" onclick="checkModal(this)" style="margin: 25px 0 0 0;">
 							<input  type="submit" id="accButtonH"  style="display: none;">
-							<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
-							<p style="margin: 20px 0 0 0;"><font color="green">${msg}</font></p>
+							
 
 						</div>
 						<div id="errorEmpty" style="display: none;">
@@ -149,13 +140,13 @@
 					
 				</div>
 				<div id="emailphonetransfer" style="display: none;">
-					<form action="/customer/transferFundsEmailPhone">
+					<form action="/customer/transferFundsEmailPhone" method="post">
 						<div class="row">
 							<div class="col">
 								<h3>From Account</h3>
 								<select name="from_accP">
 									<c:forEach items="${accounts}" var="aList">
-										<%-- <option>${aList.acc_id}(Balance : ${aList.curr_bal})</option> --%>
+										<option>${aList.acc_id}(Balance : ${aList.curr_bal})</option>
 										<option>${aList }</option>
 									</c:forEach>
 								</select>
@@ -205,8 +196,7 @@
 							<input  type="button" value="Request" class="btn btn-md btn-info" id="peButton" onclick="checkModal(this)" style="margin: 25px 0 0 0;">
 							<input  type="submit" id="peButtonH"  style="display: none;">
 
-							<p style="margin: 20px 0 0 0;"><font color="red">${error_msg1}</font></p>
-							<p style="margin: 20px 0 0 0;"><font color="green">${msg1}</font></p>
+							
 						</div>
 					</form>
 			</div>
@@ -278,6 +268,7 @@
 			document.getElementById(mDiv).style.display = 'block';
 			
 		}
+		
 		document.getElementById('phone').onchange = function() {
 		    document.getElementById('pn').disabled = !this.checked;
 		    document.getElementById('pn').focus();
@@ -289,10 +280,10 @@
 		
 		function checkModal(el){
 			if(el.id == "accButton"){
-				if(document.getElementById("req").value == "transfer"){
-					if(document.getElementById("accNum").value.length == 0 || document.getElementById("accNum").value < 0){
+				
+					if((document.getElementById("accNum").value.length == 0 || document.getElementById("accNum").value < 0) && document.getElementById("accUser").value.length == 0){
 						document.getElementById("errorEmpty").style.display = 'block';
-						document.getElementById("errorEmpty").innerText = "Please enter a valid Account number";
+						document.getElementById("errorEmpty").innerText = "Please enter a valid account number or username";
 					}
 					else if(document.getElementById("accAmount").value > 1000){
 						document.getElementById("hiddenBut2").click();
@@ -300,38 +291,29 @@
 					else{
 						document.getElementById("accButtonH").click();
 					}
-				}
-				else{
-					if(document.getElementById("accUser").value.length == 0){
-						document.getElementById("errorUser").style.display = 'block';
-						document.getElementById("errorUser").innerText = "Please enter a valid username.";
-					}
-					else if(document.getElementById("accAmount").value > 1000){
-						document.getElementById("hiddenBut2").click();
-					}
-					else{
-						document.getElementById("accButtonH").click();
-					}
-				}
+				
+				
 				
 			}
 			else if(el.id == "peButton"){
-				if(!document.getElementById("byPhone").checked && !document.getElementById("byEmail").checked){
+				console.log(el);
+				if(!document.getElementById("phone").checked && !document.getElementById("email").checked){
 					document.getElementById("error3").style.display = 'block';
 				}
-				else if(document.getElementById("byPhone").checked){
-					if(document.getElementById("emailAddress").value.length == 0){
+				else if(document.getElementById("phone").checked){
+					if(document.getElementById("pn").value.length == 0){
 						document.getElementById("error2").style.display = 'block';
 						
 					}
 					
 				}
-				else if(document.getElementById("byEmail").checked){
-					if(document.getElementById("emailAddress").value.length == 0){
+				else if(document.getElementById("email").checked){
+					if(document.getElementById("ea").value.length == 0){
 						document.getElementById("error2").style.display = 'block';
 						
 					}
 				}
+				
 				if(document.getElementById("peAmount").value < 0 || document.getElementById("peAmount").value.length == 0){
 					document.getElementById("error1").style.display = 'block';
 					
@@ -346,7 +328,7 @@
 		}
 		
 		$('#myModal3').on('hidden.bs.modal', function () {
-			document.getElementById("tButtonH").click();
+			document.getElementById("accButtonH").click();
 		});
 		
 		$('#myModal4').on('hidden.bs.modal', function () {

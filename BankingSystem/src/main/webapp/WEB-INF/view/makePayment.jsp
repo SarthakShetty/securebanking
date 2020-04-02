@@ -172,51 +172,53 @@
 		<div id="container">
 			<h1>Payment Requests</h1>
 			<hr class="divider" />
-			<form action="">
-				<div id="payment" class="row">
-					<div class='col-4'>
-						<h2>Requested From</h2>
-						<c:forEach items="${requestListNames}" var="nList">
-							<label>${nList}</label>
-						</c:forEach>
-					</div>
-					<div class='col-3'>
-						<h2>Amount</h2>
-						<c:forEach items="${requestListAmount}" var="aList">
-							<label>${aList}</label>
-						</c:forEach>
-					</div>
-					<div class="col-5">
-						<h2>Account to Pay From</h2>
-						<c:forEach items="${requestListNames}" var="x">
-							<select>
-								<c:forEach items="${accountList}" var="aList">
-									<option>${aList}</option>
-								</c:forEach>
-							</select>
-						</c:forEach>
-					</div>
-					<div class="col" style="margin: 0 0 0 0 !important;">
-						<c:forEach items="${requestListNames}" var="x">
-							<input id="checkbox" type="radio" name="payment_choice" value="request_id">
-						</c:forEach>
-					</div>
+			<form action="/customer/authorizeRequest">
+				<div id="payment">
+					
+					<div id="listDiv" class="table-wrapper-scroll-y my-custom-scrollbar">
+					<table class="table table-bordered mb-0">
+						
+						<tbody>
+						<tr>
+						 <td> <b>Requested From</b></td>
+						  <td><b>Amount Requested</b></td>
+						  <td><b>Account to Pay From</b></td>
+						  <td></td>
+						  <td></td>
+						  </tr>
+						  <c:forEach items="${list}" var="tList">
+						  	<tr>
+						  	   <td>
+						  			${tList.cust_id}
+						  		</td>
+						  		<td>
+						  			${tList.first_acc_num}
+						  		</td>
+						  		<td>
+						  		  	${tList.second_acc_num}
+						  	    </td>
+						  		<td>
+						  			<label>
+							    		<input type="radio" name="auth" id="treq" autocomplete="off" value="accept" checked> Accept
+								  	</label>
+								  	<label>
+								    	<input type="radio" name="auth" id="treq" autocomplete="off" value="decline"> Decline
+								  	</label>
+						  		</td>
+						  		<td>
+						  			<input style="display: block; margin: auto;" type="submit" class="btn btn-info btn-md" value="Authorize"/>
+						  		</td>
+						  	</tr>
+						  </c:forEach>
+						</tbody>
+					</table>
+					
 				</div>
-				<div style="text-align: center; margin: 20px 0 0 0;">
-					<label>
-					    	<input type="radio" name="auth"  value="accept" autocomplete="off"> Accept
-					  	</label>
-					  	<label>
-					    	<input type="radio" name="auth"  value="decline" autocomplete="off"> Decline
-					  	</label>
-				</div>
-				<div style="text-align: center; margin: 20px 0 0 0;">
-					<input type="submit" class="btn btn-info btn-md" id="sub" value="Submit" disabled>
 				</div>
 			</form>
 		</div>
 	<script>
-	$("#checkbox").change(function () {$("#sub").prop("disabled", false);});
+	
 	</script>
 	</body>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

@@ -88,33 +88,54 @@
 			<div id="transactions">
 				
 				<div id="listDiv" class="table-wrapper-scroll-y my-custom-scrollbar">
+					<div id="listDiv" class="table-wrapper-scroll-y my-custom-scrollbar">
 					<table class="table table-bordered mb-0">
-						<thead>
-						  <tr>
-						    <th scope="col">Pending Transactions</th>
-						    <th scope="col"></th>
-						  </tr>
-						</thead>
+						
 						<tbody>
+						<tr>
+						 <td> <b>Username</b></td>
+						  <td><b>From Account</b></td>
+						  <td><b>To Account</b></td>
+						  <td><b>Request Type</b></td>
+						  <td><b>Amount</b></td>
+						  <td></td>
+						  <td></td>
+						  </tr>
 						  <c:forEach items="${list}" var="tList">
 						  	<tr>
-						  		<td>
-						  			${tList}
+						  	   <td>
+						  			${username}
 						  		</td>
-						  		<td><input type="radio" name="options"></td>
+						  		<td>
+						  			${fromAccount}
+						  		</td>
+						  		<td>
+						  		  	${toAcc}
+						  	    </td>
+						  	    <td>${requestType }</td>
+						  	    <td>${amount }</td>
+						  		<td>
+						  			<label>
+							    		<input type="radio" name="${transaction_id}" id="treq" autocomplete="off" value="accept" checked> Accept
+								  	</label>
+								  	<label>
+								    	<input type="radio" name="${transaction_id }" id="treq" autocomplete="off" value="decline"> Decline
+								  	</label>
+						  		</td>
+						  		<td>
+						  			<input style="display: block; margin: auto;" type="submit" class="btn btn-info btn-md" value="Authorize"/>
+						  		</td>
 						  	</tr>
 						  </c:forEach>
 						</tbody>
 					</table>
+					
 				</div>
-				<div id="authSide">
-					<button class="btn btn-primary btn-md" onclick="window.location.href= '/welcome'" id="auth" disabled>Authorize</button>
 				</div>
 			</div>
 			 
 		</div>
 	<script>
-		$("input:radio").change(function () {$("#auth").prop("disabled", false);});
 	</script>
 	</body>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

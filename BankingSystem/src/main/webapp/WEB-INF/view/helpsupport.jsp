@@ -59,10 +59,22 @@
 			<h1>Schedule an Appointment</h1>
 			<hr class="divider" />
 			<div id="helpsup" style="text-align: center;">
-				<form action="/customer/schedule">
-				  <h3>Select a date </h3>
-				  <input type="date" id="dateS" name="dates" value="2020-04-10" style="display: block; margin: 10px auto">
-				  <input type="submit" class="btn btn-info btn-md" id="sub">
+				<form action="/customer/schedule" id="sch">
+					<div class="row">
+						<div class="col">
+							<h3>Select a date </h3>
+							<input type="date" id="dateS" name="dates" value="2020-04-10" style="display: block; margin: 10px auto">
+							
+						</div>
+						<div class="col">
+							<label for="ta">What is the reason for your appointment?
+								<textarea style="display: block; width: 100%;" id="ta" maxlength="100" wrap="hard" form="sch" required>
+								</textarea>
+							</label>
+						</div>
+						
+					</div>
+				  	<input type="submit" class="btn btn-info btn-md" id="sub" style="margin: 20px 0 0 0;">
 				</form>
 				
 			</div>

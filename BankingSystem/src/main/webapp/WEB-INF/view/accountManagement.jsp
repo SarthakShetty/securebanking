@@ -180,36 +180,60 @@
 			out.print(session.getAttribute("user_id"));
 		%> --%>
 		<div id="container">
-			<h1>Account Management</h1>
-			<hr class="divider" />
+			<ul class="nav nav-tabs">
+			  <li class="nav-item active" id="pr" onclick="change(this)">
+			    <a class="nav-link" href="#" style="color: white;">Banking Statements</a>
+			  </li>
+			  <li class="nav-item" id="va" onclick="change(this)">
+			    <a class="nav-link" style="color: white;" href="#">Delete an Account</a>
+			  </li>
+			  <li class="nav-item" id="dp" onclick="change(this)">
+			    <a class="nav-link" style="color: white;" href="#">Create a new Account</a>
+			  </li>
+			</ul>
+			
 			<div id="accMan" style="text-align: center;">
-				<div style="margin: 20px 0 0 0; display: block;">
-					<form action="">
+				<div id="bank" style="margin: 20px 0 0 0; display: block;">
+					<form action="/customer/downloadBankingStatements">
 						<h2>Banking Statements</h2>
 						<hr class="divider"/>
+						<div class="row">
+							<div class="col">
+								<label for="t">How many months do you want statements from? 
+									<select name="time" id="t" style="display: block; margin: 20px auto;">
+							  			<option value="1">1 month</option>
+							  			<option value="6">6 months</option>
+							  			<option value="12">12 months</option>
+								  	</select>
+								</label>
+							</div>
+						</div>
 					  	<input type="submit" class="btn btn-info btn-md" value="Download Banking Statements"/>
 				  	</form>
 				</div>
-				<div style="margin: 40px 0 0 0; display: block;">
+				<div  id ="del" style="margin: 40px 0 0 0; display: none;">
 					<form action="/customer/accountManagement/0">
 						<h2>Delete an Account</h2>
 						<hr class="divider"/>
-					  	<select name="account" style="display: block; margin: 20px auto;">
-					  		<c:forEach items="${accountList}" var="aList">
-					  			<option>${aList}</option>
-					  		</c:forEach>
-					  	</select>
+						<div class="row">
+							<div class="col">
+								<select name="account" style="display: block; margin: 20px auto;">
+							  		<c:forEach items="${accountList}" var="aList">
+							  			<option value="${aList }">${aList}</option>
+							  		</c:forEach>
+							  	</select>
+							</div>
+						</div>
+					  	
 					  	<input type="submit" class="btn btn-info btn-md" value="Submit Request"/>
 				  	</form>
 				</div>
-				<div style="margin: 40px 0 0 0; display: block;">
+				<div id="create" style="margin: 40px 0 0 0; display: none;">
 					<h2>Create New Account</h2>
 					<hr class="divider">
-				</div>
-				
-				<div id="form">
+					<div id="form">
 					
-					<form action="/customer/accountManagement/1" method="POST">
+					<form action="/customer/accountManagement/1" method="post">
 					  <div class="form-group row">
 					    <label for="intialdeposit" class="col-sm-5 col-form-label">Initial deposit:</label>
 					    <div class="col-sm-7">
@@ -236,10 +260,37 @@
 					  </div>
 					</form>
 				</div>
+				</div>
+				
+				
 			</div>
 		</div>
 	<script>
-		
+		var active = "pr";
+		var mDiv = "bank";
+		function change(el){
+			el.className = 'nav-item active';
+			document.getElementById(active).className = 'nav-item';
+			document.getElementById(mDiv).style.display = 'none';
+	
+			active = el.id;
+			
+			switch(active){
+				case 'pr':
+					mDiv = "bank";
+					break;
+				case 'va':
+					mDiv = "del";
+					break;
+				case 'dp':
+					mDiv = "create";
+					break;
+			}
+			
+	
+			document.getElementById(mDiv).style.display = 'block';
+			
+		}
 	</script>
 	</body>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

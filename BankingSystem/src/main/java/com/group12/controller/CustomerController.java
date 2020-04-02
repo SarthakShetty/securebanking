@@ -49,18 +49,18 @@ public class CustomerController {
 		}
 		
 		String userName = (String)request.getSession().getAttribute("user_id");
-//		Customer customer = customerDAO.getCustomerProfileDetails(userName);
-//		model.addObject("Firstname", customer.getFirstName());
-//		model.addObject("Lastname", customer.getLastName());
-//		model.addObject("phone", customer.getMobile());
-//		model.addObject("address", customer.getAddress());
-//		model.addObject("city", customer.getCity());
-//		model.addObject("state", customer.getState());
-//		model.addObject("zip", customer.getZipCode());
-//		model.addObject("age", customer.getAge());
-//		model.addObject("email", customer.getEmail());
-//		model.addObject("username", customer.getUsername());
-//		model.addObject("accountList",accountDAO.getAccountDetails(customer.getCust_id()));
+		Customer customer = customerDAO.getCustomerProfileDetails(userName);
+		model.addObject("Firstname", customer.getFirstName());
+		model.addObject("Lastname", customer.getLastName());
+		model.addObject("phone", customer.getMobile());
+		model.addObject("address", customer.getAddress());
+		model.addObject("city", customer.getCity());
+		model.addObject("state", customer.getState());
+		model.addObject("zip", customer.getZipCode());
+		model.addObject("age", customer.getAge());
+		model.addObject("email", customer.getEmail());
+		model.addObject("username", customer.getUsername());
+		model.addObject("accountList",accountDAO.getAccountDetails(customer.getCust_id()));
 		model.setViewName("profile");
 		return model;
 	}
@@ -138,17 +138,17 @@ public class CustomerController {
 	}
 	
     /* update the request params and add DAO call to update it */
-	@RequestMapping(value ="/changeProfile", method = RequestMethod.POST)
+	@RequestMapping(value ="/customer/changeProfile", method = RequestMethod.POST)
 	public RedirectView changeProfile(RedirectView model,HttpServletRequest request, 
-			@RequestParam("password") String password, @RequestParam("cPassword") String cPassword, @RequestParam("address") String address,
+			@RequestParam("password") String password, @RequestParam("address") String address,
 			@RequestParam("email") String email, @RequestParam("mobile") String phoneNumber, @RequestParam("age") String age,
 			@RequestParam("city") String city, @RequestParam("zip") String zip, @RequestParam("state") String state, RedirectAttributes attr) {
 		/*
 		 * Need to allow customer to put in a request to change their profile information.
 		 */
 		
-		boolean empty = checkEmptyFields("a", "a", "a", password, cPassword, address, email, phoneNumber, age, city, zip);
-		boolean noMatch = checkMatchFields("a", "a", "a", password, cPassword, address, email, phoneNumber, age, city, zip);
+		boolean empty = checkEmptyFields("a", "a", "a", password, address, email, phoneNumber, age, city, zip);
+		boolean noMatch = checkMatchFields("a", "a", "a", password, address, email, phoneNumber, age, city, zip);
 		
 		// Need to call a DAO method to update the profile information
 		model = new RedirectView("/customer/profile");
@@ -167,9 +167,9 @@ public class CustomerController {
 		return model;
 	}
 	
-	private boolean checkEmptyFields(String fName, String lName, String uName, String password, String cPassword,
+	private boolean checkEmptyFields(String fName, String lName, String uName, String password,
 			String address, String email, String phoneNumber, String age, String city, String zip){
-		if(fName.isEmpty() || lName.isEmpty() || uName.isEmpty() || password.isEmpty() || cPassword.isEmpty() || address.isEmpty()
+		if(fName.isEmpty() || lName.isEmpty() || uName.isEmpty() || password.isEmpty() ||  address.isEmpty()
 				|| email.isEmpty() || phoneNumber.isEmpty() || age.isEmpty() || city.isEmpty() || zip.isEmpty()){
 			return true;
 		}
@@ -177,10 +177,10 @@ public class CustomerController {
 		return false;
 	}
 	
-	private boolean checkMatchFields(String fName, String lName, String uName, String password, String cPassword,
+	private boolean checkMatchFields(String fName, String lName, String uName, String password, 
 			String address, String email, String phoneNumber, String age, String city, String zip){
 		if(!fName.matches("^[a-zA-Z]+$") || !lName.matches("^[a-zA-Z]+$") || !uName.matches("^[a-zA-Z0-9]+$") || !password.matches("^[a-zA-Z0-9]+$") 
-				|| !cPassword.matches("^[a-zA-Z0-9]+$") || !address.matches("^[a-zA-Z0-9# ]+$") || !email.matches("^[a-zA-Z0-9@.]+$") || !phoneNumber.matches("^[-0-9]+$")
+				 || !address.matches("^[a-zA-Z0-9# ]+$") || !email.matches("^[a-zA-Z0-9@.]+$") || !phoneNumber.matches("^[-0-9]+$")
 				|| !age.matches("^[0-9]+$") || !city.matches("^[a-zA-Z]+$") || !zip.matches("^[0-9]+$")){
 			return true;
 		}
