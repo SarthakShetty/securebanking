@@ -146,19 +146,29 @@ public class CustomerController {
 	}
 	
     /* update the request params and add DAO call to update it */
-	@RequestMapping(value ="/customer/changeProfile", method = RequestMethod.POST)
-	public RedirectView changeProfile(RedirectView model,HttpServletRequest request, 
-			@RequestParam("password") String password, @RequestParam("address") String address,
-			@RequestParam("email") String email, @RequestParam("mobile") String phoneNumber, @RequestParam("age") String age,
-			@RequestParam("city") String city, @RequestParam("zip") String zip, @RequestParam("state") String state, RedirectAttributes attr) {
+	@RequestMapping(value ="/customer/changeProfile", method = {RequestMethod.GET, RequestMethod.POST})
+	public RedirectView changeProfile(RedirectView model,HttpServletRequest request, RedirectAttributes attr) {
 		/*
 		 * Need to allow customer to put in a request to change their profile information.
 		 */
+		int cust_id = (Integer)request.getSession().getAttribute("cust_id");
+		String password = request.getParameter("password");
+		String address = request.getParameter("address");
+		String email = request.getParameter("email");
+		String phoneNumber = request.getParameter("mobile");
+		String userName = request.getParameter("username");
+		int age = Integer.parseInt(request.getParameter("age"));
+		String city = request.getParameter("city");
+		String zip = request.getParameter("zip");
+		String state = request.getParameter("state");
 		
-		boolean empty = checkEmptyFields("a", "a", "a", password, address, email, phoneNumber, age, city, zip);
-		boolean noMatch = checkMatchFields("a", "a", "a", password, address, email, phoneNumber, age, city, zip);
 		
+		boolean empty = checkEmptyFields("a", "a", userName, password, address, email, phoneNumber, age, city, zip, state);
+		boolean noMatch = checkMatchFields("a", "a", userName, password, address, email, phoneNumber, age, city, zip, userName, state);
+		
+		customerDAO.updateCustomerData(userName, password, address, email, phoneNumber, age, city, zip, state, cust_id);
 		// Need to call a DAO method to update the profile information
+		
 		model = new RedirectView("/customer/profile");
 		if(empty){
 			
@@ -176,9 +186,9 @@ public class CustomerController {
 	}
 	
 	private boolean checkEmptyFields(String fName, String lName, String uName, String password,
-			String address, String email, String phoneNumber, String age, String city, String zip){
+			String address, String email, String phoneNumber, Integer age, String city, String zip, String state){
 		if(fName.isEmpty() || lName.isEmpty() || uName.isEmpty() || password.isEmpty() ||  address.isEmpty()
-				|| email.isEmpty() || phoneNumber.isEmpty() || age.isEmpty() || city.isEmpty() || zip.isEmpty()){
+				|| email.isEmpty() || phoneNumber.isEmpty() || age > 18 || city.isEmpty() || zip.isEmpty()){
 			return true;
 		}
 		
@@ -186,10 +196,10 @@ public class CustomerController {
 	}
 	
 	private boolean checkMatchFields(String fName, String lName, String uName, String password, 
-			String address, String email, String phoneNumber, String age, String city, String zip){
+			String address, String email, String phoneNumber, Integer age, String city, String zip, String userName, String state){
 		if(!fName.matches("^[a-zA-Z]+$") || !lName.matches("^[a-zA-Z]+$") || !uName.matches("^[a-zA-Z0-9]+$") || !password.matches("^[a-zA-Z0-9]+$") 
 				 || !address.matches("^[a-zA-Z0-9# ]+$") || !email.matches("^[a-zA-Z0-9@.]+$") || !phoneNumber.matches("^[-0-9]+$")
-				|| !age.matches("^[0-9]+$") || !city.matches("^[a-zA-Z]+$") || !zip.matches("^[0-9]+$")){
+				|| age > 18 || !city.matches("^[a-zA-Z]+$") || !zip.matches("^[0-9]+$")){
 			return true;
 		}
 		

@@ -17,13 +17,15 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+
+import com.group12.controller.AccountController;
 import com.group12.models.Customer;
 import com.group12.models.Request;
 import com.group12.utils.Constants;
 
 @Component
 public class CustomerDAO {
-
+	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
@@ -100,6 +102,47 @@ public class CustomerDAO {
 		logger.info("The primary key" + keyHolder.getKey().intValue());
 	}
 
+	
+	public void updateCustomerData(String uName, String password,
+			String address, String email, String phoneNumber, Integer age, String city, String zip, String state, Integer cust_id) {
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		if(!password.isEmpty()) {
+			String update_customer = " update customer set cust_user_id = '" +uName +"',cust_pwd =" +"SHA1('" + password + "')," + "address = '" 
+					+ address +"',email = '"+ email+"',mobile = '" +phoneNumber+ "',age = '" + age + "',city = '" + city + "',zipcode = '" + zip +
+					"',state = '" +state + "'where cust_id = '" + cust_id +"';";
+
+			try {
+
+				jdbcTemplate.update(connection -> {
+					PreparedStatement ps = connection.prepareStatement(update_customer, Statement.RETURN_GENERATED_KEYS);
+					// ps.setString(1, message);
+					return ps;
+				}, keyHolder);
+
+			} catch (DataAccessException ex) {
+				throw new RuntimeException(ex);
+			}
+		} else {
+			String update_customer_no_password = " update customer set cust_user_id = '" + uName + "',address = '" 
+					+ address +"',email = '"+ email + "',mobile = '" + phoneNumber + "',age = '" + age + "',city = '" + city + "',zipcode = '" + zip +
+					"',state = '" +state + "'where cust_id = '" + cust_id +"';";
+
+			try {
+
+				jdbcTemplate.update(connection -> {
+					PreparedStatement ps = connection.prepareStatement(update_customer_no_password, Statement.RETURN_GENERATED_KEYS);
+					// ps.setString(1, message);
+					return ps;
+				}, keyHolder);
+
+			} catch (DataAccessException ex) {
+				throw new RuntimeException(ex);
+			}
+		}
+		
+//		logger.info("The primary key" + keyHolder.getKey().intValue());
+	}
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Customer getCustomerProfileDetails(String userName) {
 
