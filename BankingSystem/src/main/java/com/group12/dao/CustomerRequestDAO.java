@@ -252,11 +252,12 @@ public class CustomerRequestDAO {
 		        + Constants.TRANSACTION_TERMINATED  + "'or status='" + Constants.TRANSACTION_COMPLETED 
 				+ "' )and (type='" + Constants.TRANSACTION_TYPE_CREDIT + "' or type = '" + Constants.TRANSACTION_TYPE_DEBIT
 				+ "'or type = '" + Constants.TRANSACTION_TYPE_TRANSFER + "' or type = '" + Constants.TANSACTION_TYPE_REQUEST
-				+ "') and transaction_date >= '"+ timestamp + "';";
+				+ "') and transaction_date >= '"+ timestamp + "'and cust_id ='" +cust_id + "'and acc_num_1 ='" + acc_num +"';";
 		
 		String excelFilePath = "bankingStatements.xlsx";
 		XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("BankingStatements");
+        writeHeaderLine(sheet);
         
 		try {
 			jdbcTemplate.query(statements, new RowCallbackHandler()  {
@@ -264,19 +265,23 @@ public class CustomerRequestDAO {
 				public void processRow(ResultSet rs) throws SQLException {
 					int rowCount = 1;
 					while(rs.next()) {
-						int acc_no1 = (int) rs.getObject("acc_num_1");
+						Integer acc_no1 = (Integer) rs.getObject("acc_num_1");
 						Integer acc_no2 = (Integer) rs.getObject("acc_num_2");
-						char status = (Character) rs.getObject("status");
+						char status = rs.getObject("status").toString().charAt(0);
 						String type = (String) rs.getObject("type");
 						Double amount = (Double) rs.getObject("amount");
-						Timestamp timestamp = rs.getTimestamp("timestamp");
+						Timestamp timestamp = rs.getTimestamp("transaction_date");
 			            Row row = sheet.createRow(rowCount++);
 			            int columnCount = 0;
 			            Cell cell = row.createCell(columnCount++);
-			            cell.setCellValue(acc_no1);
-			 
+			            if(acc_no1 != null) {
+			            	cell.setCellValue(acc_no1);
+			            }
+			            
 			            cell = row.createCell(columnCount++);
-			            cell.setCellValue(acc_no2);
+			            if(acc_no2 != null) {
+			            	cell.setCellValue(acc_no2);
+			            }
 			 
 			            cell = row.createCell(columnCount++);
 			            cell.setCellValue(status);

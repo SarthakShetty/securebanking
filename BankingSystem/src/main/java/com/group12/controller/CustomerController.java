@@ -155,8 +155,8 @@ public class CustomerController {
 		}
 		
 		// TODO need to send the field from UI
-		int acc_num = Integer.parseInt(request.getParameter("acc_num"));
-//		int acc_num = 10000;
+//		int acc_num = Integer.parseInt(request.getParameter("acc_num"));
+		int acc_num = 10001;
 		int cust_id = (Integer) request.getSession().getAttribute("cust_id");
 		// assuming that the time is given in terms of month, we can add change for year 
 		int time = Integer.parseInt(request.getParameter("time"));
