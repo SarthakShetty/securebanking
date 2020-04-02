@@ -92,8 +92,7 @@
 								<h3> My Account</h3>
 								<select name="from_acc">
 									<c:forEach items="${accounts}" var="aList">
-										<option>${aList.acc_id}(Balance : ${aList.curr_bal})</option> 
-										
+									<option value="${aList.acc_id}">${aList.acc_id}(Balance : ${aList.curr_bal})</option> 
 									</c:forEach>
 								</select>
 							</div>
@@ -116,6 +115,16 @@
 	
 							</div>
 						</div>
+						<div class="col">
+								<h3>Type of Request</h3>
+								<label>
+							    	<input type="radio" name="request" id="treq" autocomplete="off" value="transfer" checked> Transfer
+							  	</label>
+							  	<label>
+							    	<input type="radio" name="request" id="treq" autocomplete="off" value="request"> Request Payment
+							  	</label>
+							  	
+							</div>
 						<div class="col" >
 								<h3>Amount</h3>
 								<input type="text" placeholder="Amount" name="accAmount" id="accAmount" style="display: block;" />
@@ -146,18 +155,17 @@
 								<h3>From Account</h3>
 								<select name="from_accP">
 									<c:forEach items="${accounts}" var="aList">
-										<option>${aList.acc_id}(Balance : ${aList.curr_bal})</option>
-										<option>${aList }</option>
+										<option value="${aList.acc_id}">${aList.acc_id}(Balance : ${aList.curr_bal})</option> 
 									</c:forEach>
 								</select>
 							</div>
 							<div class="col">
 								<h3>Phone/Email</h3>
 								<label>
-							    	<input type="checkbox" name="byPhone" id="phone" autocomplete="off" value="phone"> Phone
+							    	<input type="checkbox" name="type" id="phone" autocomplete="off" value="phone"> Phone
 							  	</label>
 							  	<label>
-							    	<input type="checkbox" name="byEmail" id="email" autocomplete="off" value="email"> Email
+							    	<input type="checkbox" name="type" id="email" autocomplete="off" value="email"> Email
 							  	</label>
 							  	<div id="error3" style="display: none;">
 								<p style="margin: 20px 0 0 0;"><font color="red">Please select at least one of the options.</font></p>
@@ -172,16 +180,7 @@
 								<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid phone number or email.</font></p>
 								</div>
 							</div>
-							<div class="col">
-								<h3>Type of Request</h3>
-								<label>
-							    	<input type="radio" name="request1" id="treq" autocomplete="off" value="transfer" checked> Transfer
-							  	</label>
-							  	<label>
-							    	<input type="radio" name="request1" id="treq" autocomplete="off" value="request"> Request Payment
-							  	</label>
-							  	
-							</div>
+							
 							
 						</div>
 						<div class="col">
