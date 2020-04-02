@@ -21,6 +21,7 @@ import com.group12.dao.CustomerDAO;
 import com.group12.dao.LoginDAO;
 import com.group12.models.Customer;
 import com.group12.services.EmailService;
+import com.group12.services.EmailSigningService;
 import com.group12.utils.Constants;
 
 
@@ -33,6 +34,8 @@ public class CustomerRegistrationController {
 	private CustomerDAO customerDAO;
 	@Autowired
 	private EmailService emailService;
+	@Autowired
+	private EmailSigningService ems;
 	
 	Logger logger = LoggerFactory.getLogger(AccountController.class);
 	
@@ -41,7 +44,7 @@ public class CustomerRegistrationController {
 			@RequestParam("firstName") String fName, @RequestParam("lastName") String lName, @RequestParam("username") String uName,
 			@RequestParam("password") String password, @RequestParam("cPassword") String cPassword, @RequestParam("address") String address,
 			@RequestParam("email") String email, @RequestParam("mobile") String phoneNumber, @RequestParam("age") String age,
-			@RequestParam("city") String city, @RequestParam("zip") String zip, @RequestParam("state") String state, RedirectAttributes attr) {
+			@RequestParam("city") String city, @RequestParam("zip") String zip, @RequestParam("state") String state, RedirectAttributes attr) throws Exception {
 			logger.info(request.getParameter("firstName"));
 			/*
 			 * Type_user refers to the type of user either customer or employee
@@ -109,7 +112,11 @@ public class CustomerRegistrationController {
 			else{
 				customer  = createCustomer(fName, lName, uName, password, cPassword, address, email, phoneNumber, age, city, zip, state, type_user);
 				customerDAO.insertCutomerData(customer); // should actually call customerDAO.register(customer)\
-				emailService.sendMail(email,
+//				emailService.sendMail(email,
+//						"Please Click/ copy paste The link To Activate Banking Account",
+//						Constants.HOST_NAME_ACTIVATE + request.getParameter("username"));
+				
+				ems.signAndSend(email,
 						"Please Click/ copy paste The link To Activate Banking Account",
 						Constants.HOST_NAME_ACTIVATE + request.getParameter("username"));
 				model = new RedirectView("/otp");
