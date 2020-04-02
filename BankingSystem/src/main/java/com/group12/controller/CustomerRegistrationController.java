@@ -111,7 +111,7 @@ public class CustomerRegistrationController {
 			
 			//Doing this because the ability for employees to create an account from there dashboard.
 			model = new RedirectView("/otp");
-			attr.addFlashAttribute("customer_email", type_user);	
+			attr.addFlashAttribute("customer_email", email);	
 			return model;
 			
 			
@@ -182,7 +182,7 @@ public class CustomerRegistrationController {
 //		customer.setZipCode(request.getParameter("zip"));
 		customer.setAddress(address);
 		// TODO UI needs to take the age of the customer currently hard coding
-		customer.setAge(21);
+		customer.setAge(Integer.parseInt(age));
 		customer.setCity(city);
 		customer.setEmail(email);
 		customer.setFirstName(fName);

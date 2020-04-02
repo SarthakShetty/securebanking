@@ -126,7 +126,6 @@ public class LoginController {
 			return model;
 		}
 
-		model = new RedirectView("/customer/profile", true);
 		if (Constants.EMPLOYEE.equals(request.getParameter("type_user"))) {
 			Integer empId = null;
 			try {

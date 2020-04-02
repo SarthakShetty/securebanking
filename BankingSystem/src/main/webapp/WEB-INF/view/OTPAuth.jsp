@@ -69,7 +69,7 @@
 				<form action="/verifyOTP" method="POST">
 					<div class="md-form">
 						<input name="email" type="text" value="${customer_email}" id="email" class="form-control" readonly="readonly">
-						<input name="OTP" type="password" placeholder="OTP Key"  id="OTPKey" class="form-control"/>
+						<input name="OTP" type="password" placeholder="OTP Key"  id="OTPKey" class="form-control" style="margin: 20px 0 0 0;"/>
 					</div>
 					<hr class="divider">
 					<div>

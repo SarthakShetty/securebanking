@@ -70,7 +70,12 @@
 		  <ul class="navbar-nav">
 			<li class=" nav-item"  ><a class="nav-link" href="/internalUser/profile">Profile</a></li>
 			  <li class ="  nav-item" ><a class="nav-link" href="/internalUser/transactions">View/Authorize Transactions</a></li>
-			  <li class ="  nav-item"  ><a class="nav-link" href="/internalUser/accountManagement">Account Management</a></li>
+			  <c:if test="${role == 'tier2' || role == 'tier1' }">
+			  	<li class =" nav-item"  ><a class="nav-link" href="/internalUser/accountManagement">Account Management</a></li>
+			  </c:if>
+			  <c:if test="${role == 'admin;}">
+			  	<li class =" nav-item"  ><a class="nav-link" href="/internalUser/accountManagement/admin">Account Management</a></li>
+			  </c:if>
 			  <li class ="active nav-item" ><a class="nav-link" href="/internalUser/Requests">Requests</a></li>
 			  <c:if test="${role == 'admin'}">
 				  	<li class ="nav-item" ><a class="nav-link" href="/admin/systemLogs">System Log</a></li>
