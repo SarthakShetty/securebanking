@@ -249,10 +249,10 @@ public class AccountDAO {
 
 				String key = "REQUEST"+request.getReq_id();
 
-				contract.submitTransaction("createRequest", key, request.getReq_id(), request.getCust_id(),
-											request.getFirst_acc_num(), request.getSecond_acc_num() ,
-											request.getIs_critical(), request.getApproved_by(), request.getStatus(),
-											request.getType(), request.getTransaction_date(), request.getAmount());
+				contract.submitTransaction("createRequest", key, Integer.toString(request.getReq_id()), Integer.toString(request.getCust_id()),
+											Integer.toString(request.getFirst_acc_num()), Integer.toString(request.getSecond_acc_num()) ,
+											Integer.toString(request.getIs_critical()), request.getApproved_by(), Character.toString(request.getStatus()),
+											request.getType(), request.getTransaction_date().toString(), Double.toString(request.getAmount()));
 
 				result = contract.evaluateTransaction("queryRequest", key);
 				log.info("hyperledger queryRequest result" + (new String(result));

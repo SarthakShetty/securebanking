@@ -31,6 +31,12 @@
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 
 		</dependency>
+		<!-- hyperledger-->
+		 <dependency>
+         	<groupId>org.hyperledger.fabric</groupId>
+         	<artifactId>fabric-gateway-java</artifactId>
+         	<version>1.4.1-SNAPSHOT</version>
+      	</dependency>
 
 		<!-- mail -->
 		<dependency>
