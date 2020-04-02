@@ -190,6 +190,8 @@ public class AccountDAO {
 
 	// Does the Transfer Process Between The Accounts
 	public void transferFundsFromAcc(Request request) {
+		
+		 log.debug("In Transfer Fund Req");
 
 		String get_Ammount_present_In_Acc = "select curr_bal from Account where acc_id  = " + request.getFirst_acc_num()
 				+ ";";

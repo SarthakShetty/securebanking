@@ -6,8 +6,15 @@
 		<title>Group 12 Bank</title>
 		<style>
 			#container{
-				width: 70%;
+				width: 90%;
 				margin: 50px auto;
+			}
+			
+			#transfer{
+			float:left;
+			}
+			#emailphonetransfer{
+			float:right;
 			}
 			
 			.divider{
@@ -78,18 +85,18 @@
 				<div id="accTransfer">
 					<h2>Transfer Via Account Number</h2>
 					<hr class="divider"/>
-					<form action="/customer/transferFundsOtherAccount">
+					<form action="/customer/transferFundsOtherAccount" method="post">
 						<div>
 							<h3>From Account</h3>
 							<select name="from_acc">
 								<c:forEach items="${accounts}" var="aList">
-									<option>${aList.acc_id}(Balance : ${aList.curr_bal})</option>
+									<option value="${aList.acc_id}">${aList.acc_id}(Balance : ${aList.curr_bal})</option>
 								</c:forEach>
 							</select>
 						</div>
 						<div>
-							<h3>To Account</h3>
-						  	<input type="text" placeholder="Account Number" name="accNumber" style="display: block;"/>
+							<h3>To Account/Customer Username in case of Payment Requests </h3>
+						  	<input type="text" placeholder="Account Number/Customer User Name " name="accNumber" style="display: block;"/>
 
 						  	<div id="errorTo" style="display: none;">
 							<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid account number.</font></p>
@@ -135,23 +142,17 @@
 							<h3>From Account</h3>
 							<select name="from_accP">
 								<c:forEach items="${accounts}" var="aList">
-									<option>${aList.acc_id}(Balance : ${aList.curr_bal})</option>
+									<option value="${aList.acc_id}">${aList.acc_id}(Balance : ${aList.curr_bal})</option>
 								</c:forEach>
 							</select>
 						</div>
 						<div>
 							<h3>Phone/Email</h3>
 							<label>
-						    	<input type="radio" name="medium" id="phone" autocomplete="off"> Phone
+						    	<input type="checkbox" name="type" id="phone" autocomplete="off" value="phone"> Phone
 						  	</label>
 						  	<label>
-						    	<input type="radio" name="medium" id="email" autocomplete="off"> Email
-						  	</label>
-							<label>
-						    	<input type="checkbox" name="byPhone" id="phone" autocomplete="off" value="phone"> Phone
-						  	</label>
-						  	<label>
-						    	<input type="checkbox" name="byEmail" id="email" autocomplete="off" value="email"> Email
+						    	<input type="checkbox" name="type" id="email" autocomplete="off" value="email"> Email
 						  	</label>
 						  	<div id="error3" style="display: none;">
 							<p style="margin: 20px 0 0 0;"><font color="red">Please select at least one of the options.</font></p>
@@ -161,21 +162,14 @@
 							<h3>To</h3>
 							
 						  	<input type="text" placeholder="Phone Number" name="phoneNumber" id="pn" style="display: block; margin: 0 auto 30px auto;"/>
-						  	<input type="text" placeholder="Email Address" name="emailAddress" id="ea" style="display: block;"/>
+						  	<input type="text" placeholder="Email Address" name="emailAddress" id="ea" style="display: block; margin: 0 auto 30px auto;"/>
 						  	<div id="error2" style="display: none;">
 							<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid phone number or email.</font></p>
 							</div>
 						</div>
-						<div>
-							<h3>Type of Request</h3>
-							<label>
-						    	<input type="radio" name="request1" id="treq" autocomplete="off" value="transfer"> Transfer
-						  	</label>
-						  	
-						</div>
 						<div >
 							<h2>Amount</h2>
-							<input type="text" placeholder="Amount" name="peAmount" id="peAmount" style="display: block;" />
+							<input type="text" placeholder="Amount" name="peAmount" id="peAmount" style="display: block; margin: 0 auto 30px auto;" />
 							<div id="error1" style="display: none;">
 							<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid amount.</font></p>
 						</div>

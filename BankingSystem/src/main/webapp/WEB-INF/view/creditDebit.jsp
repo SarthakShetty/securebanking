@@ -181,7 +181,7 @@
 						<h2>From Account</h2>
 						<select name="account">
 							<c:forEach items="${accounts}" var="aList">
-								<option value="${aList}">${aList}</option>
+								<option value="${aList.acc_id}">${aList.acc_id}(Balance : ${aList.curr_bal})</option>
 							</c:forEach>
 						</select>
 					</div>

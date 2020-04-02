@@ -6,13 +6,13 @@ public class Constants {
 
 	public static String TRANSACTION_TYPE_CREATE_ACCOUNT = "Create";
 
-	public static String TRANSACTION_TYPE_TRANSFER = "Transfer";
+	public static String TRANSACTION_TYPE_TRANSFER = "transfer";
 
-	public static String TANSACTION_TYPE_REQUEST = "Request";
+	public static String TANSACTION_TYPE_REQUEST = "request";
 	
-	public static String TRANSACTION_TYPE_CREDIT = "Credit";
+	public static String TRANSACTION_TYPE_CREDIT = "credit";
 	
-	public static String TRANSACTION_TYPE_DEBIT = "Debit";
+	public static String TRANSACTION_TYPE_DEBIT = "debit";
 	
 	public static String TRANSACTION_SUCCESFUL = "Transaction Sucess";
 	
