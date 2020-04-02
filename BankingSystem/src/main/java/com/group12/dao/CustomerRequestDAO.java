@@ -195,8 +195,44 @@ public class CustomerRequestDAO {
 		} catch (DataAccessException ex) {
 			throw new RuntimeException(ex);
 		}
-		
 		return requests;
+	}
+		
+		
+		
+		@SuppressWarnings("unchecked")
+		public Request retrieveRequestFromId(int req_id) {
+			List<Request> requests = new ArrayList<>();
+			String paymentRequests = "Select * from Customer_Request where req_id = " + req_id  + ";";
+
+			
+			try {
+				requests = jdbcTemplate.query(paymentRequests, new RowMapper() {
+
+					public Request mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+						Request req = new Request();
+						req.setCust_id((int)rs.getObject("cust_id"));
+						if(rs.getObject("acc_num_2") != null) {
+						req.setSecond_acc_num((int) rs.getObject("acc_num_2"));
+						}
+						if(rs.getObject("acc_num_1") != null) {
+							req.setFirst_acc_num((int) rs.getObject("acc_num_1"));
+						}if(rs.getObject("amount")!=null) {
+							req.setAmount((Double) rs.getObject("amount"));
+						}
+						req.setIs_critical((int) rs.getObject("is_critical"));
+						req.setReq_id((int) rs.getObject("req_id"));
+						req.setType((String)rs.getObject("type"));
+						return req;
+					}
+				});
+			} catch (DataAccessException ex) {
+				throw new RuntimeException(ex);
+			}
+			
+		
+		return requests.get(0);
 	}
 
 }

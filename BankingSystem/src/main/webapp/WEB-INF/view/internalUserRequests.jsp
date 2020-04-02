@@ -90,7 +90,7 @@
 			<div id="log">
 				
 				<div id="listDiv" class="table-wrapper-scroll-y my-custom-scrollbar">
-					<form action="/internalUser/authorizeEmployeeRequests/${tList.req_id}" method="post">
+					<form action="/internalUser/authorizeEmployeeRequests" method="post">
 					<table class="table table-bordered mb-0">
 						<thead>
 						
@@ -121,10 +121,10 @@
 						  		</td>
 						  		<td>
 						  			<label>
-							    		<input type="radio" name="${transaction_id}" id="treq" autocomplete="off" value="accept" checked> Accept
+							    		<input type="radio" name="status" id="treq" autocomplete="off" value="accept ${tList.req_id}" checked> Accept
 								  	</label>
 								  	<label>
-								    	<input type="radio" name="${transaction_id }" id="treq" autocomplete="off" value="decline"> Decline
+								    	<input type="radio" name="status" id="treq" autocomplete="off" value="decline ${tList.req_id}"> Decline
 								  	</label>
 						  		</td>
 						  		<td>
