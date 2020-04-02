@@ -27,7 +27,7 @@ public static MimeMessage signMessage(MimeMessage message) throws Exception {
 	
 	Security.addProvider(new BouncyCastleProvider());
 
-	CertificateDetails certDetails = CertificateUtil.getCertificateDetails("/home/ubuntu","sbsPrac");
+	CertificateDetails certDetails = CertificateUtil.getCertificateDetails("/home/ubuntu/group12-banking-system.jks","sbsPrac");
 	
 	// Create the SMIMESignedGenerator
 	SMIMECapabilityVector capabilities = new SMIMECapabilityVector();
