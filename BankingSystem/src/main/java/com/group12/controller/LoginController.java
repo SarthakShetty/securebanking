@@ -77,7 +77,7 @@ public class LoginController {
 			redir.addFlashAttribute("error_msg", "Invalid characters entered, please enter valid characters.");
 			return model;
 		}
-		model = new RedirectView("/customer/transferEmailPhone", true);
+		model = new RedirectView("/", true);
 	
 
 		//model = new RedirectView("/customer/profile", true);
