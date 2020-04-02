@@ -68,7 +68,7 @@ public class AccountController {
 	}
 	
 	// credit and debit
-	@RequestMapping(value ="/customer/creditOrDebit", method = RequestMethod.POST)
+	@RequestMapping(value ="/customer/creditOrDebit", method = {RequestMethod.GET, RequestMethod.POST})
 	public RedirectView customerCreditOrDebit(RedirectView model, HttpServletRequest request, @RequestParam("account") String accountNum,
 			@RequestParam("transferAmount") String transferAmount, @RequestParam("type_request") String type_request, RedirectAttributes attr) {
 		// TODO the assumptions that the UI is doing the checks for the valid amount
@@ -81,7 +81,7 @@ public class AccountController {
 			attr.addFlashAttribute("error_msg", "Please enter valid characters in the amount. ");
 			return model;
 		}
-		int cust_id = Integer.parseInt(request.getParameter("cust_id"));
+		int cust_id = (Integer)request.getSession().getAttribute("cust_id");
 		int accountNumber = Integer.parseInt(accountNum);
 		double amount = Double.parseDouble(transferAmount);
 		String typeOftransfer  = type_request;
@@ -435,7 +435,9 @@ public class AccountController {
 			model = new ModelAndView("redirect:/");
 			return model;
 		}
+
 		List<Account> accounts = accountDAO.getAccountDetails((int) request.getSession().getAttribute("cust_id"));
+
 		model.addObject("accounts", accounts);
 	    model.setViewName("creditDebit");	 	    	    
 		return model;

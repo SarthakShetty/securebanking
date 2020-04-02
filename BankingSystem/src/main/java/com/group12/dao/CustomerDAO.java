@@ -169,7 +169,7 @@ public class CustomerDAO {
 		String request_customer_information = "Select * from customer where mobile = '" + mobile + "';";
 
 		try {
-			customer = jdbcTemplate.query(request_customer_information, new RowMapper() {
+			customer = jdbcTemplate.query(request_customer_information, new RowMapper<Customer>() {
 
 				public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
 					Customer cust = new Customer();

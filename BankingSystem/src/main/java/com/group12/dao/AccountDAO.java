@@ -75,6 +75,28 @@ public class AccountDAO {
 		return accounts;
 	}
 
+	// Retrieving The Account Details
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		public List<Integer> getAccountIDs(int customer_id) {
+			String get_accounts_for_a_customer = "select acc_id from account where cust_id = " + customer_id
+					+ " and is_active = 1";
+			List<Integer> accountIds = new ArrayList<Integer>();
+
+			try {
+				accountIds = jdbcTemplate.query(get_accounts_for_a_customer, new RowMapper() {
+
+					public Integer mapRow(ResultSet rs, int rowNum) throws SQLException {
+						return (int) rs.getObject("acc_id");
+					}
+				});
+
+			} catch (DataAccessException ex) {
+				throw new RuntimeException(ex);
+			}
+
+			return accountIds;
+		}
+
 	// Creates an Account for the customer
 	public void createAccount(Account account) {
 
