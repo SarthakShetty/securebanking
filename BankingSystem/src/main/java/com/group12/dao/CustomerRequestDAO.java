@@ -1,13 +1,24 @@
 package com.group12.dao;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
@@ -235,4 +246,91 @@ public class CustomerRequestDAO {
 		return requests.get(0);
 	}
 
+	@SuppressWarnings({ "unchecked", "unchecked" })
+	public void getBankingStatements(Timestamp timestamp, int cust_id, int acc_num) throws IOException {
+		String statements = "Select acc_num_1, acc_num_2, status, type, amount, transaction_date from Customer_Request where (status = '" 
+		        + Constants.TRANSACTION_TERMINATED  + "'or status='" + Constants.TRANSACTION_COMPLETED 
+				+ "' )and (type='" + Constants.TRANSACTION_TYPE_CREDIT + "' or type = '" + Constants.TRANSACTION_TYPE_DEBIT
+				+ "'or type = '" + Constants.TRANSACTION_TYPE_TRANSFER + "' or type = '" + Constants.TANSACTION_TYPE_REQUEST
+				+ "') and transaction_date >= '"+ timestamp + "';";
+		
+		String excelFilePath = "bankingStatements.xlsx";
+		XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("BankingStatements");
+        
+		try {
+			jdbcTemplate.query(statements, new RowCallbackHandler()  {
+				@Override
+				public void processRow(ResultSet rs) throws SQLException {
+					int rowCount = 1;
+					while(rs.next()) {
+						int acc_no1 = (int) rs.getObject("acc_num_1");
+						Integer acc_no2 = (Integer) rs.getObject("acc_num_2");
+						char status = (Character) rs.getObject("status");
+						String type = (String) rs.getObject("type");
+						Double amount = (Double) rs.getObject("amount");
+						Timestamp timestamp = rs.getTimestamp("timestamp");
+			            Row row = sheet.createRow(rowCount++);
+			            int columnCount = 0;
+			            Cell cell = row.createCell(columnCount++);
+			            cell.setCellValue(acc_no1);
+			 
+			            cell = row.createCell(columnCount++);
+			            cell.setCellValue(acc_no2);
+			 
+			            cell = row.createCell(columnCount++);
+			            cell.setCellValue(status);
+			 
+			            cell = row.createCell(columnCount++);
+			            cell.setCellValue(type);
+			            
+			            cell = row.createCell(columnCount++);
+			            cell.setCellValue(amount);
+			            
+			            cell = row.createCell(columnCount);
+			 
+			            CellStyle cellStyle = workbook.createCellStyle();
+			            CreationHelper creationHelper = workbook.getCreationHelper();
+			            cellStyle.setDataFormat(creationHelper.createDataFormat().getFormat("yyyy-MM-dd HH:mm:ss"));
+			            cell.setCellStyle(cellStyle);
+			 
+			            cell.setCellValue(timestamp);
+			 
+					}
+				}
+			});
+			FileOutputStream outputStream = new FileOutputStream(excelFilePath);
+	        workbook.write(outputStream);
+	        workbook.close();
+	
+		} catch (DataAccessException ex) {
+			throw new RuntimeException(ex);
+		}
+			
+	}
+	
+	private void writeHeaderLine(XSSFSheet sheet) {
+		 
+        Row headerRow = sheet.createRow(0);
+ 
+        Cell headerCell = headerRow.createCell(0);
+        headerCell.setCellValue("Account Number One");
+        
+        headerCell = headerRow.createCell(1);
+        headerCell.setCellValue("Account Number Two");
+ 
+        headerCell = headerRow.createCell(2);
+        headerCell.setCellValue("Transaction Status");
+ 
+        headerCell = headerRow.createCell(3);
+        headerCell.setCellValue("Transaction type");
+ 
+        headerCell = headerRow.createCell(4);
+        headerCell.setCellValue("Amount");
+        
+        headerCell = headerRow.createCell(5);
+        headerCell.setCellValue("Transaction Date");
+    }
+	
+	
 }

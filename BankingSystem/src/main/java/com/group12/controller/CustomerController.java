@@ -1,6 +1,10 @@
 package com.group12.controller;
 
+import java.util.Date;
+import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +39,9 @@ public class CustomerController {
 	
 	@Autowired
 	private AccountDAO accountDAO;
+	
+	@Autowired
+	private CustomerRequestDAO customerRequestDAO;
 	
 	Logger log = LoggerFactory.getLogger(AccountController.class);
 	
@@ -78,10 +85,7 @@ public class CustomerController {
 		return "redirect:/confirmationAccount";
 
     }
-	
-	
-	
-	
+
 	@RequestMapping(value = "/customer/helpSupport", method=RequestMethod.GET)
 	public ModelAndView getCustomerDetailsHelpSupp(ModelAndView model, HttpServletRequest request) {
 
@@ -108,11 +112,7 @@ public class CustomerController {
 	    model.setViewName("adminSystemLogs");	 	    	    
 		return model;
 	}
-	
-	
-	
 
-	
 	@RequestMapping(value = "/customer/schedule")
 	public RedirectView scheduleAppointment(RedirectView model, HttpServletRequest request, RedirectAttributes attr) {
 		if(request.getSession().getAttribute("role") == null){
@@ -144,8 +144,38 @@ public class CustomerController {
 		model = new RedirectView("/");
 		return model;
 	}
+
 	
-    /* update the request params and add DAO call to update it */
+	@RequestMapping(value = "/customer/downloadBankingStatements", method=RequestMethod.GET)
+	public ModelAndView downloadBankingStatements(ModelAndView model, HttpServletRequest request) throws IOException {
+
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
+		
+		// TODO need to send the field from UI
+		int acc_num = Integer.parseInt(request.getParameter("acc_num"));
+//		int acc_num = 10000;
+		int cust_id = (Integer) request.getSession().getAttribute("cust_id");
+		// assuming that the time is given in terms of month, we can add change for year 
+		int time = Integer.parseInt(request.getParameter("time"));
+		Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, -time);
+        Date date = calendar.getTime();
+        Timestamp timestamp = new Timestamp(date.getTime());
+        
+        // call the customer request dao with specific account, transaction date, and type ( credit and debit, transfer and request)
+        customerRequestDAO.getBankingStatements(timestamp, cust_id, acc_num);
+        /*
+		 * return system log.
+		 */
+			 	    	    
+		return model;
+	}
+	
+	
+	
 	@RequestMapping(value ="/customer/changeProfile", method = {RequestMethod.GET, RequestMethod.POST})
 	public RedirectView changeProfile(RedirectView model,HttpServletRequest request, RedirectAttributes attr) {
 		/*
