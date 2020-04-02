@@ -135,9 +135,10 @@ public class CustomerDAO {
 		return customer.size() > 0 ? customer.get(0) : null;
 	}
 
-	public int getCustomerId(String userName) {
+	public Integer getCustomerId(String userName) {
 		Customer customer = getCustomerProfileDetails(userName);
-		return customer.getCust_id();
+		
+		return customer==null?null:customer.getCust_id();
 	}
 
 	@SuppressWarnings("unchecked")

@@ -19,10 +19,6 @@ public class LoginDAO {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
-	public boolean validateUser(String user, String password) {
-		return user.equalsIgnoreCase("test") && password.equals("test");
-	}
 
 	@SuppressWarnings("unchecked")
 	public Integer checkIfTheCustomerIsValid(String user_name, String password) {

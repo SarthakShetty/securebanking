@@ -264,6 +264,7 @@ public class AccountController {
 
 		String transferAmount = request.getParameter("accAmount");
 		String to = request.getParameter("accNumber");
+		String username= request.getParameter("accUsername");
 		String from = request.getParameter("from_acc");
 		String request_type = request.getParameter("request");
 
@@ -304,15 +305,20 @@ public class AccountController {
 			accountDAO.transferFunds_create_request(customerRequest);
 			return model;
 		}
-		return createRequestForPaymentReqs(fromAccountNumber, to, amount, model, isCritical);
+		
+		return createRequestForPaymentReqs(fromAccountNumber, username, amount, model, isCritical,attr);
 }
 	
 	
 	private RedirectView createRequestForPaymentReqs(int fromAccountNumber, String to, double amount,
-			RedirectView model, int isCritical) {
+			RedirectView model, int isCritical,RedirectAttributes attr) {
 
 		Request request = new Request();
-		int custId = customerDAO.getCustomerId(to);
+		Integer custId = customerDAO.getCustomerId(to);
+		if(custId==null) {
+			attr.addFlashAttribute("error_msg", "The Person from whom you requesting for money does not exists");
+			return model;
+		}
 		request.setAmount(amount);
 		request.setCust_id(custId);
 		request.setSecond_acc_num(fromAccountNumber);

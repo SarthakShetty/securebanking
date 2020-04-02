@@ -55,58 +55,8 @@ public class LoginController {
 	}
 	
 	
-//	@RequestMapping(value = "/login", method = RequestMethod.POST)
-//	public String handleUserLogin(ModelMap model, @RequestParam String name,
-//			@RequestParam String password) {
-//		
-//		List<String> l = new ArrayList<String>();
-//		l.add("Beep Boop");
-//		l.add("got em");
-//		l.add("fork");
-//		l.add("Beep Boop");
-//		l.add("got em");
-//		l.add("fork");
-//		l.add("Beep Boop");
-//		l.add("got em");
-//		l.add("fork");
-//		
-//		List<String> b = new ArrayList<String>();
-//		b.add("56.70");
-//		b.add("40.30");
-//		
-//		List<String> reqListNames = new ArrayList<String>();
-//		reqListNames.add("brandon");
-//		reqListNames.add("stephen");
-//		
-//		model.put("user_id", name);
-//		model.put("password", password);
-//		model.put("employeeID", "1234");
-//		model.put("dob", "Today");
-//		model.put("list", l);
-//		model.put("accountList", l);
-//		model.put("accountBList", b);
-//		model.put("requestListAmount", b);
-//		model.put("requestListNames", reqListNames);
-//		/*
-//		 * Need to check for the type of user they are and verify
-//		 */
-//		return "customerAccount";
-//		//return "internalUserProfile";
-//	}
-	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public RedirectView getCustomerDetails(RedirectView model, HttpServletRequest request, RedirectAttributes redir) {
-		/*
-		 * Need to check credentials of the user and set the session variable of the
-		 * role they have ie: customer, merchant, administrator Other session variables:
-		 * user_name, customer_id * * = maybe If credentials are correct we link to the
-		 * correct page using another API call via model = new
-		 * ModelAndView("redirect:/blah blah");
-		 * 
-		 * if you need to redirect with attributes we have to use a redirectView. and
-		 * use redirectView.attributes and stuff
-		 * 
-		 */
 		
 		log.debug("I am in login");
 		String name = request.getParameter("name");
