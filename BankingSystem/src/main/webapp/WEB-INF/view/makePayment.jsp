@@ -224,7 +224,9 @@
 			</form>
 		</div>
 	<script>
-	
+		$('input').on('change', function(){
+			console.log(this.value);
+		});
 	</script>
 	</body>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

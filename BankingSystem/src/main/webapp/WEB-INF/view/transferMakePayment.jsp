@@ -94,9 +94,20 @@
 								<h3> My Account</h3>
 								<select name="from_acc">
 									<c:forEach items="${accounts}" var="aList">
-									<option value="${aList.acc_id}">${aList.acc_id}(Balance : ${aList.curr_bal})</option> 
+									<%-- <option value="${aList.acc_id}">${aList.acc_id}(Balance : ${aList.curr_bal})</option>  --%>
 									</c:forEach>
 								</select>
+							</div>
+							<div class="col">
+								<h3>Type of Request</h3>
+								<label>
+							    	<input type="radio" name="request" id="treq"  value="transfer"> Transfer
+							  	</label>
+							  	
+							  	<label>
+							    	<input type="radio" name="request" id="treq"  value="request"> Request Payment
+							  	</label>
+							  	
 							</div>
 							<div class="col">
 								<h3>Transfer to Account</h3>
@@ -117,16 +128,7 @@
 	
 							</div>
 						</div>
-						<div class="col">
-								<h3>Type of Request</h3>
-								<label>
-							    	<input type="radio" name="request" id="treq" autocomplete="off" value="transfer" checked> Transfer
-							  	</label>
-							  	<label>
-							    	<input type="radio" name="request" id="treq" autocomplete="off" value="request"> Request Payment
-							  	</label>
-							  	
-							</div>
+						
 						<div class="col" >
 								<h3>Amount</h3>
 								<input type="text" placeholder="Amount" name="accAmount" id="accAmount" style="display: block;" />
@@ -160,17 +162,17 @@
 								<h3>From Account</h3>
 								<select name="from_accP">
 									<c:forEach items="${accounts}" var="aList">
-										<option value="${aList.acc_id}">${aList.acc_id}(Balance : ${aList.curr_bal})</option> 
+										<%-- <option value="${aList.acc_id}">${aList.acc_id}(Balance : ${aList.curr_bal})</option>  --%>
 									</c:forEach>
 								</select>
 							</div>
 							<div class="col">
 								<h3>Phone/Email</h3>
 								<label>
-							    	<input type="checkbox" name="type" id="phone" autocomplete="off" value="phone"> Phone
+							    	<input type="radio" name="type" id="phoneEmail" autocomplete="off" value="phone"> Phone
 							  	</label>
 							  	<label>
-							    	<input type="checkbox" name="type" id="email" autocomplete="off" value="email"> Email
+							    	<input type="radio" name="type" id="phoneEmail" autocomplete="off" value="email"> Email
 							  	</label>
 							  	<div id="error3" style="display: none;">
 								<p style="margin: 20px 0 0 0;"><font color="red">Please select at least one of the options.</font></p>
@@ -249,7 +251,34 @@
 			 <input type="button" style="display: none;" data-toggle="modal" data-target="#myModal4" id="hiddenBut3">
 		</div>
 	<script>
+		$('input:radio[name="type"]').change(function(){
+			var x = this.value;
+			if(x == 'phone'){
+				document.getElementById("pn").disabled = false;
+				document.getElementById("pn").focus();
+				document.getElementById("ea").disabled = true;
+			}
+			else{
+				document.getElementById("ea").disabled = false;
+				document.getElementById("ea").focus();
+				document.getElementById("pn").disabled = true;
+			}
+		}); 
 		
+		$('input:radio[name="request"]').change(function(){
+			var x = this.value;
+			if(x == 'transfer'){
+				document.getElementById("accNum").disabled = false;
+				document.getElementById("accNum").focus();
+				document.getElementById("accUser").disabled = true;
+			}
+			else{
+				
+				document.getElementById("accUser").disabled = false;
+				document.getElementById("accUser").focus();
+				document.getElementById("accNum").disabled = true;
+			}
+		}); 
 		var active = "pr";
 		var mDiv = "accTransfer";
 		function change(el){
@@ -273,14 +302,6 @@
 			
 		}
 		
-		document.getElementById('phone').onchange = function() {
-		    document.getElementById('pn').disabled = !this.checked;
-		    document.getElementById('pn').focus();
-		};
-		document.getElementById('email').onchange = function() {
-		    document.getElementById('ea').disabled = !this.checked;
-		    document.getElementById('ea').focus();
-		};
 		
 		function checkModal(el){
 			if(el.id == "accButton"){
@@ -301,7 +322,7 @@
 			}
 			else if(el.id == "peButton"){
 				console.log(el);
-				if(!document.getElementById("phone").checked && !document.getElementById("email").checked){
+				/* if(!document.getElementById("phone").checked && !document.getElementById("email").checked){
 					document.getElementById("error3").style.display = 'block';
 				}
 				else if(document.getElementById("phone").checked){
@@ -316,7 +337,7 @@
 						document.getElementById("error2").style.display = 'block';
 						
 					}
-				}
+				} */
 				
 				if(document.getElementById("peAmount").value < 0 || document.getElementById("peAmount").value.length == 0){
 					document.getElementById("error1").style.display = 'block';

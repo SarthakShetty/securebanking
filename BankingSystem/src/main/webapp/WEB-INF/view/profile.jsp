@@ -149,7 +149,7 @@
 					<div class="form-group row">
 						<label class="col-sm-5 col-form-label">Name:</label>
 						<div class="col-sm-7">
-				      		<input type="text"  class="form-control" name="Name" id="phone" value="${Firstname} ${Lastname}">
+				      		<input type="text"  class="form-control" name="Name" id="name" value="${Firstname} ${Lastname}">
 				    	</div>
 					</div>
 					<div class="form-group row">
@@ -168,7 +168,10 @@
 				  <div class="form-group row">
 				    <label for="phone" class="col-sm-5 col-form-label">New Password:</label>
 				    <div class="col-sm-7">
-				      <input type="password"  class="form-control" name="password" id="phone">
+				      <input type="password"  class="form-control" name="password" id="npass">
+				       <div id="pwError" style="display: none; text-align: left;">
+				    	<p><font color="red">Password must be at least 8 characters long.</font></p>
+				    </div>
 				    </div>
 				    </div>
 				  <div class="form-group row">
@@ -183,6 +186,9 @@
 				    <div class="col-sm-7">
 
 				      <input type="text" class="form-control" id="age" name="age" value="${age}">
+				       <div id="ageError" style="display: none; text-align: left;">
+				    	<p><font color="red">Age does not meet minimum requirement.</font></p>
+				    </div>
 				    </div>
 				  </div>
 				  <div class="form-group row">
@@ -254,11 +260,43 @@
 			      	</select>
 				</div>
 			<div id="submitInfo">
-					<input type="submit" class="btn btn-md btn-info" value="Submit Changes">
+					<input type="button" class="btn btn-md btn-info" id="butt" value="Submit Changes">
+					<input type="submit" class="btn btn-md btn-info" id="sub" style="display: none;">
 			</div>
+			<div id="emptyError" style="display: none; margin: auto;">
+				    	<p><font color="red">Please fill in all fields except password if you're not changing it.</font></p>
+				    </div>
 			</div>
 			</form>
 		</div>
+		<script>
+			$('#butt').on('click', function(){
+				var user = document.getElementById("name");
+				var phone = document.getElementById("phone");
+				var add = document.getElementById("address");
+				var npass = document.getElementById("npass");
+				var email = document.getElementById("email");
+				var age = document.getElementById("age");
+				var username = document.getElementById("username");
+				var city = document.getElementById("city");
+				var zip = document.getElementById("zip");
+				
+				if(user.value.length == 0 || phone.value.length == 0 || add.value.length == 0||
+						email.value.length == 0 || age.value.length == 0 || username.value.length == 0 || city.value.length == 0 ||
+						zip.value.length == 0){
+					document.getElementById("emptyError").style.display = 'block';
+				}
+				else if(password.value.length != 0 && password.value.length < 8){
+					document.getElementById("pwError").style.display = 'block';
+				}
+				else if(age.value < 18){
+					document.getElementById("ageError").style.display = 'block';
+				}
+				else{
+					document.getElementById("sub").click();
+				}
+			});
+		</script>
 	</body>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

@@ -424,7 +424,6 @@ public class AccountController {
 		}
 
 		attr.addFlashAttribute("msg", "Request successfully processed!!");
-
 		return model;
 	}
 
@@ -514,8 +513,10 @@ public class AccountController {
 		model.addObject("accountList", accounts);
 		int cust_id = (int) request.getSession().getAttribute("cust_id");
 		List<Request> listOfCustomerRequests = customerDAO.retrieveAllPaymentRequestForCust(cust_id);
+
 		model.addObject("list", listOfCustomerRequests);
 		model.setViewName("makePayment");
+
 		return model;
 	}
 

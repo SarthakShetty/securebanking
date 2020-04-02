@@ -114,7 +114,7 @@ public class LoginController {
 		// We only want to set these if the user is a valid one!
 		request.getSession().setAttribute("user_id", name);
 
-		// if the user is an employee
+		// if the user is an employee we need to get role from DB. 
 		request.getSession().setAttribute("role", "tier1");
 
 		return model;
