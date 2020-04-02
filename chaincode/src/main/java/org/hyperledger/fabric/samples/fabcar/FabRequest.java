@@ -1,10 +1,6 @@
 
 package org.hyperledger.fabric.samples.fabcar;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.hyperledger.fabric.contract.Context;
 import org.hyperledger.fabric.contract.ContractInterface;
 import org.hyperledger.fabric.contract.annotation.Contact;
@@ -83,14 +79,14 @@ public final class FabRequest implements ContractInterface {
      * @return the created Car
      */
     @Transaction()
-    public Request createRequest(final Context ctx, final String key, final int req_id, final int cust_id,
-            final int first_acc_num, final int second_acc_num, final int is_critical, final String approved_by,
-            final char status, final String type, final Timestamp transaction_date, final Double amount) {
+    public Request createRequest(final Context ctx, final String key, final String req_id, final String cust_id,
+            final String first_acc_num, final String second_acc_num, final String is_critical, final String approved_by,
+            final String status, final String type, final String transaction_date, final String amount) {
         ChaincodeStub stub = ctx.getStub();
 
         String requestState = stub.getStringState(key);
         if (!requestState.isEmpty()) {
-            String errorMessage = String.format("Car %s already exists", key);
+            String errorMessage = String.format("Request %s already exists", key);
             System.out.println(errorMessage);
             throw new ChaincodeException(errorMessage, FabRequestErrors.REQUEST_ALREADY_EXISTS.toString());
         }
