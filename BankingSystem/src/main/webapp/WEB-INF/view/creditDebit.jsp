@@ -181,7 +181,7 @@
 						<h2>From Account</h2>
 						<select name="account">
 							<c:forEach items="${accounts}" var="aList">
-								<option value="${aList}">${aList}</option>
+								<option >${aList.acc_id}</option>
 							</c:forEach>
 						</select>
 					</div>
