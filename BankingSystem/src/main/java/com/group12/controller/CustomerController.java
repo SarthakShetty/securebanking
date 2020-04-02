@@ -49,18 +49,18 @@ public class CustomerController {
 		}
 		
 		String userName = (String)request.getSession().getAttribute("user_id");
-		Customer customer = customerDAO.getCustomerProfileDetails(userName);
-		model.addObject("Firstname", customer.getFirstName());
-		model.addObject("Lastname", customer.getLastName());
-		model.addObject("phone", customer.getMobile());
-		model.addObject("address", customer.getAddress());
-		model.addObject("city", customer.getCity());
-		model.addObject("state", customer.getState());
-		model.addObject("zip", customer.getZipCode());
-		model.addObject("age", customer.getAge());
-		model.addObject("email", customer.getEmail());
-		model.addObject("username", customer.getUsername());
-		model.addObject("accountList",accountDAO.getAccountDetails(customer.getCust_id()));
+//		Customer customer = customerDAO.getCustomerProfileDetails(userName);
+//		model.addObject("Firstname", customer.getFirstName());
+//		model.addObject("Lastname", customer.getLastName());
+//		model.addObject("phone", customer.getMobile());
+//		model.addObject("address", customer.getAddress());
+//		model.addObject("city", customer.getCity());
+//		model.addObject("state", customer.getState());
+//		model.addObject("zip", customer.getZipCode());
+//		model.addObject("age", customer.getAge());
+//		model.addObject("email", customer.getEmail());
+//		model.addObject("username", customer.getUsername());
+//		model.addObject("accountList",accountDAO.getAccountDetails(customer.getCust_id()));
 		model.setViewName("profile");
 		return model;
 	}
@@ -105,7 +105,7 @@ public class CustomerController {
 		 * return system log.
 		 */
 		model.addObject("logs", "enter list here");
-	    model.setViewName("helpsupport");	 	    	    
+	    model.setViewName("adminSystemLogs");	 	    	    
 		return model;
 	}
 	
@@ -129,14 +129,11 @@ public class CustomerController {
 	
 	@RequestMapping(value = "/customer/logout")
 	public RedirectView logout(RedirectView model, HttpServletRequest request) {
-		if(request.getSession().getAttribute("role") == null){
-			model = new RedirectView("/");
-			return model;
-		}
 		/*
 		 * logout
 		 */
 		request.getSession().invalidate();
+		model = new RedirectView("/");
 		return model;
 	}
 	

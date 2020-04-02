@@ -363,7 +363,9 @@ public class AccountController {
 			model = new ModelAndView("redirect:/");
 			return model;
 		}
-		List<Account> accounts = accountDAO.getAccountDetails((int) request.getSession().getAttribute("cust_id"));
+//		List<Account> accounts = accountDAO.getAccountDetails((int) request.getSession().getAttribute("cust_id"));
+		List<String> accounts = new ArrayList<String>();
+		accounts.add("blah");
 		model.addObject("accounts", accounts);
 	    model.setViewName("transferMakePayment");	 	    	    
 		return model;
@@ -376,8 +378,8 @@ public class AccountController {
 			model = new ModelAndView("redirect:/");
 			return model;
 		}
-		List<Account> accounts = accountDAO.getAccountDetails((int) request.getSession().getAttribute("cust_id"));
-		model.addObject("accountList", accounts);
+//		List<Account> accounts = accountDAO.getAccountDetails((int) request.getSession().getAttribute("cust_id"));
+//		model.addObject("accountList", accounts);
 		model.setViewName("transferBetweenAccounts");
 		return model;
 	}

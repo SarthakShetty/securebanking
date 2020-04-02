@@ -68,7 +68,7 @@
 		<div id="container">
 			<h1>Transfer Between Accounts</h1>
 			<hr class="divider" />
-			<form action="/customer/transferFunds">
+			<form action="/customer/transferFunds" method="post">
 				<div id="transferB" class="row" style="position: relative;">
 					<div class="col">
 						<h2>From Account</h2>
@@ -133,7 +133,6 @@
 		
 	function checkModal(el){
 		if(el.id == "tButton"){
-			if(document.getElementById("tbAmount").value > 1000){
 			if(document.getElementById("tbAmount").value < 0 || document.getElementById("tbAmount").value.length == 0){
 				document.getElementById("error").style.display = 'block';
 				
@@ -144,7 +143,6 @@
 			}
 			else
 				document.getElementById("tButtonH").click();
-		}
 		}
 	}
 		

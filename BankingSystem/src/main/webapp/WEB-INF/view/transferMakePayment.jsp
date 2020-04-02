@@ -73,47 +73,65 @@
 		</nav>
 		
 		<div id="container">
+			<ul class="nav nav-tabs">
+			  <li class="nav-item active" id="pr" onclick="change(this)">
+			    <a class="nav-link" href="#" style="color: white;">Transfer by Account</a>
+			  </li>
+			  <li class="nav-item" id="va" onclick="change(this)">
+			    <a class="nav-link" style="color: white;" href="#">Request by User</a>
+			  </li>
+			</ul>
 			
 			<div id="transfer">
 				<div id="accTransfer">
-					<h2>Transfer Via Account Number</h2>
-					<hr class="divider"/>
 					<form action="/customer/transferFundsOtherAccount">
-						<div>
-							<h3>From Account</h3>
-							<select name="from_acc">
-								<c:forEach items="${accounts}" var="aList">
-									<option>${aList.acc_id}(Balance : ${aList.curr_bal})</option>
-								</c:forEach>
-							</select>
+						<div class="row">
+							<div class="col">
+								<h3>From Account</h3>
+								<select name="from_acc">
+									<c:forEach items="${accounts}" var="aList">
+										<%-- <option>${aList.acc_id}(Balance : ${aList.curr_bal})</option> --%>
+										<option>${aList }</option>
+									</c:forEach>
+								</select>
+							</div>
+							<div class="col">
+								<h3>Type of Request</h3>
+								<label>
+							    	<input type="radio" name="request" id="req" autocomplete="off" value="transfer" checked> Transfer
+							  	</label>
+							  	<label>
+							    	<input type="radio" name="request" id="req" autocomplete="off" value="request"> Request Payment
+	
+							  	</label>
+							</div>
+							<div class="col">
+								<h3>Transfer Via Account</h3>
+							  	<input type="text" placeholder="Account Number" name="accNumber" id="accNum" style="display: block;"/>
+	
+							  	<div id="errorTo" style="display: none;">
+									<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid account number.</font></p>
+								</div>
+	
+							</div>
+							<div class="col">
+								<h3>Request Via Username</h3>
+							  	<input type="text" placeholder="Username" name="accUsername" id="accUser" style="display: block;"/>
+	
+							  	<div id="errorUser" style="display: none;">
+									<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid username.</font></p>
+								</div>
+	
+							</div>
 						</div>
-						<div>
-							<h3>To Account</h3>
-						  	<input type="text" placeholder="Account Number" name="accNumber" style="display: block;"/>
+						<div class="col" >
+								<h3>Amount</h3>
+								<input type="text" placeholder="Amount" name="accAmount" id="accAmount" style="display: block;" />
+								<div id="error" style="display: none;">
+									<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid amount.</font></p>
+								</div>
 
-						  	<div id="errorTo" style="display: none;">
-							<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid account number.</font></p>
-						</div>
-
-						</div>
-						<div>
-							<h3>Type of Request</h3>
-							<label>
-						    	<input type="radio" name="request" id="treq" autocomplete="off" value="transfer"> Transfer
-						  	</label>
-						  	<label>
-						    	<input type="radio" name="request" id="preq" autocomplete="off" value="request"> Request Payment
-
-						  	</label>
-						</div>
-						<div >
-							<h2>Amount</h2>
-							<input type="text" placeholder="Amount" name="accAmount" id="accAmount" style="display: block;" />
-							<div id="error" style="display: none;">
-							<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid amount.</font></p>
-						</div>
-
-						</div>
+							</div>
 						<div style="text-align: center;">
 							<input  type="button" value="Request" class="btn btn-md btn-info" id="accButton" onclick="checkModal(this)" style="margin: 25px 0 0 0;">
 							<input  type="submit" id="accButtonH"  style="display: none;">
@@ -121,66 +139,68 @@
 							<p style="margin: 20px 0 0 0;"><font color="green">${msg}</font></p>
 
 						</div>
+						<div id="errorEmpty" style="display: none;">
+								<p style="margin: 20px 0 0 0;"><font color="red"></font></p>
+							</div>
 
 						</form>
 					</div>
 
 					
 				</div>
-				<div id="emailphonetransfer">
-					<h2>Transfer Via Email/Phone</h2>
-					<hr class="divider"/>
+				<div id="emailphonetransfer" style="display: none;">
 					<form action="/customer/transferFundsEmailPhone">
-						<div>
-							<h3>From Account</h3>
-							<select name="from_accP">
-								<c:forEach items="${accounts}" var="aList">
-									<option>${aList.acc_id}(Balance : ${aList.curr_bal})</option>
-								</c:forEach>
-							</select>
-						</div>
-						<div>
-							<h3>Phone/Email</h3>
-							<label>
-						    	<input type="radio" name="medium" id="phone" autocomplete="off"> Phone
-						  	</label>
-						  	<label>
-						    	<input type="radio" name="medium" id="email" autocomplete="off"> Email
-						  	</label>
-							<label>
-						    	<input type="checkbox" name="byPhone" id="phone" autocomplete="off" value="phone"> Phone
-						  	</label>
-						  	<label>
-						    	<input type="checkbox" name="byEmail" id="email" autocomplete="off" value="email"> Email
-						  	</label>
-						  	<div id="error3" style="display: none;">
-							<p style="margin: 20px 0 0 0;"><font color="red">Please select at least one of the options.</font></p>
+						<div class="row">
+							<div class="col">
+								<h3>From Account</h3>
+								<select name="from_accP">
+									<c:forEach items="${accounts}" var="aList">
+										<%-- <option>${aList.acc_id}(Balance : ${aList.curr_bal})</option> --%>
+										<option>${aList }</option>
+									</c:forEach>
+								</select>
 							</div>
-						</div>
-						<div>
-							<h3>To</h3>
+							<div class="col">
+								<h3>Phone/Email</h3>
+								<label>
+							    	<input type="checkbox" name="byPhone" id="phone" autocomplete="off" value="phone"> Phone
+							  	</label>
+							  	<label>
+							    	<input type="checkbox" name="byEmail" id="email" autocomplete="off" value="email"> Email
+							  	</label>
+							  	<div id="error3" style="display: none;">
+								<p style="margin: 20px 0 0 0;"><font color="red">Please select at least one of the options.</font></p>
+								</div>
+							</div>
+							<div class="col">
+								<h3>To</h3>
+								
+							  	<input type="text" placeholder="Phone Number" name="phoneNumber" id="pn" style="display: block; margin: 0 auto 30px auto;" disabled/>
+							  	<input type="text" placeholder="Email Address" name="emailAddress" id="ea" style="display: block; margin: 0 auto 30px auto;" disabled/>
+							  	<div id="error2" style="display: none;">
+								<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid phone number or email.</font></p>
+								</div>
+							</div>
+							<div class="col">
+								<h3>Type of Request</h3>
+								<label>
+							    	<input type="radio" name="request1" id="treq" autocomplete="off" value="transfer" checked> Transfer
+							  	</label>
+							  	<label>
+							    	<input type="radio" name="request1" id="treq" autocomplete="off" value="request"> Request Payment
+							  	</label>
+							  	
+							</div>
 							
-						  	<input type="text" placeholder="Phone Number" name="phoneNumber" id="pn" style="display: block; margin: 0 auto 30px auto;"/>
-						  	<input type="text" placeholder="Email Address" name="emailAddress" id="ea" style="display: block;"/>
-						  	<div id="error2" style="display: none;">
-							<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid phone number or email.</font></p>
+						</div>
+						<div class="col">
+								<h3>Amount</h3>
+								<input type="text" placeholder="Amount" name="peAmount" id="peAmount" style="display: block; margin: 0 auto 30px auto;" />
+								<div id="error1" style="display: none;">
+									<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid amount.</font></p>
+								</div>
+	
 							</div>
-						</div>
-						<div>
-							<h3>Type of Request</h3>
-							<label>
-						    	<input type="radio" name="request1" id="treq" autocomplete="off" value="transfer"> Transfer
-						  	</label>
-						  	
-						</div>
-						<div >
-							<h2>Amount</h2>
-							<input type="text" placeholder="Amount" name="peAmount" id="peAmount" style="display: block;" />
-							<div id="error1" style="display: none;">
-							<p style="margin: 20px 0 0 0;"><font color="red">Please enter a valid amount.</font></p>
-						</div>
-
-						</div>
 						<div style="text-align: center;">
 							<input  type="button" value="Request" class="btn btn-md btn-info" id="peButton" onclick="checkModal(this)" style="margin: 25px 0 0 0;">
 							<input  type="submit" id="peButtonH"  style="display: none;">
@@ -236,34 +256,64 @@
 		</div>
 	<script>
 		
+		var active = "pr";
+		var mDiv = "accTransfer";
+		function change(el){
+			el.className = 'nav-item active';
+			document.getElementById(active).className = 'nav-item';
+			document.getElementById(mDiv).style.display = 'none';
 	
+			active = el.id;
+			
+			switch(active){
+				case 'pr':
+					mDiv = "accTransfer";
+					break;
+				case 'va':
+					mDiv = "emailphonetransfer";
+					break;
+			}
+			
+	
+			document.getElementById(mDiv).style.display = 'block';
+			
+		}
+		document.getElementById('phone').onchange = function() {
+		    document.getElementById('pn').disabled = !this.checked;
+		    document.getElementById('pn').focus();
+		};
+		document.getElementById('email').onchange = function() {
+		    document.getElementById('ea').disabled = !this.checked;
+		    document.getElementById('ea').focus();
+		};
+		
 		function checkModal(el){
 			if(el.id == "accButton"){
-				if(document.getElementById("accAmount").value > 1000){
-					console.log("wef");
-					document.getElementById("hiddenBut2").click();
-				}
-				else
-					document.getElementById("accButtonH").click();
-			}
-			else if(el.id == "peButton"){
-				if(document.getElementById("peAmount").value > 1000){
-
-				if(el.id == "accButton"){
-					if(document.getElementById("accAmount").value < 0 || document.getElementById("accAmount").value.length == 0){
-						document.getElementById("error").style.display = 'block';
-						
-					}
-					else if(document.getElementById("accNumber").value < 0 || document.getElementById("accNumber").value.length == 0){
-						document.getElementById("error").style.display = 'block';
-						
+				if(document.getElementById("req").value == "transfer"){
+					if(document.getElementById("accNum").value.length == 0 || document.getElementById("accNum").value < 0){
+						document.getElementById("errorEmpty").style.display = 'block';
+						document.getElementById("errorEmpty").innerText = "Please enter a valid Account number";
 					}
 					else if(document.getElementById("accAmount").value > 1000){
-						
 						document.getElementById("hiddenBut2").click();
 					}
-					else
+					else{
 						document.getElementById("accButtonH").click();
+					}
+				}
+				else{
+					if(document.getElementById("accUser").value.length == 0){
+						document.getElementById("errorUser").style.display = 'block';
+						document.getElementById("errorUser").innerText = "Please enter a valid username.";
+					}
+					else if(document.getElementById("accAmount").value > 1000){
+						document.getElementById("hiddenBut2").click();
+					}
+					else{
+						document.getElementById("accButtonH").click();
+					}
+				}
+				
 			}
 			else if(el.id == "peButton"){
 				if(!document.getElementById("byPhone").checked && !document.getElementById("byEmail").checked){
@@ -292,8 +342,6 @@
 				else
 					document.getElementById("peButtonH").click();
 
-			}
-		}
 			}
 		}
 		

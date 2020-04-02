@@ -126,31 +126,31 @@ public class LoginController {
 			return model;
 		}
 
-		model = new RedirectView("/", true);
-		if (Constants.EMPLOYEE.equals(request.getParameter("type_user"))) {
-			Integer empId = null;
-			try {
-				empId = loginDAO.checkIfTheEmployeeIsValid(name, password);
-			} catch (RuntimeException ex) {
-				redir.addFlashAttribute("error_msg", ex.getMessage());
-			}
-			if (empId != null) {
-				request.getSession().setAttribute("emp_id", empId);
-				model = new RedirectView("/internalUser/profile", true);
-			}
-
-		} else {
-			Integer cust_id = null;
-			try {
-				cust_id = loginDAO.checkIfTheCustomerIsValid(name, password);
-			} catch (RuntimeException ex) {
-				redir.addFlashAttribute("error_msg", ex.getMessage());
-			}
-			if (cust_id != null) {
-				request.getSession().setAttribute("cust_id", cust_id);
-				model = new RedirectView("/customer/profile", true);
-			}
-		}
+		model = new RedirectView("/customer/profile", true);
+//		if (Constants.EMPLOYEE.equals(request.getParameter("type_user"))) {
+//			Integer empId = null;
+//			try {
+//				empId = loginDAO.checkIfTheEmployeeIsValid(name, password);
+//			} catch (RuntimeException ex) {
+//				redir.addFlashAttribute("error_msg", ex.getMessage());
+//			}
+//			if (empId != null) {
+//				request.getSession().setAttribute("emp_id", empId);
+//				model = new RedirectView("/internalUser/profile", true);
+//			}
+//
+//		} else {
+//			Integer cust_id = null;
+//			try {
+//				cust_id = loginDAO.checkIfTheCustomerIsValid(name, password);
+//			} catch (RuntimeException ex) {
+//				redir.addFlashAttribute("error_msg", ex.getMessage());
+//			}
+//			if (cust_id != null) {
+//				request.getSession().setAttribute("cust_id", cust_id);
+//				model = new RedirectView("/customer/profile", true);
+//			}
+//		}
 
 		// We only want to set these if the user is a valid one!
 		request.getSession().setAttribute("user_id", name);
