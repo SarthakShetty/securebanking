@@ -70,17 +70,17 @@
 		  <ul class="navbar-nav">
 			<li class=" nav-item"  ><a class="nav-link" href="/internalUser/profile">Profile</a></li>
 			  <li class ="  nav-item" ><a class="nav-link" href="/internalUser/transactions">View/Authorize Transactions</a></li>
+			 	<li class ="nav-item" ><a class="nav-link" href="/internalUser/Requests">Requests</a></li>
 			  <c:if test="${role == 'tier2' || role == 'tier1' }">
 			  	<li class =" nav-item"  ><a class="nav-link" href="/internalUser/accountManagement">Account Management</a></li>
 			  </c:if>
-			 <c:if test="${role == 'admin;}">
+			 <c:if test="${role == 'admin'}">
 				  	<li class =" nav-item"  ><a class="nav-link" href="/internalUser/accountManagement/admin">Account Management</a></li>
-				  	<li class ="nav-item" ><a class="nav-link" href="/internalUser/Requests">Requests</a></li>
 				  	<li class ="nav-item" ><a class="nav-link" href="/admin/systemLogs">System Log</a></li>
 			</c:if>
 		  </ul>
-		  <ul class="navbar-nav ml-auto">
-			  <li  class ="nav-item" ><a class="nav-link" href="/customer/logout">Logout</a></li>
+		   <ul class="navbar-nav ml-auto">
+			  <li  class ="nav-item" ><a class="nav-link" href="/employee/logout">Logout</a></li>
 		  </ul>
 		</nav>
 		<div id="container">

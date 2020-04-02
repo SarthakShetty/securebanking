@@ -298,6 +298,16 @@ public class InternalUserController {
 	   employeeDAO.deleteInternalUser(emp.getEmp_id(), emp.getType());
 	   return model;
    }
+   
+   
+   
+   @RequestMapping(value = "/employee/logout")
+	public RedirectView logout(RedirectView model, HttpServletRequest request) {
+
+		request.getSession().invalidate();
+		model = new RedirectView("/");
+		return model;
+	}
 
 	
 	private boolean checkEmptyFields(String fName, String lName, String uName, String password, String cPassword,
