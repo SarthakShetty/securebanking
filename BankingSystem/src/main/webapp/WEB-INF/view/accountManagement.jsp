@@ -199,13 +199,27 @@
 						<hr class="divider"/>
 						<div class="row">
 							<div class="col">
-								<label for="t">How many months do you want statements from? 
-									<select name="time" id="t" style="display: block; margin: 20px auto;">
-							  			<option value="1">1 month</option>
-							  			<option value="6">6 months</option>
-							  			<option value="12">12 months</option>
-								  	</select>
-								</label>
+								<div class="row">
+									<div class="col-6">
+										<label>Which account do you want to statements from?
+											<select name="account" id="t" style="display: block; margin: 20px auto;">
+									  			<c:forEach items="${accountList}" var="list">
+									  				<option value="${accountList.number }">${list.number }</option>
+									  			</c:forEach>
+										  	</select>
+										</label>
+									</div>
+									<div class="col-6">
+										<label for="t">How many months do you want statements from? 
+											<select name="time" id="t" style="display: block; margin: 20px auto;">
+									  			<option value="1">1 month</option>
+									  			<option value="6">6 months</option>
+									  			<option value="12">12 months</option>
+										  	</select>
+										</label>
+									</div>
+									
+								</div>
 							</div>
 						</div>
 					  	<input type="submit" class="btn btn-info btn-md" value="Download Banking Statements"/>

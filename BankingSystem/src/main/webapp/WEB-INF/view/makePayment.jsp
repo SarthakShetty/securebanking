@@ -171,6 +171,8 @@
 		
 		<div id="container">
 			<h1>Payment Requests</h1>
+				<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
+				<p style="margin: 20px 0 0 0;"><font color="green">${msg}</font></p>
 			<hr class="divider" />
 			<form action="/customer/authorizeRequest" method="post">
 				<div id="payment">
@@ -204,7 +206,7 @@
 						  		</td>
 						  		<td><select name="to_acc">
 
-							<c:forEach items="${accountList}" var="aList">
+							<c:forEach items="${accountList}" var="aList" >
 								 <option value="${aList.acc_id}">${aList.acc_id}(Balance : ${aList.curr_bal})</option> 
 
 							</c:forEach>

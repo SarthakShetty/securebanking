@@ -174,6 +174,8 @@
 		
 		<div id="container">
 			<h1>Credit/Debit</h1>
+				<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
+				<p style="margin: 20px 0 0 0;"><font color="green">${msg}</font></p>
 			<hr class="divider" />
 			<form action="/customer/creditOrDebit">
 				<div id="transferB" class="row" style="position: relative;">
@@ -209,8 +211,7 @@
 						<input type="button" class="btn btn-md btn-info" value="Request" id="tButton" onclick="checkModal(this)" style="margin: 20px 0 0 0;">
 						<input type="submit" style="display: none;" id="tButtonH">
 				</div>
-				<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
-				<p style="margin: 20px 0 0 0;"><font color="green">${msg}</font></p>
+			
 			</form>
 			
 			<div class="modal fade" id="myModal1" role="dialog" style="display: none;">

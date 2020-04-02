@@ -175,6 +175,8 @@
 		
 				<div id="container" class="table-wrapper-scroll-y my-custom-scrollbar">
 					<h1>Account Details</h1>
+						<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
+						<p style="margin: 20px 0 0 0;"><font color="green">${msg}</font></p>
 					<table class="table table-bordered mb-0">
 						<thead>
 						

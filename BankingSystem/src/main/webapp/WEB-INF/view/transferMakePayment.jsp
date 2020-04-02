@@ -83,9 +83,11 @@
 			</ul>
 			
 			<div id="transfer">
+				
+				<div id="accTransfer">
+				
 				<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
 				<p style="margin: 20px 0 0 0;"><font color="green">${msg}</font></p>
-				<div id="accTransfer">
 					<form action="/customer/transferFundsOtherAccount" method="post">
 						<div class="row">
 							<div class="col">
@@ -99,10 +101,11 @@
 							<div class="col">
 								<h3>Type of Request</h3>
 								<label>
-							    	<input type="radio" name="request" id="treq" autocomplete="off" value="transfer" checked> Transfer
+							    	<input type="radio" name="request" id="treq"  value="transfer"> Transfer
 							  	</label>
+							  	
 							  	<label>
-							    	<input type="radio" name="request" id="treq" autocomplete="off" value="request"> Request Payment
+							    	<input type="radio" name="request" id="treq"  value="request"> Request Payment
 							  	</label>
 							  	
 							</div>
@@ -150,6 +153,9 @@
 					
 				</div>
 				<div id="emailphonetransfer" style="display: none;">
+				<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
+				<p style="margin: 20px 0 0 0;"><font color="green">${msg}</font></p>
+				
 					<form action="/customer/transferFundsEmailPhone" method="post">
 						<div class="row">
 							<div class="col">
@@ -245,30 +251,31 @@
 			 <input type="button" style="display: none;" data-toggle="modal" data-target="#myModal4" id="hiddenBut3">
 		</div>
 	<script>
-		$('#phoneEmail').on('change', function(){
+		$('input:radio[name="type"]').change(function(){
 			var x = this.value;
 			if(x == 'phone'){
 				document.getElementById("pn").disabled = false;
-				document.getElementById("pn").autoFocus();
+				document.getElementById("pn").focus();
 				document.getElementById("ea").disabled = true;
 			}
 			else{
 				document.getElementById("ea").disabled = false;
-				document.getElementById("ea").autoFocus();
+				document.getElementById("ea").focus();
 				document.getElementById("pn").disabled = true;
 			}
 		}); 
 		
-		$('#treq').on('change', function(){
+		$('input:radio[name="request"]').change(function(){
 			var x = this.value;
 			if(x == 'transfer'){
 				document.getElementById("accNum").disabled = false;
-				document.getElementById("accNum").autoFocus();
+				document.getElementById("accNum").focus();
 				document.getElementById("accUser").disabled = true;
 			}
 			else{
+				
 				document.getElementById("accUser").disabled = false;
-				document.getElementById("accUser").autoFocus();
+				document.getElementById("accUser").focus();
 				document.getElementById("accNum").disabled = true;
 			}
 		}); 
@@ -295,14 +302,6 @@
 			
 		}
 		
-		document.getElementById('phone').onchange = function() {
-		    document.getElementById('pn').disabled = !this.checked;
-		    document.getElementById('pn').focus();
-		};
-		document.getElementById('email').onchange = function() {
-		    document.getElementById('ea').disabled = !this.checked;
-		    document.getElementById('ea').focus();
-		};
 		
 		function checkModal(el){
 			if(el.id == "accButton"){
