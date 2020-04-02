@@ -1,6 +1,10 @@
 package com.group12.controller;
 
+import java.util.Date;
+import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +39,9 @@ public class CustomerController {
 	
 	@Autowired
 	private AccountDAO accountDAO;
+	
+	@Autowired
+	private CustomerRequestDAO customerRequestDAO;
 	
 	Logger log = LoggerFactory.getLogger(AccountController.class);
 	
@@ -78,10 +85,7 @@ public class CustomerController {
 		return "redirect:/confirmationAccount";
 
     }
-	
-	
-	
-	
+
 	@RequestMapping(value = "/customer/helpSupport", method=RequestMethod.GET)
 	public ModelAndView getCustomerDetailsHelpSupp(ModelAndView model, HttpServletRequest request) {
 
@@ -108,11 +112,7 @@ public class CustomerController {
 	    model.setViewName("adminSystemLogs");	 	    	    
 		return model;
 	}
-	
-	
-	
 
-	
 	@RequestMapping(value = "/customer/schedule")
 	public RedirectView scheduleAppointment(RedirectView model, HttpServletRequest request, RedirectAttributes attr) {
 		if(request.getSession().getAttribute("role") == null){
@@ -137,28 +137,68 @@ public class CustomerController {
 	
 	@RequestMapping(value = "/customer/logout")
 	public RedirectView logout(RedirectView model, HttpServletRequest request) {
-		/*
-		 * logout
-		 */
+
+		int cust_id = (int) request.getSession().getAttribute("cust_id");
+		customerDAO.customerLogout(cust_id);
 		request.getSession().invalidate();
 		model = new RedirectView("/");
 		return model;
 	}
+
 	
-    /* update the request params and add DAO call to update it */
-	@RequestMapping(value ="/customer/changeProfile", method = RequestMethod.POST)
-	public RedirectView changeProfile(RedirectView model,HttpServletRequest request, 
-			@RequestParam("password") String password, @RequestParam("address") String address,
-			@RequestParam("email") String email, @RequestParam("mobile") String phoneNumber, @RequestParam("age") String age,
-			@RequestParam("city") String city, @RequestParam("zip") String zip, @RequestParam("state") String state, RedirectAttributes attr) {
+	@RequestMapping(value = "/customer/downloadBankingStatements", method=RequestMethod.GET)
+	public ModelAndView downloadBankingStatements(ModelAndView model, HttpServletRequest request) throws IOException {
+
+		if(request.getSession().getAttribute("role") == null){
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
+		
+		// TODO need to send the field from UI
+		int acc_num = Integer.parseInt(request.getParameter("acc_num"));
+//		int acc_num = 10000;
+		int cust_id = (Integer) request.getSession().getAttribute("cust_id");
+		// assuming that the time is given in terms of month, we can add change for year 
+		int time = Integer.parseInt(request.getParameter("time"));
+		Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, -time);
+        Date date = calendar.getTime();
+        Timestamp timestamp = new Timestamp(date.getTime());
+        
+        // call the customer request dao with specific account, transaction date, and type ( credit and debit, transfer and request)
+        customerRequestDAO.getBankingStatements(timestamp, cust_id, acc_num);
+        /*
+		 * return system log.
+		 */
+			 	    	    
+		return model;
+	}
+	
+	
+	
+	@RequestMapping(value ="/customer/changeProfile", method = {RequestMethod.GET, RequestMethod.POST})
+	public RedirectView changeProfile(RedirectView model,HttpServletRequest request, RedirectAttributes attr) {
 		/*
 		 * Need to allow customer to put in a request to change their profile information.
 		 */
+		int cust_id = (Integer)request.getSession().getAttribute("cust_id");
+		String password = request.getParameter("password");
+		String address = request.getParameter("address");
+		String email = request.getParameter("email");
+		String phoneNumber = request.getParameter("mobile");
+		String userName = request.getParameter("username");
+		int age = Integer.parseInt(request.getParameter("age"));
+		String city = request.getParameter("city");
+		String zip = request.getParameter("zip");
+		String state = request.getParameter("state");
 		
-		boolean empty = checkEmptyFields("a", "a", "a", password, address, email, phoneNumber, age, city, zip);
-		boolean noMatch = checkMatchFields("a", "a", "a", password, address, email, phoneNumber, age, city, zip);
 		
+		boolean empty = checkEmptyFields("a", "a", userName, password, address, email, phoneNumber, age, city, zip, state);
+		boolean noMatch = checkMatchFields("a", "a", userName, password, address, email, phoneNumber, age, city, zip, userName, state);
+		
+		customerDAO.updateCustomerData(userName, password, address, email, phoneNumber, age, city, zip, state, cust_id);
 		// Need to call a DAO method to update the profile information
+		
 		model = new RedirectView("/customer/profile");
 		if(empty){
 			
@@ -176,9 +216,9 @@ public class CustomerController {
 	}
 	
 	private boolean checkEmptyFields(String fName, String lName, String uName, String password,
-			String address, String email, String phoneNumber, String age, String city, String zip){
+			String address, String email, String phoneNumber, Integer age, String city, String zip, String state){
 		if(fName.isEmpty() || lName.isEmpty() || uName.isEmpty() || password.isEmpty() ||  address.isEmpty()
-				|| email.isEmpty() || phoneNumber.isEmpty() || age.isEmpty() || city.isEmpty() || zip.isEmpty()){
+				|| email.isEmpty() || phoneNumber.isEmpty() || age > 18 || city.isEmpty() || zip.isEmpty()){
 			return true;
 		}
 		
@@ -186,10 +226,10 @@ public class CustomerController {
 	}
 	
 	private boolean checkMatchFields(String fName, String lName, String uName, String password, 
-			String address, String email, String phoneNumber, String age, String city, String zip){
+			String address, String email, String phoneNumber, Integer age, String city, String zip, String userName, String state){
 		if(!fName.matches("^[a-zA-Z]+$") || !lName.matches("^[a-zA-Z]+$") || !uName.matches("^[a-zA-Z0-9]+$") || !password.matches("^[a-zA-Z0-9]+$") 
 				 || !address.matches("^[a-zA-Z0-9# ]+$") || !email.matches("^[a-zA-Z0-9@.]+$") || !phoneNumber.matches("^[-0-9]+$")
-				|| !age.matches("^[0-9]+$") || !city.matches("^[a-zA-Z]+$") || !zip.matches("^[0-9]+$")){
+				|| age > 18 || !city.matches("^[a-zA-Z]+$") || !zip.matches("^[0-9]+$")){
 			return true;
 		}
 		

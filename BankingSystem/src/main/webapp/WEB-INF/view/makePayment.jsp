@@ -172,7 +172,7 @@
 		<div id="container">
 			<h1>Payment Requests</h1>
 			<hr class="divider" />
-			<form action="/customer/authorizeRequest", method="post">
+			<form action="/customer/authorizeRequest" method="post">
 				<div id="payment">
 					
 					<div id="listDiv" class="table-wrapper-scroll-y my-custom-scrollbar">
@@ -180,32 +180,35 @@
 						
 						<tbody>
 						<tr>
-						 <td> <b>Requested From</b></td>
+						 <td> <b>Requested From Account</b></td>
 						  <td><b>Amount Requested</b></td>
-						  <td><b>Account to Pay From</b></td>
+						  <td></td>
 						  <td></td>
 						  <td></td>
 						  </tr>
 						  <c:forEach items="${list}" var="tList">
 						  	<tr>
 						  	   <td>
-						  			${tList.cust_id}
-						  			
+						  			${tList.second_acc_num}
 						  		</td>
 						  		<td>
-						  			${tList.first_acc_num}
+						  			${tList.amount}
 						  		</td>
-						  		<td>
-						  		  	${tList.second_acc_num}
-						  	    </td>
 						  		<td>
 						  			<label>
-							    		<input type="radio" name="auth" id="treq" autocomplete="off" value="accept" checked> Accept
+							    		<input type="radio" name="auth" id="treq" autocomplete="off" value="accept ${tList.req_id}"  checked> Accept
 								  	</label>
 								  	<label>
-								    	<input type="radio" name="auth" id="treq" autocomplete="off" value="decline"> Decline
+								    	<input type="radio" name="auth" id="treq" autocomplete="off" value="decline ${tList.req_id}"> Decline
 								  	</label>
 						  		</td>
+						  		<td><select name="to_acc">
+
+							<c:forEach items="${accountList}" var="aList">
+								 <option value="${aList.acc_id}">${aList.acc_id}(Balance : ${aList.curr_bal})</option> 
+
+							</c:forEach>
+						</select></td>
 						  		<td>
 						  			<input style="display: block; margin: auto;" type="submit" class="btn btn-info btn-md" value="Authorize"/>
 						  		</td>

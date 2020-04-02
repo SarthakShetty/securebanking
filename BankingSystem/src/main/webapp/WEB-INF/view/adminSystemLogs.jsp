@@ -80,8 +80,8 @@
 				  
 				  
 			  </ul>
-			  <ul class="navbar-nav ml-auto">
-			  <li  class ="nav-item" ><a class="nav-link" href="/customer/logout">Logout</a></li>
+			    <ul class="navbar-nav ml-auto">
+			  <li  class ="nav-item" ><a class="nav-link" href="/employee/logout">Logout</a></li>
 		  </ul>
 			</nav>
 		<div id="container">
