@@ -4,6 +4,10 @@ public class Constants {
 
 	public static final String EMPLOYEE = "employee";
 	
+	public static final String SAVINGS = "saving";
+	
+	public static final String CURRENT = "current";
+	
 	public static final String CUSTOMER = "customer";
 
 	public static String TRANSACTION_TYPE_CREATE_ACCOUNT = "Create";

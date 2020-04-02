@@ -163,6 +163,11 @@ public class AccountDAO {
 
 	// Debit and credit operation for an account
 	public void creditOrDebit(Request request) {
+		
+		if(!checkIfAccIsActive(request.getFirst_acc_num())) {
+			 request.setStatus(Constants.TRANSACTION_TERMINATED);
+		}else {
+		
 		String get_Amount_present_In_Acc = "select curr_bal from Account where acc_id  = " + request.getFirst_acc_num()
 				+ ";";
 		boolean canBeAdded = false;
@@ -195,6 +200,7 @@ public class AccountDAO {
 		} else {
 			request.setStatus(Constants.TRANSACTION_TERMINATED);
 		}
+		}
 
 	}
 
@@ -214,7 +220,13 @@ public class AccountDAO {
 	public void transferFundsFromAcc(Request request) {
 		
 		 log.debug("In Transfer Fund Req");
-
+		 
+		 if(!checkIfAccIsActive(request.getFirst_acc_num())) {
+			 request.setStatus(Constants.TRANSACTION_TERMINATED);
+		 } else if(!checkIfAccIsActive(request.getSecond_acc_num())){
+			 request.setStatus(Constants.TRANSACTION_TERMINATED);
+		 }
+		 else {
 		String get_Ammount_present_In_Acc = "select curr_bal from Account where acc_id  = " + request.getFirst_acc_num()
 				+ ";";
 		Double amount_left = jdbcTemplate.queryForObject(get_Ammount_present_In_Acc, Double.class);
@@ -241,6 +253,7 @@ public class AccountDAO {
 			}
 			request.setStatus(Constants.TRANSACTION_COMPLETED);
 		}
+		 }
 	}
 
 	// deletes is inactivating the account
@@ -255,5 +268,31 @@ public class AccountDAO {
 			throw new RuntimeException(ex);
 		}
 
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public List<Account> getAccountDetailstype(int cust_id) {
+		String get_accounts_for_a_customer = "select * from account where cust_id = " + cust_id
+				+ " and is_active = 1 and acc_type in ('saving','current');";
+		List<Account> accounts = new ArrayList<Account>();
+
+		try {
+			accounts = jdbcTemplate.query(get_accounts_for_a_customer, new RowMapper() {
+
+				public Account mapRow(ResultSet rs, int rowNum) throws SQLException {
+					Account account = new Account();
+					account.setAcc_id((int) rs.getObject("acc_id"));
+					account.setCurr_bal(rs.getDouble("curr_bal"));
+					account.setAcc_type((String)rs.getObject("acc_type"));
+					return account;
+				}
+			});
+
+		} catch (DataAccessException ex) {
+			throw new RuntimeException(ex);
+		}
+
+		return accounts;
 	}
 }

@@ -66,7 +66,11 @@
 		</nav>
 		
 		<div id="container">
+		
+		
 			<h1>Transfer Between Accounts</h1>
+			<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
+			<p style="margin: 20px 0 0 0;"><font color="green">${msg}</font></p>
 			<hr class="divider" />
 			<form action="/customer/transferFunds" method="post">
 				<div id="transferB" class="row" style="position: relative;">
@@ -103,8 +107,7 @@
 				<div style="display: block; text-align: center; margin: 20px 0 0 0;">
 					<input type="button" class="btn btn-md btn-info" value="Transfer" id="tButton" onclick="checkModal(this)" style="margin: 20px 0 0 0;">
 					<input type="submit" style="display: none;" id="tButtonH">
-					<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
-					<p style="margin: 20px 0 0 0;"><font color="green">${msg}</font></p>
+					
 				</div>
 
 			</form>
