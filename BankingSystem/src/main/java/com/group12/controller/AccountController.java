@@ -360,12 +360,31 @@ public class AccountController {
 	}
 	
 	@RequestMapping(value ="/customer/authorizeRequest", method = RequestMethod.POST)
-	public RedirectView acceptRequest(RedirectView model, HttpServletRequest request, @ModelAttribute("auth") String accOrdec) {
-		/*
-		 * Need to be able to allow customer to accept/decline a transfer request from another customer
-		 * and take it out of the request list and take money from account. Then return the list of requests
-		 * and a message based on accept/decline.
-		 */
+	public RedirectView acceptRequest(RedirectView model, HttpServletRequest request) {
+
+		
+		int to_account_no = Integer.parseInt(request.getParameter("to_acc"));
+		
+		
+		String req_status =request.getParameter("auth");
+		if(req_status != null) {
+			String [] reqs = req_status.split(" ");
+			if(reqs.length > 1 && reqs[0] != null && reqs[1]!=null) {
+				if("accept".equals(reqs[0])) {
+					Request customerRequest = new Request();
+					customerRequest.setFirst_acc_num(to_account_no);
+					customerRequest.setReq_id(Integer.parseInt(reqs[1]));
+					customerDAO.authorizeRequestCust(customerRequest, (String)request.getSession().getAttribute("user_id"));
+				} else if("decline".equals(reqs[0])) {
+					Request customerRequest = new Request();
+					customerRequest.setReq_id(Integer.parseInt(reqs[1]));
+					customerDAO.declineCustRequestCust(customerRequest, (String)request.getSession().getAttribute("user_id"));
+				}
+				
+			}
+		}
+		
+		
 		model = new RedirectView("/customer/payment");
 		return model;
 	}
@@ -439,7 +458,8 @@ public class AccountController {
 			return model;
 		}
 		
-		
+		List<Account> accounts = accountDAO.getAccountDetails((int) request.getSession().getAttribute("cust_id"));
+		model.addObject("accountList", accounts);
 		int cust_id = (int) request.getSession().getAttribute("cust_id");
 		List<Request> listOfCustomerRequests = customerDAO.retrieveAllPaymentRequestForCust(cust_id);
 		model.addObject("list",listOfCustomerRequests);
@@ -485,17 +505,7 @@ public class AccountController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/approvecustomerpaymentrequest")
-	public ModelAndView approveCustomerPayment(ModelAndView model, HttpServletRequest request) {
-		int to_account_no = Integer.parseInt(request.getParameter("to_account"));
-		int req_id = Integer.parseInt(request.getParameter("req_id"));
-		Request customerRequest = new Request();
-		customerRequest.setFirst_acc_num(to_account_no);
-		customerRequest.setReq_id(req_id);
-		customerDAO.authorizeRequestCust(customerRequest, null);
-		model.addObject("message", "Sucess");
-		return model;
-	}
+
 	
 
 	private Request createRequest(int cust_id,double amount, int fromAccountNumber, int toAccountNumber, String typeOftransfer) {
