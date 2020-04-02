@@ -83,9 +83,11 @@
 			</ul>
 			
 			<div id="transfer">
+				
+				<div id="accTransfer">
+				
 				<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
 				<p style="margin: 20px 0 0 0;"><font color="green">${msg}</font></p>
-				<div id="accTransfer">
 					<form action="/customer/transferFundsOtherAccount" method="post">
 						<div class="row">
 							<div class="col">
@@ -149,6 +151,9 @@
 					
 				</div>
 				<div id="emailphonetransfer" style="display: none;">
+				<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
+				<p style="margin: 20px 0 0 0;"><font color="green">${msg}</font></p>
+				
 					<form action="/customer/transferFundsEmailPhone" method="post">
 						<div class="row">
 							<div class="col">
