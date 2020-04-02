@@ -74,7 +74,7 @@
 			</div>
 			<hr class="divider">
 			<div id="loginForm">
-				<form action="/login" method="POST">
+				<form action="/login" method="post">
 					<div class="md-form">
 						<input type="text" name="name" placeholder="Username"  id="user" class="form-control"/> 
 						<input name="password" type="password" placeholder="Password"  id="pass" class="form-control"/>

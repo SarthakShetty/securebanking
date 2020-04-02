@@ -101,17 +101,23 @@ public class CustomerRegistrationController {
 				attr.addFlashAttribute("error_msg", "Username already is registered.");
 				return model;
 			}
-			
-			Customer customer  = createCustomer(fName, lName, uName, password, cPassword, address, email, phoneNumber, age, city, zip, state, type_user);
-			customerDAO.insertCutomerData(customer); // should actually call customerDAO.register(customer)\
-			emailService.sendMail(email,
-					"Please Click/ copy paste The link To Activate Banking Account",
-					Constants.HOST_NAME_ACTIVATE + request.getParameter("username"));
-			
+			Customer customer;
+			if(request.getSession().getAttribute("role") != null ){
+				customer = createCustomer(fName, lName, uName, password, cPassword, address, email, phoneNumber, age, city, zip, state, "customer");
+				model = new RedirectView("/internalUser/accountManagement");
+			}
+			else{
+				customer  = createCustomer(fName, lName, uName, password, cPassword, address, email, phoneNumber, age, city, zip, state, type_user);
+				customerDAO.insertCutomerData(customer); // should actually call customerDAO.register(customer)\
+				emailService.sendMail(email,
+						"Please Click/ copy paste The link To Activate Banking Account",
+						Constants.HOST_NAME_ACTIVATE + request.getParameter("username"));
+				model = new RedirectView("/otp");
+			}
 			
 			//Doing this because the ability for employees to create an account from there dashboard.
-			model = new RedirectView("/otp");
-			attr.addFlashAttribute("customer_email", type_user);	
+			
+			attr.addFlashAttribute("customer_email", email);	
 			return model;
 			
 			
@@ -182,7 +188,7 @@ public class CustomerRegistrationController {
 //		customer.setZipCode(request.getParameter("zip"));
 		customer.setAddress(address);
 		// TODO UI needs to take the age of the customer currently hard coding
-		customer.setAge(21);
+		customer.setAge(Integer.parseInt(age));
 		customer.setCity(city);
 		customer.setEmail(email);
 		customer.setFirstName(fName);

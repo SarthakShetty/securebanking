@@ -115,7 +115,7 @@ public class LoginController {
 		request.getSession().setAttribute("user_id", name);
 
 		// if the user is an employee
-		request.getSession().setAttribute("role", "admin");
+		request.getSession().setAttribute("role", "tier1");
 
 		return model;
 	}

@@ -114,16 +114,24 @@ public class CustomerController {
 
 	
 	@RequestMapping(value = "/customer/schedule")
-	public RedirectView scheduleAppointment(RedirectView model, HttpServletRequest request) {
+	public RedirectView scheduleAppointment(RedirectView model, HttpServletRequest request, RedirectAttributes attr) {
 		if(request.getSession().getAttribute("role") == null){
 			model = new RedirectView("redirect:/");
+			return model;
+		}
+		
+		String reason = request.getParameter("txtArea");
+		if(reason.isEmpty() || !reason.matches("^[a-zA-Z0-9.?!]+$")){
+			model = new RedirectView("/customer/helpSupport");
+			attr.addFlashAttribute("error_msg", "Please enter a reason and use valid characters.");
 			return model;
 		}
 		/*
 		 * Need to allow the customer to schedule an appointment then return a message saying appointment
 		 * entered.
 		 */
-		
+		model = new RedirectView("/customer/helpSupport");
+		attr.addFlashAttribute("msg", "Appointment Scheduled.");
 		return model;
 	}
 	

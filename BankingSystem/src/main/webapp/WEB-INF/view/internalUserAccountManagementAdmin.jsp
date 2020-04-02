@@ -72,9 +72,11 @@
 			  <c:if test="${role == 'tier2' || role == 'tier1' }">
 			  	<li class =" nav-item"  ><a class="nav-link" href="/internalUser/accountManagement">Account Management</a></li>
 			  </c:if>
-			  <c:if test="${role == 'admin;}">
-				  	<li class =" nav-item"  ><a class="nav-link" href="/internalUser/accountManagement/admin">Account Management</a></li>
-				  	<li class ="nav-item" ><a class="nav-link" href="/internalUser/Requests">Requests</a></li>
+			  <c:if test="${role == 'admin'}">
+			  	<li class =" nav-item"  ><a class="nav-link" href="/internalUser/accountManagement/admin">Account Management</a></li>
+			  </c:if>
+			  <li class ="nav-item" ><a class="nav-link" href="/internalUser/Requests">Requests</a></li>
+			  <c:if test="${role == 'admin'}">
 				  	<li class ="nav-item" ><a class="nav-link" href="/admin/systemLogs">System Log</a></li>
 				  </c:if>
 		  </ul>
@@ -88,45 +90,29 @@
 			
 			<div id="accounts">
 				<div id="accountDiv">
-					<select class="custom-select" size="8">
+					<select class="custom-select" id="sel" size="8">
 					  <c:forEach items="${accountList}" var="aList">
-					  	<option>${aList}</option>
+					  	<option value="${aList}">${aList.username}</option>
 					  </c:forEach>
 					</select>
 				</div>
 				<div id="hm" style="display: inline; text-align: right;">
-					<c:choose>
-						<c:when test="${tier2 }">
-							<form action="/internalUser/deleteAccount">
-							<input type="submit" value="Close" class="btn btn-info "/>
-	
-							</form>
-							<form >
-								<input type="button" onclick="modifyAcc()" value="Modify" class="btn btn-info" /> 
-							</form>
-							<form >
-								<input type="button" onclick="showNewAcc()" value="Add Account" class="btn btn-info"/>
-							</form>
-						</c:when>
-						<c:otherwise>
-							<form action="/internalUser/deleteAccount">
-								<input type="submit" value="Close" class="btn btn-info " disabled/>
-		
-							</form>
-							<form >
-								<input type="button" onclick="modifyAcc()" value="Modify" class="btn btn-info" disabled/> 
-							</form>
-							<form >
-								<input type="button" onclick="showNewAcc()" value="Add Account" class="btn btn-info" disabled/>
-							</form>
-						</c:otherwise>
-					</c:choose>
+					<form action="/internalUser/deleteAccount">
+						<input type="submit" value="Delete" class="btn btn-info "/>
+
+					</form>
+					<form >
+						<input type="button" onclick="modifyAcc()" value="Modify" class="btn btn-info" /> 
+					</form>
+					<form >
+						<input type="button" onclick="showNewAcc()" value="Add Account" class="btn btn-info"/>
+					</form>
 				</div>
 				<div id="newAccDiv">
 					<h3>Add Account</h3>
 					<div id="form">
 						<hr class="divider">
-						<form action="/confirmationAccount" method="POST">
+						<form action="/internalUser/createEmployee" method="POST">
 						  <div class="form-group row">
 						    <label for="firstName" class="col-sm-5 col-form-label">First Name:</label>
 						    <div class="col-sm-7">
@@ -161,6 +147,12 @@
 						    <label for="mobile" class="col-sm-5 col-form-label">Phone Number:</label>
 						    <div class="col-sm-7">
 						      <input type="text" name="phoneAdd" class="form-control" id="mobile1" placeholder="Phone Number" >
+						    </div>
+						  </div>
+						  <div class="form-group row">
+						    <label for="mobile" class="col-sm-5 col-form-label">Age:</label>
+						    <div class="col-sm-7">
+						      <input type="text" name="ageAdd" class="form-control" id="age1" placeholder="Age" >
 						    </div>
 						  </div>
 						  <div id="bottom">
@@ -247,7 +239,7 @@
 						  <div class="form-group row">
 						    <label for="firstName" class="col-sm-5 col-form-label">First Name:</label>
 						    <div class="col-sm-7">
-						      <input type="text" name ="firstNameModify"  class="form-control" id="firstName"  placeholder="First Name">
+						      <input type="text" name ="firstNameModify"  class="form-control" id="firstName"  placeholder="First Name" value="${accountList[0]}">
 						    </div>
 						  </div>
 						  <div class="form-group row">
@@ -351,6 +343,9 @@
 			 
 		</div>
 	<script>
+	$('#sel').on('change', function() {
+		  
+		});
 	function showNewAcc(){
 		document.getElementById('newAccDiv').style.display = 'block';
 		document.getElementById('modifyAcc').style.display = 'none';
