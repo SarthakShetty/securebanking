@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -428,10 +429,10 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/customer/downloadBankingStatements", method = RequestMethod.POST)
-	public RedirectView downloadStatements(RedirectView model, HttpServletRequest request,
-			@ModelAttribute("auth") String accOrdec) {
+	public RedirectView downloadStatements(RedirectView model, HttpServletRequest request, RedirectAttributes attr) {
 
 		model = new RedirectView("/customer/accountManagement");
+		attr.addFlashAttribute("msg_works", "This works");
 		return model;
 	}
 
@@ -521,14 +522,15 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/customer/accountManagement", method = RequestMethod.GET)
-	public ModelAndView getCustomerDetailsAccMan(ModelAndView model, HttpServletRequest request) {
+	public ModelAndView getCustomerDetailsAccMan(ModelAndView model, HttpServletRequest request, Model m) {
 		if (request.getSession().getAttribute("role") == null) {
 			model = new ModelAndView("redirect:/");
 			return model;
 		}
 
-		List<Account> accounts = accountDAO.getAccountDetails((int) request.getSession().getAttribute("cust_id"));
-		model.addObject("accountList", accounts);
+//		List<Account> accounts = accountDAO.getAccountDetails((int) request.getSession().getAttribute("cust_id"));
+//		model.addObject("accountList", accounts);
+		model.addObject("msg_works", m.asMap().get("msg_works"));
 		model.setViewName("accountManagement");
 		return model;
 	}

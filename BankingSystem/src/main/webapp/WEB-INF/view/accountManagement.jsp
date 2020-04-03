@@ -194,28 +194,29 @@
 			
 			<div id="accMan" style="text-align: center;">
 				<div id="bank" style="margin: 20px 0 0 0; display: block;">
-					<form action="/customer/downloadBankingStatements">
+					<form action="/customer/downloadBankingStatements" >
 						<h2>Banking Statements</h2>
 						<hr class="divider"/>
+						${msg_works }
 						<div class="row">
 							<div class="col">
 								<div class="row">
 									<div class="col-6">
 										<label>Which account do you want to statements from?
-											<select name="account" id="t" style="display: block; margin: 20px auto;">
+											<%-- <select name="account" id="t" style="display: block; margin: 20px auto;">
 									  			<c:forEach items="${accountList}" var="list">
 									  				<option value="${accountList.number }">${list.number }</option>
 									  			</c:forEach>
-										  	</select>
+										  	</select> --%>
 										</label>
 									</div>
 									<div class="col-6">
 										<label for="t">How many months do you want statements from? 
-											<select name="time" id="t" style="display: block; margin: 20px auto;">
+											<!-- <select name="time" id="t" style="display: block; margin: 20px auto;">
 									  			<option value="1">1 month</option>
 									  			<option value="6">6 months</option>
 									  			<option value="12">12 months</option>
-										  	</select>
+										  	</select> -->
 										</label>
 									</div>
 									
@@ -231,11 +232,11 @@
 						<hr class="divider"/>
 						<div class="row">
 							<div class="col">
-								<select name="account" style="display: block; margin: 20px auto;">
+								<%-- <select name="account" style="display: block; margin: 20px auto;">
 							  		<c:forEach items="${accountList}" var="aList">
 							  			<option value="${aList.acc_id}">${aList.acc_id}</option>
 							  		</c:forEach>
-							  	</select>
+							  	</select> --%>
 							</div>
 						</div>
 					  	
