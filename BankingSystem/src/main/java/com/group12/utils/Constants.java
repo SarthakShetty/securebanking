@@ -32,7 +32,7 @@ public class Constants {
 
 	public static char TRANSACTION_CUSTOMER_ACCEPTANCE = 'X';
 	
-	public static String HOST_NAME_ACTIVATE = "http://localhost:8080/activate/";
+	public static String HOST_NAME_ACTIVATE = "http://ec2-18-218-163-94.us-east-2.compute.amazonaws.com:8080/activate/";
 	
 	
 	

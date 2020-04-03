@@ -26,9 +26,11 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.group12.dao.AccountDAO;
 import com.group12.dao.CustomerDAO;
 import com.group12.dao.CustomerRequestDAO;
+import com.group12.dao.SupportDAO;
 import com.group12.models.Account;
 import com.group12.models.Customer;
 import com.group12.models.Request;
+import com.group12.models.Support;
 
 
 @Controller
@@ -42,6 +44,9 @@ public class CustomerController {
 	
 	@Autowired
 	private CustomerRequestDAO customerRequestDAO;
+	
+	@Autowired
+	private SupportDAO supportDAO;
 	
 	Logger log = LoggerFactory.getLogger(AccountController.class);
 	
@@ -93,6 +98,12 @@ public class CustomerController {
 			model = new ModelAndView("redirect:/");
 			return model;
 		}
+		int cust_id = (Integer) request.getSession().getAttribute("cust_id");
+		// Thi=s pull in only the pending transactions
+		// Additionally we need to have a button to reponse to the cases previous
+		// Need some UI changes too
+		List<Support> supportRequests = supportDAO.getIssues(cust_id);
+		// set the helpsupport to the supportRequests and check in the uI
 	    model.setViewName("helpsupport");	 	    	    
 		return model;
 	}
@@ -158,7 +169,6 @@ public class CustomerController {
 			 	    	    
 		return model;
 	}
-	
 	
 	
 	@RequestMapping(value ="/customer/changeProfile", method = {RequestMethod.GET, RequestMethod.POST})
