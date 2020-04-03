@@ -140,13 +140,15 @@ CREATE TABLE `employee` (
 DROP TABLE IF EXISTS `help_support`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `help_support` (
-  `cust_id` int NOT NULL,
-  `request_subject` varchar(45) DEFAULT NULL,
-  `message` varchar(45) DEFAULT NULL,
+CREATE TABLE `customer_help_and_services` (
+  `cust_id` int DEFAULT NULL,
   `status` char(1) DEFAULT NULL,
-  PRIMARY KEY (`cust_id`)
+  `query` VARCHAR(300)  DEFAULT NULL,
+  `meetingDate` DATE DEFAULT NULL,
+  KEY `cust_id` (`cust_id`),
+  CONSTRAINT `customer_help_and_services_ibfk_1` FOREIGN KEY (`cust_id`) REFERENCES `customer` (`cust_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
