@@ -26,6 +26,7 @@ import com.group12.models.Request;
 import com.group12.utils.Constants;
 import com.group12.models.Account;
 import com.group12.models.Customer;
+import com.group12.models.CustomerLogin;
 
 @Controller
 public class InternalUserController {
