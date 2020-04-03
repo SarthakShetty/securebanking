@@ -23,6 +23,7 @@ import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import com.group12.models.CustomerLogin;
 import com.group12.models.Request;
 import com.group12.utils.Constants;
 

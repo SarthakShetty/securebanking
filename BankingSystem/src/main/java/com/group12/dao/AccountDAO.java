@@ -35,7 +35,7 @@ public class AccountDAO {
 	
 	public boolean checkIfAccIsActive(int acc_num) {
 
-		String checkIfActive = "select is_active from Account where acc_id = " + acc_num + ";";
+		String checkIfActive = "select is_active from account where acc_id = " + acc_num + ";";
 		int value = -1;
 
 		try {
@@ -102,7 +102,7 @@ public class AccountDAO {
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		try {
-			String insert_sql = "Insert into Account(cust_id,acc_type,is_active,curr_bal) values("
+			String insert_sql = "Insert into account(cust_id,acc_type,is_active,curr_bal) values("
 					+ account.getCust_id() + ",'" + account.getAcc_type() + "'," + 0 + "," + account.getCurr_bal()
 					+ ");";
 			jdbcTemplate.update(connection -> {
@@ -168,7 +168,7 @@ public class AccountDAO {
 			 request.setStatus(Constants.TRANSACTION_TERMINATED);
 		}else {
 		
-		String get_Amount_present_In_Acc = "select curr_bal from Account where acc_id  = " + request.getFirst_acc_num()
+		String get_Amount_present_In_Acc = "select curr_bal from account where acc_id  = " + request.getFirst_acc_num()
 				+ ";";
 		boolean canBeAdded = false;
 		Double amount_left = 0.0;
@@ -189,7 +189,7 @@ public class AccountDAO {
 			request.setStatus(Constants.TRANSACTION_COMPLETED);
 		}
 		if (canBeAdded) {
-			String updateAcc = "UPDATE Account SET curr_bal =" + amount_left + " where acc_id ="
+			String updateAcc = "UPDATE account SET curr_bal =" + amount_left + " where acc_id ="
 					+ request.getFirst_acc_num() + ";";
 
 			try {
@@ -227,7 +227,7 @@ public class AccountDAO {
 			 request.setStatus(Constants.TRANSACTION_TERMINATED);
 		 }
 		 else {
-		String get_Ammount_present_In_Acc = "select curr_bal from Account where acc_id  = " + request.getFirst_acc_num()
+		String get_Ammount_present_In_Acc = "select curr_bal from account where acc_id  = " + request.getFirst_acc_num()
 				+ ";";
 		Double amount_left = jdbcTemplate.queryForObject(get_Ammount_present_In_Acc, Double.class);
 
@@ -235,14 +235,14 @@ public class AccountDAO {
 			request.setStatus(Constants.TRANSACTION_TERMINATED);
 		} else {
 			amount_left -= request.getAmount();
-			get_Ammount_present_In_Acc = "select curr_bal from Account where acc_id  = " + request.getSecond_acc_num()
+			get_Ammount_present_In_Acc = "select curr_bal from account where acc_id  = " + request.getSecond_acc_num()
 					+ ";";
 
 			double sec_acc_num = jdbcTemplate.queryForObject(get_Ammount_present_In_Acc, Double.class);
 			sec_acc_num += request.getAmount();
-			String update_first_Acc = "UPDATE Account SET curr_bal =" + amount_left + " where acc_id ="
+			String update_first_Acc = "UPDATE account SET curr_bal =" + amount_left + " where acc_id ="
 					+ request.getFirst_acc_num() + ";";
-			String update_sec_Acc = "UPDATE Account SET curr_bal =" + sec_acc_num + " where acc_id ="
+			String update_sec_Acc = "UPDATE account SET curr_bal =" + sec_acc_num + " where acc_id ="
 					+ request.getSecond_acc_num() + ";";
 			try {
 

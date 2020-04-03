@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.group12.dao.AccountDAO;
-import com.group12.dao.CustomerLogin;
+import com.group12.models.CustomerLogin;
 import com.group12.dao.CustomerRequestDAO;
 import com.group12.dao.InternalUserDAO;
 import com.group12.models.InternalUser;

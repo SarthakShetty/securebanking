@@ -1,4 +1,4 @@
-package com.group12.dao;
+package com.group12.models;
 
 
 import java.sql.Timestamp;

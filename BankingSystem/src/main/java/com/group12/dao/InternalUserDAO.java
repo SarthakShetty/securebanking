@@ -31,7 +31,7 @@ public class InternalUserDAO {
 
 		int count = 0;
 		try {
-			count = jdbcTemplate.queryForObject("select count(*) from Employee where mobile = " + parameter + ";",
+			count = jdbcTemplate.queryForObject("select count(*) from employee where mobile = " + parameter + ";",
 					Integer.class);
 		} catch (DataAccessException ex) {
 			throw new RuntimeException(ex);
@@ -47,7 +47,7 @@ public class InternalUserDAO {
 
 		try {
 			count = jdbcTemplate.queryForObject(
-					"select count(*) from Employee where email = " + "'" + parameter + "'" + ";", Integer.class);
+					"select count(*) from employee where email = " + "'" + parameter + "'" + ";", Integer.class);
 		} catch (DataAccessException ex) {
 			throw new RuntimeException(ex);
 		}
@@ -61,7 +61,7 @@ public class InternalUserDAO {
 		int count = 0;
 		try {
 			count = jdbcTemplate.queryForObject(
-					"select count(*) from Employee where emp_user_id = " + "'" + parameter + "'" + ";", Integer.class);
+					"select count(*) from employee where emp_user_id = " + "'" + parameter + "'" + ";", Integer.class);
 		} catch (DataAccessException ex) {
 			throw new RuntimeException(ex);
 		}
