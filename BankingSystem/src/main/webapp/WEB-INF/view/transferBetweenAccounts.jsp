@@ -148,6 +148,9 @@
 			else
 				document.getElementById("tButtonH").click();
 		}
+		$('#myModal1').on('hidden.bs.modal', function () {
+			document.getElementById("tButtonH").click();
+		});
 	}
 		
 	</script>
