@@ -49,4 +49,14 @@ public class SupportDAO {
 
 		return listOfsupports;
 	}
+
+	public void insertIssue(int attribute, String date, String reason) {
+		String insert ="insert into customer_help_and_services(cust_id,status,meetingDate,query) values(" + attribute + ",'P','" + date +"'," +"'" + reason +"');"; 
+				
+		try {
+			jdbcTemplate.update(insert);
+		}catch(Exception ex) {
+			throw new RuntimeException(ex);
+		}
+	}
 }

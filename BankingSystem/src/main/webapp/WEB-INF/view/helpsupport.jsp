@@ -57,9 +57,12 @@
 		
 		<div id="container">
 			<h1>Schedule an Appointment</h1>
+			
+			<p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
+			<p style="margin: 20px 0 0 0;"><font color="green">${msg}</font></p>
 			<hr class="divider" />
 			<div id="helpsup" style="text-align: center;">
-				<form action="/customer/schedule" id="sch">
+				<form action="/customer/schedule" id="sch" method="post">
 					<div class="row">
 						<div class="col">
 							<h3>Select a date </h3>

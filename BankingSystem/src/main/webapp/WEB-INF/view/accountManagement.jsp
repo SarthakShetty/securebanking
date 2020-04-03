@@ -180,6 +180,9 @@
 			out.print(session.getAttribute("user_id"));
 		%> --%>
 		<div id="container">
+		   <p style="margin: 20px 0 0 0;"><font color="red">${error_msg}</font></p>
+			<p style="margin: 20px 0 0 0;"><font color="green">${msg}</font></p>
+			
 			<ul class="nav nav-tabs">
 			  <li class="nav-item active" id="pr" onclick="change(this)">
 			    <a class="nav-link" href="#" style="color: white;">Banking Statements</a>
@@ -193,8 +196,11 @@
 			</ul>
 			
 			<div id="accMan" style="text-align: center;">
+			
+			 
 				<div id="bank" style="margin: 20px 0 0 0; display: block;">
-					<form action="/customer/downloadBankingStatements" >
+				
+					<form action="/customer/downloadBankingStatements"  method="get">
 						<h2>Banking Statements</h2>
 						<hr class="divider"/>
 						${msg_works }
@@ -203,20 +209,20 @@
 								<div class="row">
 									<div class="col-6">
 										<label>Which account do you want to statements from?
-											<%-- <select name="account" id="t" style="display: block; margin: 20px auto;">
+											 <select name="account" id="t" style="display: block; margin: 20px auto;">
 									  			<c:forEach items="${accountList}" var="list">
 									  				<option value="${list.acc_id }">${list.acc_id }</option>
 									  			</c:forEach>
-										  	</select> --%>
+										  	</select> 
 										</label>
 									</div>
 									<div class="col-6">
 										<label for="t">How many months do you want statements from? 
-											<!-- <select name="time" id="t" style="display: block; margin: 20px auto;">
+											 <select name="time" id="t" style="display: block; margin: 20px auto;">
 									  			<option value="1">1 month</option>
 									  			<option value="6">6 months</option>
 									  			<option value="12">12 months</option>
-										  	</select> -->
+										  	</select> 
 										</label>
 									</div>
 									
@@ -227,16 +233,17 @@
 				  	</form>
 				</div>
 				<div  id ="del" style="margin: 40px 0 0 0; display: none;">
+			
 					<form action="/customer/accountManagement/0" method="post">
 						<h2>Delete an Account</h2>
 						<hr class="divider"/>
 						<div class="row">
 							<div class="col">
-								<%-- <select name="account" style="display: block; margin: 20px auto;">
+								 <select name="account" style="display: block; margin: 20px auto;">
 							  		<c:forEach items="${accountList}" var="aList">
 							  			<option value="${aList.acc_id}">${aList.acc_id}</option>
 							  		</c:forEach>
-							  	</select> --%>
+							  	</select> 
 							</div>
 						</div>
 					  	
@@ -249,6 +256,7 @@
 					<div id="form">
 					
 					<form action="/customer/accountManagement/1" method="post">
+					
 					  <div class="form-group row">
 					    <label for="intialdeposit" class="col-sm-5 col-form-label">Initial deposit:</label>
 					    <div class="col-sm-7">

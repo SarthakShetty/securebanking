@@ -441,13 +441,13 @@ public class AccountController {
 		return model;
 	}
 
-	@RequestMapping(value = "/customer/downloadBankingStatements", method = RequestMethod.POST)
+/*	@RequestMapping(value = "/customer/downloadBankingStatements", method = RequestMethod.POST)
 	public RedirectView downloadStatements(RedirectView model, HttpServletRequest request, RedirectAttributes attr) {
 
 		model = new RedirectView("/customer/accountManagement");
 		attr.addFlashAttribute("msg_works", "This works");
 		return model;
-	}
+	}*/
 
 	@RequestMapping(value = "/customer/transferEmailPhone", method = RequestMethod.GET)
 	public ModelAndView getCustomerDetailsEmailPhone(ModelAndView model, HttpServletRequest request,

@@ -98,34 +98,34 @@ public class CustomerController {
 			model = new ModelAndView("redirect:/");
 			return model;
 		}
-		int cust_id = (Integer) request.getSession().getAttribute("cust_id");
-		// Thi=s pull in only the pending transactions
-		// Additionally we need to have a button to reponse to the cases previous
-		// Need some UI changes too
-		List<Support> supportRequests = supportDAO.getIssues(cust_id);
-		// set the helpsupport to the supportRequests and check in the uI
+		
 	    model.setViewName("helpsupport");	 	    	    
 		return model;
 	}
 
 
-	@RequestMapping(value = "/customer/schedule")
+	@RequestMapping(value = "/customer/schedule",method=RequestMethod.POST)
 	public RedirectView scheduleAppointment(RedirectView model, HttpServletRequest request, RedirectAttributes attr) {
 		if(request.getSession().getAttribute("role") == null){
 			model = new RedirectView("redirect:/");
 			return model;
 		}
 		
+		String date = (String)request.getParameter("dateS");
+		
 		String reason = request.getParameter("txtArea");
-		if(reason.isEmpty() || !reason.matches("^[a-zA-Z0-9.?!]+$")){
+		if(reason.isEmpty() || date == null || date.length() ==0){
 			model = new RedirectView("/customer/helpSupport");
 			attr.addFlashAttribute("error_msg", "Please enter a reason and use valid characters.");
 			return model;
 		}
-		/*
-		 * Need to allow the customer to schedule an appointment then return a message saying appointment
-		 * entered.
-		 */
+		try {
+		supportDAO.insertIssue((int)request.getSession().getAttribute("cust_id"),date,reason);
+		}catch(Exception ex) {
+			attr.addFlashAttribute("error_msg", "Error in ctreating the Appointment");
+			return model;
+
+		}
 		model = new RedirectView("/customer/helpSupport");
 		attr.addFlashAttribute("msg", "Appointment Scheduled.");
 		return model;
@@ -143,16 +143,14 @@ public class CustomerController {
 
 	
 	@RequestMapping(value = "/customer/downloadBankingStatements", method=RequestMethod.GET)
-	public ModelAndView downloadBankingStatements(ModelAndView model, HttpServletRequest request) throws IOException {
+	public RedirectView downloadBankingStatements(RedirectView model, HttpServletRequest request,RedirectAttributes attr) throws IOException {
 
-		if(request.getSession().getAttribute("role") == null){
-			model = new ModelAndView("redirect:/");
-			return model;
-		}
+	
 		
-		// TODO need to send the field from UI
-//		int acc_num = Integer.parseInt(request.getParameter("acc_num"));
-		int acc_num = 10001;
+		model = new RedirectView("/customer/accountManagement");
+		try {
+	
+		int acc_num = Integer.parseInt(request.getParameter("account"));
 		int cust_id = (Integer) request.getSession().getAttribute("cust_id");
 		// assuming that the time is given in terms of month, we can add change for year 
 		int time = Integer.parseInt(request.getParameter("time"));
@@ -166,7 +164,11 @@ public class CustomerController {
         /*
 		 * return system log.
 		 */
-			 	    	    
+		}catch(Exception ex) {
+			attr.addFlashAttribute("error_msg", "Error in downloading the statement");
+			return model;
+		}
+		attr.addFlashAttribute("msg", "Downloaded Statement!!");		 	    	    
 		return model;
 	}
 	
