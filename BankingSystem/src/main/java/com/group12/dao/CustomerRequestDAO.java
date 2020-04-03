@@ -1,8 +1,9 @@
 package com.group12.dao;
 
-import java.io.FileNotFoundException;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -336,6 +337,33 @@ public class CustomerRequestDAO {
         headerCell = headerRow.createCell(5);
         headerCell.setCellValue("Transaction Date");
     }
+
+	@SuppressWarnings("unchecked")
+	public List<CustomerLogin> getAllCustomerLogins() {
+		List<CustomerLogin> logins = new ArrayList<>();
+		String cust_logins = "select * from customer_login_activity;";
+		
+		
+		try {
+			logins = jdbcTemplate.query(cust_logins, new RowMapper() {
+
+				public CustomerLogin mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+					CustomerLogin custLogin = new CustomerLogin();
+					custLogin.setCust_id((int)rs.getObject("cust_id"));
+					String is_sccues= (String)rs.getObject("is_successful");
+					if(is_sccues!=null && is_sccues.length() !=0) {
+					custLogin.setSucces(is_sccues.charAt(0));
+					}
+					custLogin.setTimstamp((Timestamp)rs.getObject("ts"));
+					return custLogin;
+				}
+			});
+		} catch (DataAccessException ex) {
+			throw new RuntimeException(ex);
+		}
+		return logins;
+	}
 	
 	
 }

@@ -205,7 +205,7 @@
 										<label>Which account do you want to statements from?
 											<%-- <select name="account" id="t" style="display: block; margin: 20px auto;">
 									  			<c:forEach items="${accountList}" var="list">
-									  				<option value="${accountList.number }">${list.number }</option>
+									  				<option value="${list.acc_id }">${list.acc_id }</option>
 									  			</c:forEach>
 										  	</select> --%>
 										</label>

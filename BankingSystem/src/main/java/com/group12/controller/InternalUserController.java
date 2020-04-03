@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.group12.dao.AccountDAO;
+import com.group12.dao.CustomerLogin;
 import com.group12.dao.CustomerRequestDAO;
 import com.group12.dao.InternalUserDAO;
 import com.group12.models.InternalUser;
@@ -57,8 +58,30 @@ public class InternalUserController {
 			model.addObject("username", employee.getEmp_user_id());
 			model.addObject("Age", employee.getAge());
 			request.getSession().setAttribute("emp_type", employee.getType());
+			if(employee.getType()==1) {
+				request.getSession().setAttribute("role","tier1");
+			}else if(employee.getType()==2) {
+				request.getSession().setAttribute("role","tier2");
+			}else {
+				request.getSession().setAttribute("role","admin");
+			}
 		}
 		model.setViewName("internalUserProfile");
+		return model;
+	}
+	
+	
+	
+	@RequestMapping(value = "/admin/systemLogs", method = RequestMethod.GET)
+	public ModelAndView retriveCustomerLogs(ModelAndView model, HttpServletRequest request) {
+		if (request.getSession().getAttribute("role") == null) {
+			model = new ModelAndView("redirect:/");
+			return model;
+		}
+		
+		List<CustomerLogin> customer_logins = customerReqs.getAllCustomerLogins();
+		model.addObject("list",customer_logins);
+		model.setViewName("adminSystemLogs");
 		return model;
 	}
 

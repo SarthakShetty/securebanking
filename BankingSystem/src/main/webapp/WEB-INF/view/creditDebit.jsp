@@ -227,8 +227,8 @@
 			        <div class="modal-body">
 			          <p style="color: black !important;" id="modalmsg">The specified amount caused this request to be considered a critical transaction.</p>
 			        </div>
-			        <div class="modal-footer">
-			          
+			          <div class="modal-footer">
+			          <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
 			        </div>
 			      </div>
 			      
