@@ -108,7 +108,7 @@ CREATE TABLE `customer_help_and_services` (
   `cust_id` int DEFAULT NULL,
   `status` char(1) DEFAULT NULL,
   `query` VARCHAR(300)  DEFAULT NULL,
-  `meetingDate` DATE DEFAULT NULL,
+  `meetingDate` VARCHAR(20) DEFAULT NULL,
   KEY `cust_id` (`cust_id`),
   CONSTRAINT `customer_help_and_services_ibfk_1` FOREIGN KEY (`cust_id`) REFERENCES `customer` (`cust_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
