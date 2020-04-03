@@ -540,9 +540,8 @@ public class AccountController {
 			return model;
 		}
 
-//		List<Account> accounts = accountDAO.getAccountDetails((int) request.getSession().getAttribute("cust_id"));
-//		model.addObject("accountList", accounts);
-		model.addObject("msg_works", m.asMap().get("msg_works"));
+		List<Account> accounts = accountDAO.getAccountDetails((int) request.getSession().getAttribute("cust_id"));
+		model.addObject("accountList", accounts);
 		model.setViewName("accountManagement");
 		return model;
 	}

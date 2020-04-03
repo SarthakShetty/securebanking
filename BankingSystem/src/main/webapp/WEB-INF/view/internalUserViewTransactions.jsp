@@ -62,9 +62,12 @@
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 		<link href="https://fonts.googleapis.com/css?family=Squada+One&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+		
 	</head>
 	<body>
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -92,18 +95,21 @@
 				
 				<div id="listDiv" class="table-wrapper-scroll-y my-custom-scrollbar">
 					<div id="listDiv" class="table-wrapper-scroll-y my-custom-scrollbar">
+					<input class="form-control" id="myInput" type="text" placeholder="Search.." style="margin: 0 0 10px 0;">
 					<table class="table table-bordered mb-0">
-						
-						<tbody>
-						<tr>
+						<thead>
+							<tr>
 						 <td> <b>Username</b></td>
 						  <td><b>From Account</b></td>
 						  <td><b>To Account</b></td>
 						  <td><b>Request Type</b></td>
 						  <td><b>Amount</b></td>
-						  <td></td>
-						  <td></td>
+						  <td>Accept/Decline</td>
+						  <td>Authorize</td>
 						  </tr>
+						</thead>
+						<tbody id="myTable">
+						
 						  <c:forEach items="${list}" var="tList">
 						  	<tr>
 						  	   <td>
@@ -139,9 +145,16 @@
 			 
 		</div>
 	<script>
+	$(document).ready(function(){
+		  $("#myInput").on("keyup", function() {
+		    var value = $(this).val().toLowerCase();
+		    $("#myTable tr").filter(function() {
+		      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		    });
+		  });
+		});
 	</script>
 	</body>
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </html>
