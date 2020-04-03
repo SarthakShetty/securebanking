@@ -94,7 +94,7 @@
 								<h3> My Account</h3>
 								<select name="from_acc">
 									<c:forEach items="${accounts}" var="aList">
-									<%-- <option value="${aList.acc_id}">${aList.acc_id}(Balance : ${aList.curr_bal})</option>  --%>
+									 <option value="${aList.acc_id}">${aList.acc_id}(Balance : ${aList.curr_bal})</option>  
 									</c:forEach>
 								</select>
 							</div>
@@ -162,7 +162,7 @@
 								<h3>From Account</h3>
 								<select name="from_accP">
 									<c:forEach items="${accounts}" var="aList">
-										<%-- <option value="${aList.acc_id}">${aList.acc_id}(Balance : ${aList.curr_bal})</option>  --%>
+										<option value="${aList.acc_id}">${aList.acc_id}(Balance : ${aList.curr_bal})</option> 
 									</c:forEach>
 								</select>
 							</div>

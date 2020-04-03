@@ -91,16 +91,25 @@
 				
 				<div id="listDiv" class="table-wrapper-scroll-y my-custom-scrollbar">
 					<table class="table table-bordered mb-0">
-						<thead>
-						  <tr>
-						    <th scope="col">Logs</th>
-						  </tr>
-						</thead>
+						
 						<tbody>
+						  <tr>
+						   <td><b>Customer Id</b></td>
+						 
+						   <td><b>Last Logged In</b></td>
+						 
+						   <td><b>Is Successful</b></td>
+						  </tr>
 						  <c:forEach items="${list}" var="tList">
 						  	<tr>
 						  		<td>
-						  			${tList}
+						  			${tList.cust_id}
+						  		</td>
+						  		<td>
+						  			${tList.timstamp}
+						  		</td>
+						  		<td>
+						  			${tList.succes}
 						  		</td>
 						  	</tr>
 						  </c:forEach>

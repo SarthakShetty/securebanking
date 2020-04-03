@@ -92,7 +92,7 @@ public class AccountController {
 		String typeOftransfer = type_request;
 		Request customerRequest = new Request();
 		String msg = "";
-		int isCritical;
+		int isCritical=0;
 		customerRequest.setAmount(amount);
 		customerRequest.setFirst_acc_num(accountNumber);
 		customerRequest.setType(typeOftransfer);
@@ -103,6 +103,7 @@ public class AccountController {
 		} else {
 			msg = "Request Submitted.";
 		}
+		customerRequest.setIs_critical(isCritical);
 		try {
 			accountDAO.createCreditOrDebitReq(customerRequest);
 		} catch (Exception ex) {
@@ -288,19 +289,30 @@ public class AccountController {
 		} else {
 			isCritical = 0;
 		}
+		try {
 		if (!accountDAO.checkIfAccIsActive(fromAccountNumber)) {
 			log.info("Firscond");
 			attr.addFlashAttribute("error_msg",
 					"The account from where we are requesting for transfer is not yet Activated");
 			return model;
 		}
+		}catch(Exception ex) {
+			attr.addFlashAttribute("error_msg",
+					"The account with the given account number does not exists");
+			return model;
+		}
 
 		if (Constants.TRANSACTION_TYPE_TRANSFER.equals(request_type)) {
 			int toAccountNumber = Integer.parseInt(to);
-
+			try {
 			if (!accountDAO.checkIfAccIsActive(toAccountNumber)) {
 				log.info("second");
 				attr.addFlashAttribute("error_msg", "The account to which we sending amount is not yet Activated");
+				return model;
+			}
+			}catch(Exception ex) {
+				attr.addFlashAttribute("error_msg",
+						"The account with the given account number does not exists");
 				return model;
 			}
 			Request customerRequest = createRequest((int) request.getSession().getAttribute("cust_id"), amount,

@@ -96,7 +96,7 @@
 						
 						<tbody>
 						<tr>
-						 <td> <b>Customer Username</b></td>
+						 <td> <b>Customer User Id</b></td>
 						  <td><b>From Account Number</b></td>
 						  <td><b>To Account Number</b></td>
 						  <td><b>Request Type</b></td>
@@ -105,7 +105,7 @@
 						  <c:forEach items="${list}" var="tList">
 						  	<tr>
 						  	   <td>
-						  			${tList.username}
+						  			${tList.cust_id}
 						  		</td>
 						  		<td>
 						  			${tList.first_acc_num}
