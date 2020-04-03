@@ -163,6 +163,7 @@ public class AccountController {
 		String typeOftransfer = "transfer";// request.getParameter("type_transfer");
 		Request customerRequest = createRequest((int) request.getSession().getAttribute("cust_id"), amount,
 				fromAccountNumber, toAccountNumber, typeOftransfer);
+		customerRequest.setIs_critical(isCritical);
 		try {
 			accountDAO.transferFunds_create_request(customerRequest);
 		} catch (Exception ex) {
